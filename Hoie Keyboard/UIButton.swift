@@ -1,6 +1,6 @@
 //
-//  KeyButton.swift
-//  Hoie Keyboard
+//  UIButton.swift
+//  Hoie UIButton
 //
 //  Created by Hoie Kim on 8/4/24.
 //
@@ -22,6 +22,7 @@ extension UIButton {
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
+            self.setTitle(newValue?.title, for: .normal)
         }
     }
 }

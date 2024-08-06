@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isToggleOn = true
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationSplitView {
+            List {
+                Toggle(isOn: $isToggleOn) {
+                    Text("Testing toggle")
+                }
+            }
+            .navigationTitle("Keyboards")
+
+        } detail: {
+            Text("Configuration")
         }
-        .padding()
     }
 }
 

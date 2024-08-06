@@ -11,7 +11,37 @@
 		5798A4AF2C5DFE4400FCAA66 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4AE2C5DFE4400FCAA66 /* ContentView.swift */; };
 		5798A4B12C5DFE4600FCAA66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5798A4B02C5DFE4600FCAA66 /* Assets.xcassets */; };
 		5798A4B42C5DFE4600FCAA66 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5798A4B32C5DFE4600FCAA66 /* Preview Assets.xcassets */; };
+		5798A4C12C5EE8AD00FCAA66 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4C02C5EE8AD00FCAA66 /* KeyboardViewController.swift */; };
+		5798A4C52C5EE8AD00FCAA66 /* Hoie Keyboard.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5798A4BE2C5EE8AD00FCAA66 /* Hoie Keyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5798A4CB2C6055FF00FCAA66 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4CA2C6055FF00FCAA66 /* Key.swift */; };
+		5798A4CD2C605C8E00FCAA66 /* EnglishKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */; };
+		5798A4CF2C6092B300FCAA66 /* KoreanKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4CE2C6092B300FCAA66 /* KoreanKeySet.swift */; };
+		5798A4D12C609D1C00FCAA66 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4D02C609D1C00FCAA66 /* UIButton.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5798A4C32C5EE8AD00FCAA66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5798A4A12C5DFE4400FCAA66 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5798A4BD2C5EE8AD00FCAA66;
+			remoteInfo = "Hoie Keyboard";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5798A4C92C5EE8AD00FCAA66 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5798A4C52C5EE8AD00FCAA66 /* Hoie Keyboard.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5798A4A92C5DFE4400FCAA66 /* Keybaords.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keybaords.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -19,10 +49,24 @@
 		5798A4AE2C5DFE4400FCAA66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5798A4B02C5DFE4600FCAA66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5798A4B32C5DFE4600FCAA66 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		5798A4BE2C5EE8AD00FCAA66 /* Hoie Keyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Hoie Keyboard.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5798A4C02C5EE8AD00FCAA66 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
+		5798A4C22C5EE8AD00FCAA66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5798A4CA2C6055FF00FCAA66 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
+		5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishKeySet.swift; sourceTree = "<group>"; };
+		5798A4CE2C6092B300FCAA66 /* KoreanKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoreanKeySet.swift; sourceTree = "<group>"; };
+		5798A4D02C609D1C00FCAA66 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5798A4A62C5DFE4400FCAA66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5798A4BB2C5EE8AD00FCAA66 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -36,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				5798A4AB2C5DFE4400FCAA66 /* Keybaords */,
+				5798A4BF2C5EE8AD00FCAA66 /* Hoie Keyboard */,
 				5798A4AA2C5DFE4400FCAA66 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -44,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				5798A4A92C5DFE4400FCAA66 /* Keybaords.app */,
+				5798A4BE2C5EE8AD00FCAA66 /* Hoie Keyboard.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,6 +113,19 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		5798A4BF2C5EE8AD00FCAA66 /* Hoie Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				5798A4C02C5EE8AD00FCAA66 /* KeyboardViewController.swift */,
+				5798A4C22C5EE8AD00FCAA66 /* Info.plist */,
+				5798A4CA2C6055FF00FCAA66 /* Key.swift */,
+				5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */,
+				5798A4CE2C6092B300FCAA66 /* KoreanKeySet.swift */,
+				5798A4D02C609D1C00FCAA66 /* UIButton.swift */,
+			);
+			path = "Hoie Keyboard";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -77,15 +136,34 @@
 				5798A4A52C5DFE4400FCAA66 /* Sources */,
 				5798A4A62C5DFE4400FCAA66 /* Frameworks */,
 				5798A4A72C5DFE4400FCAA66 /* Resources */,
+				5798A4C92C5EE8AD00FCAA66 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5798A4C42C5EE8AD00FCAA66 /* PBXTargetDependency */,
 			);
 			name = Keybaords;
 			productName = Keybaords;
 			productReference = 5798A4A92C5DFE4400FCAA66 /* Keybaords.app */;
 			productType = "com.apple.product-type.application";
+		};
+		5798A4BD2C5EE8AD00FCAA66 /* Hoie Keyboard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5798A4C62C5EE8AD00FCAA66 /* Build configuration list for PBXNativeTarget "Hoie Keyboard" */;
+			buildPhases = (
+				5798A4BA2C5EE8AD00FCAA66 /* Sources */,
+				5798A4BB2C5EE8AD00FCAA66 /* Frameworks */,
+				5798A4BC2C5EE8AD00FCAA66 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Hoie Keyboard";
+			productName = "Hoie Keyboard";
+			productReference = 5798A4BE2C5EE8AD00FCAA66 /* Hoie Keyboard.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -98,6 +176,9 @@
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					5798A4A82C5DFE4400FCAA66 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					5798A4BD2C5EE8AD00FCAA66 = {
 						CreatedOnToolsVersion = 15.4;
 					};
 				};
@@ -116,6 +197,7 @@
 			projectRoot = "";
 			targets = (
 				5798A4A82C5DFE4400FCAA66 /* Keybaords */,
+				5798A4BD2C5EE8AD00FCAA66 /* Hoie Keyboard */,
 			);
 		};
 /* End PBXProject section */
@@ -127,6 +209,13 @@
 			files = (
 				5798A4B42C5DFE4600FCAA66 /* Preview Assets.xcassets in Resources */,
 				5798A4B12C5DFE4600FCAA66 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5798A4BC2C5EE8AD00FCAA66 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,7 +231,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5798A4BA2C5EE8AD00FCAA66 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5798A4C12C5EE8AD00FCAA66 /* KeyboardViewController.swift in Sources */,
+				5798A4CB2C6055FF00FCAA66 /* Key.swift in Sources */,
+				5798A4CF2C6092B300FCAA66 /* KoreanKeySet.swift in Sources */,
+				5798A4CD2C605C8E00FCAA66 /* EnglishKeySet.swift in Sources */,
+				5798A4D12C609D1C00FCAA66 /* UIButton.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5798A4C42C5EE8AD00FCAA66 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5798A4BD2C5EE8AD00FCAA66 /* Hoie Keyboard */;
+			targetProxy = 5798A4C32C5EE8AD00FCAA66 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		5798A4B52C5DFE4600FCAA66 /* Debug */ = {
@@ -267,6 +376,7 @@
 		5798A4B82C5DFE4600FCAA66 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -296,6 +406,7 @@
 		5798A4B92C5DFE4600FCAA66 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -322,6 +433,56 @@
 			};
 			name = Release;
 		};
+		5798A4C72C5EE8AD00FCAA66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LVDPYK299G;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Hoie Keyboard/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Hoie Keyboard";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "kim.hoie.Keybaords.Hoie-Keyboard";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5798A4C82C5EE8AD00FCAA66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = LVDPYK299G;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Hoie Keyboard/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Hoie Keyboard";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "kim.hoie.Keybaords.Hoie-Keyboard";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -339,6 +500,15 @@
 			buildConfigurations = (
 				5798A4B82C5DFE4600FCAA66 /* Debug */,
 				5798A4B92C5DFE4600FCAA66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5798A4C62C5EE8AD00FCAA66 /* Build configuration list for PBXNativeTarget "Hoie Keyboard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5798A4C72C5EE8AD00FCAA66 /* Debug */,
+				5798A4C82C5EE8AD00FCAA66 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
