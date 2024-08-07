@@ -26,7 +26,7 @@ private let L = SingleKey(title: "L")
 private let X = SingleKey(title: "X")
 private let E = SingleKey(title: "E")
 private let U = SingleKey(title: "U")
-    
+
 let englishKeySet: [[Key]] = [
     [DT, KQ, G, J, H, Y, I],
     [BV, SZ, R, C, W, O, A],

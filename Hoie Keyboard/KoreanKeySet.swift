@@ -27,16 +27,9 @@ private let ㅊ = SingleKey(title: "ㅊ")
 private let ㅍ = SingleKey(title: "ㅍ")
 private let ㅜ = DoubleKey(title: "ㅜ", first: "ㅜ", second: "ㅠ")
 private let ㅡ = SingleKey(title: "ㅡ")
-    
+
 let koreanKeySet: [[Key]] = [
     [ㅂ, ㅈ, ㄷ, ㄱ, ㅅ, ㅗ, ㅐ, ㅔ],
     [ㅁ, ㄴ, ㅇ, ㄹ, ㅎ, ㅓ, ㅏ, ㅣ],
     [ㅋ, ㅌ, ㅊ, ㅍ, ㅜ, ㅡ]
-]
-
-
-let koreanButtonSet = [
-    [["ㅂ"], ["ㅈ"], ["ㄷ"], ["ㄱ"], ["ㅅ"], ["ㅗ"], ["ㅐ"], ["ㅔ"]],
-    [["ㅁ"], ["ㄴ"], ["ㅇ"], ["ㄹ"], ["ㅎ"], ["ㅓ"], ["ㅏ"], ["ㅣ"]],
-    [["ㅋ"], ["ㅌ"], ["ㅊ"], ["ㅍ"], ["ㅜ"], ["ㅡ"]]
 ]

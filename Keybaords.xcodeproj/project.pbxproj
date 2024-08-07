@@ -17,6 +17,7 @@
 		5798A4CD2C605C8E00FCAA66 /* EnglishKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */; };
 		5798A4CF2C6092B300FCAA66 /* KoreanKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4CE2C6092B300FCAA66 /* KoreanKeySet.swift */; };
 		5798A4D12C609D1C00FCAA66 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4D02C609D1C00FCAA66 /* UIButton.swift */; };
+		5798A4D32C62961300FCAA66 /* CommonKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4D22C62961300FCAA66 /* CommonKeys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishKeySet.swift; sourceTree = "<group>"; };
 		5798A4CE2C6092B300FCAA66 /* KoreanKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoreanKeySet.swift; sourceTree = "<group>"; };
 		5798A4D02C609D1C00FCAA66 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
+		5798A4D22C62961300FCAA66 /* CommonKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonKeys.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */,
 				5798A4CE2C6092B300FCAA66 /* KoreanKeySet.swift */,
 				5798A4D02C609D1C00FCAA66 /* UIButton.swift */,
+				5798A4D22C62961300FCAA66 /* CommonKeys.swift */,
 			);
 			path = "Hoie Keyboard";
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				5798A4CB2C6055FF00FCAA66 /* Key.swift in Sources */,
 				5798A4CF2C6092B300FCAA66 /* KoreanKeySet.swift in Sources */,
 				5798A4CD2C605C8E00FCAA66 /* EnglishKeySet.swift in Sources */,
+				5798A4D32C62961300FCAA66 /* CommonKeys.swift in Sources */,
 				5798A4D12C609D1C00FCAA66 /* UIButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

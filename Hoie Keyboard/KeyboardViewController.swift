@@ -8,14 +8,12 @@
 import UIKit
 
 class KeyboardViewController: UIInputViewController {
-    
     let keyInputContext = KeyInputContext(
         isShift: false,
         isCapsLock: false,
-        isDoubleTap: false
+        isDoubleTap: false,
+        keySet: englishKeySet
     )
-    
-    var keySet = englishKeySet
 
     @IBOutlet var nextKeyboardButton: UIButton!
     
@@ -27,19 +25,70 @@ class KeyboardViewController: UIInputViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupNextKeyboardButton()
+        mountButtons()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        nextKeyboardButton.isHidden = !needsInputModeSwitchKey
+        super.viewWillLayoutSubviews()
+    }
+    
+    override func textWillChange(_ textInput: UITextInput?) {
+        // The app is about to change the document's contents. Perform any preparation here.
+    }
+    
+    override func textDidChange(_ textInput: UITextInput?) {
+        // The app has just changed the document's contents, the document context has been updated.
         
+        var textColor: UIColor
+        let proxy = textDocumentProxy
+        if proxy.keyboardAppearance == UIKeyboardAppearance.dark {
+            textColor = UIColor.white
+        } else {
+            textColor = UIColor.black
+        }
+        nextKeyboardButton.setTitleColor(textColor, for: [])
+    }
+    
+    private func setupNextKeyboardButton() {
+        nextKeyboardButton = UIButton(type: .system)
+        
+        nextKeyboardButton.setTitle(
+            NSLocalizedString("Next Keyboard", comment: "Title for 'Next Keyboard' button"),
+            for: []
+        )
+        nextKeyboardButton.sizeToFit()
+        nextKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        nextKeyboardButton.addTarget(
+            self,
+            action: #selector(handleInputModeList(from:with:)),
+            for: .allTouchEvents
+        )
+        
+        view.addSubview(nextKeyboardButton)
+        
+        nextKeyboardButton
+            .leftAnchor
+            .constraint(equalTo: view.leftAnchor)
+            .isActive = true
+        nextKeyboardButton
+            .bottomAnchor
+            .constraint(equalTo: view.bottomAnchor)
+            .isActive = true
+    }
+    
+    private func mountButtons() {
         let mainStackView = UIStackView()
         mainStackView.axis = .vertical
         mainStackView.distribution = .fillEqually
         mainStackView.spacing = 5
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        let buttonHeight: CGFloat = 40
         let buttonSpacing: CGFloat = 5
 
-        for row in keySet {
+        for row in keyInputContext.keySet {
             let rowStackView = UIStackView()
             rowStackView.axis = .horizontal
             rowStackView.distribution = .fillEqually
@@ -54,7 +103,10 @@ class KeyboardViewController: UIInputViewController {
             mainStackView.addArrangedSubview(rowStackView)
             
             let minimumRowHeight: CGFloat = 50.0
-            rowStackView.heightAnchor.constraint(greaterThanOrEqualToConstant: minimumRowHeight).isActive = true
+            var constraint = rowStackView
+                .heightAnchor
+                .constraint(greaterThanOrEqualToConstant: minimumRowHeight)
+            constraint.isActive = true
         }
         
         view.addSubview(mainStackView)
@@ -66,14 +118,7 @@ class KeyboardViewController: UIInputViewController {
         ])
     }
     
-    @objc func keyTapped(sender: UIButton) {
-        if let key = sender.key {
-            key.onTap(textDocumentProxy, keyInputContext)
-        }
-    }
-    
     private func createButton(withKey key: Key) -> UIButton {
-        let title = key.title
         let button = UIButton(type: .system)
         button.key = key
         button.backgroundColor = UIColor.lightGray
@@ -84,54 +129,35 @@ class KeyboardViewController: UIInputViewController {
         return button
     }
     
-    override func viewWillLayoutSubviews() {
-        self.nextKeyboardButton.isHidden = !self.needsInputModeSwitchKey
-        super.viewWillLayoutSubviews()
+    @objc func keyTapped(sender: UIButton) {
+        handleDoubleTap()
+        sender.key?.onTap(textDocumentProxy, keyInputContext)
     }
     
-    override func textWillChange(_ textInput: UITextInput?) {
-        // The app is about to change the document's contents. Perform any preparation here.
-    }
+    private var isFirstTap = false
+    private var doubleTapTimer: Timer?
     
-    override func textDidChange(_ textInput: UITextInput?) {
-        // The app has just changed the document's contents, the document context has been updated.
-        
-        var textColor: UIColor
-        let proxy = self.textDocumentProxy
-        if proxy.keyboardAppearance == UIKeyboardAppearance.dark {
-            textColor = UIColor.white
+    func handleDoubleTap() {
+        if isFirstTap {
+            keyInputContext.isDoubleTap = true
+            doubleTapTimer?.invalidate()
+            doubleTapTimer = nil
+            isFirstTap = false
         } else {
-            textColor = UIColor.black
+            isFirstTap = true
+            keyInputContext.isDoubleTap = false
+            doubleTapTimer = Timer.scheduledTimer(
+                timeInterval: 0.3,
+                target: self,
+                selector: #selector(resetDoubleTap),
+                userInfo: nil,
+                repeats: false
+            )
         }
-        self.nextKeyboardButton.setTitleColor(textColor, for: [])
-    }
-    
-    private func setupNextKeyboardButton() {
-        self.nextKeyboardButton = UIButton(type: .system)
-        
-        self.nextKeyboardButton.setTitle(
-            NSLocalizedString("Next Keyboard", comment: "Title for 'Next Keyboard' button"),
-            for: []
-        )
-        self.nextKeyboardButton.sizeToFit()
-        self.nextKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.nextKeyboardButton.addTarget(
-            self,
-            action: #selector(handleInputModeList(from:with:)),
-            for: .allTouchEvents
-        )
-        
-        self.view.addSubview(self.nextKeyboardButton)
-        
-        self.nextKeyboardButton
-            .leftAnchor
-            .constraint(equalTo: self.view.leftAnchor)
-            .isActive = true
-        self.nextKeyboardButton
-            .bottomAnchor
-            .constraint(equalTo: self.view.bottomAnchor)
-            .isActive = true
     }
 
+    @objc private func resetDoubleTap() {
+        isFirstTap = false
+        keyInputContext.isDoubleTap = false
+    }
 }

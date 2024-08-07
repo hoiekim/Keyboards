@@ -7,10 +7,18 @@
 
 import UIKit
 
-struct KeyInputContext {
+class KeyInputContext {
     var isShift: Bool
     var isCapsLock: Bool
     var isDoubleTap: Bool
+    var keySet: [[Key]]
+    
+    init(isShift: Bool, isCapsLock: Bool, isDoubleTap: Bool, keySet: [[Key]]) {
+        self.isShift = isShift
+        self.isCapsLock = isCapsLock
+        self.isDoubleTap = isDoubleTap
+        self.keySet = keySet
+    }
 }
 
 typealias OnTap = (UIKeyInput, KeyInputContext) -> Void
@@ -27,17 +35,17 @@ private func onTapSingleKey(
 ) {
     let isShift = context.isShift
     let isCapsLock = context.isCapsLock
-    if (isShift || isCapsLock) { uiKeyInput.insertText(title.uppercased()) }
+    if isShift || isCapsLock { uiKeyInput.insertText(title.uppercased()) }
     else { uiKeyInput.insertText(title.lowercased()) }
 }
 
 class SingleKey: Key {
     var title: String
     var onTap: OnTap
-    
+
     init(title: String) {
         self.title = title
-        self.onTap = { (uiKeyInput, context) in
+        self.onTap = { uiKeyInput, context in
             onTapSingleKey(
                 title: title,
                 uiKeyInput: uiKeyInput,
@@ -54,18 +62,18 @@ private func onTapDoubleKey(
     context: KeyInputContext
 ) {
     let isDoubleTap = context.isDoubleTap
-    if (isDoubleTap) { uiKeyInput.deleteBackward() }
-    let title = if (!isDoubleTap) { first } else { second }
+    if isDoubleTap { uiKeyInput.deleteBackward() }
+    let title = if !isDoubleTap { first } else { second }
     onTapSingleKey(title: title, uiKeyInput: uiKeyInput, context: context)
 }
 
 class DoubleKey: Key {
     var title: String
     var onTap: OnTap
-    
+
     init(title: String, first: String, second: String) {
         self.title = title
-        self.onTap = { (uiKeyInput, context) in
+        self.onTap = { uiKeyInput, context in
             onTapDoubleKey(
                 first: first,
                 second: second,
