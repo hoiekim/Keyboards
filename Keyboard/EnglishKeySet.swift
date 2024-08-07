@@ -30,5 +30,6 @@ private let U = SingleKey(title: "U")
 let englishKeySet: [[Key]] = [
     [DT, KQ, G, J, H, Y, I],
     [BV, SZ, R, C, W, O, A],
-    [PF, N, M, L, X, E, U]
+    [PF, N, M, L, X, E, U],
+    [shift, space, enter, backSpace]
 ]

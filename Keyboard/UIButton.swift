@@ -22,7 +22,6 @@ extension UIButton {
                 newValue,
                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC
             )
-            self.setTitle(newValue?.title, for: .normal)
         }
     }
 }

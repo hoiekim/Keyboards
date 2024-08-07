@@ -79,12 +79,15 @@ class KeyboardViewController: UIInputViewController {
             .isActive = true
     }
     
+    var buttonsView = UIStackView()
+    
     private func mountButtons() {
-        let mainStackView = UIStackView()
-        mainStackView.axis = .vertical
-        mainStackView.distribution = .fillEqually
-        mainStackView.spacing = 5
-        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        buttonsView.removeFromSuperview()
+        buttonsView = UIStackView()
+        buttonsView.axis = .vertical
+        buttonsView.distribution = .fillEqually
+        buttonsView.spacing = 5
+        buttonsView.translatesAutoresizingMaskIntoConstraints = false
         
         let buttonSpacing: CGFloat = 5
 
@@ -100,28 +103,35 @@ class KeyboardViewController: UIInputViewController {
                 rowStackView.addArrangedSubview(button)
             }
             
-            mainStackView.addArrangedSubview(rowStackView)
-            
             let minimumRowHeight: CGFloat = 50.0
             let constraint = rowStackView
                 .heightAnchor
                 .constraint(greaterThanOrEqualToConstant: minimumRowHeight)
             constraint.isActive = true
+            
+            buttonsView.addArrangedSubview(rowStackView)
         }
         
-        view.addSubview(mainStackView)
+        view.addSubview(buttonsView)
         NSLayoutConstraint.activate([
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
-            mainStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
-            mainStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5)
+            buttonsView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
+            buttonsView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
+            buttonsView.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
+            buttonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -5)
         ])
     }
     
     private func createButton(withKey key: Key) -> UIButton {
         let button = UIButton(type: .system)
         button.key = key
-        button.backgroundColor = UIColor.lightGray
+        
+        if keyInputContext.isShifted || keyInputContext.isCapsLocked {
+            button.setTitle(key.title.uppercased(), for: .normal)
+        } else {
+            button.setTitle(key.title.lowercased(), for: .normal)
+        }
+        
+        button.backgroundColor = UIColor.darkGray
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 5
         button.addTarget(self, action: #selector(keyTapped), for: .touchUpInside)
@@ -130,34 +140,39 @@ class KeyboardViewController: UIInputViewController {
     }
     
     @objc func keyTapped(sender: UIButton) {
-        handleDoubleTap()
-        sender.key?.onTap(textDocumentProxy, keyInputContext)
+        let key = sender.key!
+        handleDoubleTap(key: key)
+        let isShiftKey = key.isShift
+        key.onTap(uiKeyInput: textDocumentProxy, context: keyInputContext)
+        if !keyInputContext.isCapsLocked && !isShiftKey {
+            keyInputContext.isShifted = false
+            shift.setTitle(newTitle: TITLE_SHIFT_DEFAULT)
+        }
+        mountButtons()
     }
     
-    private var isFirstTap = false
+    private var firstTappedKey: Key?
     private var doubleTapTimer: Timer?
     
-    func handleDoubleTap() {
-        if isFirstTap {
-            keyInputContext.isDoubleTap = true
+    func handleDoubleTap(key: Key) {
+        if firstTappedKey?.id == key.id {
+            keyInputContext.isDoubleTapped = true
             doubleTapTimer?.invalidate()
-            doubleTapTimer = nil
-            isFirstTap = false
         } else {
-            isFirstTap = true
-            keyInputContext.isDoubleTap = false
-            doubleTapTimer = Timer.scheduledTimer(
-                timeInterval: 0.3,
-                target: self,
-                selector: #selector(resetDoubleTap),
-                userInfo: nil,
-                repeats: false
-            )
+            firstTappedKey = key
+            keyInputContext.isDoubleTapped = false
         }
+        doubleTapTimer = Timer.scheduledTimer(
+            timeInterval: 0.3,
+            target: self,
+            selector: #selector(resetDoubleTap),
+            userInfo: nil,
+            repeats: false
+        )
     }
 
     @objc private func resetDoubleTap() {
-        isFirstTap = false
-        keyInputContext.isDoubleTap = false
+        firstTappedKey = nil
+        keyInputContext.isDoubleTapped = false
     }
 }
