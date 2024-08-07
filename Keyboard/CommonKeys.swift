@@ -1,6 +1,6 @@
 //
 //  CommonKeys.swift
-//  Hoie Keyboard
+//  Keyboard
 //
 //  Created by Hoie Kim on 8/6/24.
 //
@@ -35,3 +35,5 @@ let shift = UtilKey(title: "⇧", onTap: { (uiKeyInput, context) in
         }
     }
 })
+
+let space = SingleKey(title: " ")

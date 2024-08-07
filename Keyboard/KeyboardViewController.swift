@@ -1,6 +1,6 @@
 //
 //  KeyboardViewController.swift
-//  Hoie Keyboard
+//  Keyboard
 //
 //  Created by Hoie Kim on 8/3/24.
 //
@@ -103,7 +103,7 @@ class KeyboardViewController: UIInputViewController {
             mainStackView.addArrangedSubview(rowStackView)
             
             let minimumRowHeight: CGFloat = 50.0
-            var constraint = rowStackView
+            let constraint = rowStackView
                 .heightAnchor
                 .constraint(greaterThanOrEqualToConstant: minimumRowHeight)
             constraint.isActive = true
