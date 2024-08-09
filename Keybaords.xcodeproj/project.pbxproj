@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		579762802C65CAFA00FB5BD4 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797627F2C65CAFA00FB5BD4 /* Utils.swift */; };
+		579762842C6658D800FB5BD4 /* SymbolKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579762832C6658D800FB5BD4 /* SymbolKeySet.swift */; };
 		5798A4AD2C5DFE4400FCAA66 /* KeybaordsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4AC2C5DFE4400FCAA66 /* KeybaordsApp.swift */; };
 		5798A4AF2C5DFE4400FCAA66 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4AE2C5DFE4400FCAA66 /* ContentView.swift */; };
 		5798A4B12C5DFE4600FCAA66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5798A4B02C5DFE4600FCAA66 /* Assets.xcassets */; };
@@ -45,6 +47,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5797627F2C65CAFA00FB5BD4 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		579762832C6658D800FB5BD4 /* SymbolKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolKeySet.swift; sourceTree = "<group>"; };
 		5798A4A92C5DFE4400FCAA66 /* Keybaords.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keybaords.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5798A4AC2C5DFE4400FCAA66 /* KeybaordsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeybaordsApp.swift; sourceTree = "<group>"; };
 		5798A4AE2C5DFE4400FCAA66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -78,6 +82,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5797627C2C645F6C00FB5BD4 /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+				5798A4CA2C6055FF00FCAA66 /* Key.swift */,
+				5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */,
+				5798A4CE2C6092B300FCAA66 /* KoreanKeySet.swift */,
+				5798A4D22C62961300FCAA66 /* CommonKeys.swift */,
+				579762832C6658D800FB5BD4 /* SymbolKeySet.swift */,
+			);
+			path = Keys;
+			sourceTree = "<group>";
+		};
+		5797627D2C645FAB00FB5BD4 /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				5798A4D02C609D1C00FCAA66 /* UIButton.swift */,
+			);
+			path = Extentions;
+			sourceTree = "<group>";
+		};
+		5797627E2C65CAEA00FB5BD4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5797627F2C65CAFA00FB5BD4 /* Utils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		5798A4A02C5DFE4400FCAA66 = {
 			isa = PBXGroup;
 			children = (
@@ -118,13 +150,11 @@
 		5798A4BF2C5EE8AD00FCAA66 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
+				5797627E2C65CAEA00FB5BD4 /* Utils */,
+				5797627D2C645FAB00FB5BD4 /* Extentions */,
+				5797627C2C645F6C00FB5BD4 /* Keys */,
 				5798A4C02C5EE8AD00FCAA66 /* KeyboardViewController.swift */,
 				5798A4C22C5EE8AD00FCAA66 /* Info.plist */,
-				5798A4CA2C6055FF00FCAA66 /* Key.swift */,
-				5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */,
-				5798A4CE2C6092B300FCAA66 /* KoreanKeySet.swift */,
-				5798A4D02C609D1C00FCAA66 /* UIButton.swift */,
-				5798A4D22C62961300FCAA66 /* CommonKeys.swift */,
 			);
 			path = Keyboard;
 			sourceTree = "<group>";
@@ -238,9 +268,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				579762842C6658D800FB5BD4 /* SymbolKeySet.swift in Sources */,
 				5798A4C12C5EE8AD00FCAA66 /* KeyboardViewController.swift in Sources */,
 				5798A4CB2C6055FF00FCAA66 /* Key.swift in Sources */,
 				5798A4CF2C6092B300FCAA66 /* KoreanKeySet.swift in Sources */,
+				579762802C65CAFA00FB5BD4 /* Utils.swift in Sources */,
 				5798A4CD2C605C8E00FCAA66 /* EnglishKeySet.swift in Sources */,
 				5798A4D32C62961300FCAA66 /* CommonKeys.swift in Sources */,
 				5798A4D12C609D1C00FCAA66 /* UIButton.swift in Sources */,

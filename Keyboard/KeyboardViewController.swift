@@ -9,8 +9,8 @@ import UIKit
 
 class KeyboardViewController: UIInputViewController {
     let keyInputContext = KeyInputContext(
-        isShift: false,
-        isCapsLock: false,
+        isShifted: false,
+        isCapsLocked: false,
         isDoubleTap: false,
         keySet: englishKeySet
     )
@@ -19,8 +19,7 @@ class KeyboardViewController: UIInputViewController {
     
     override func updateViewConstraints() {
         super.updateViewConstraints()
-        
-        // Add custom view sizing constraints here
+        adjustButtonSizes()
     }
     
     override func viewDidLoad() {
@@ -32,6 +31,25 @@ class KeyboardViewController: UIInputViewController {
     override func viewWillLayoutSubviews() {
         nextKeyboardButton.isHidden = !needsInputModeSwitchKey
         super.viewWillLayoutSubviews()
+    }
+
+    private func adjustButtonSizes() {
+        let keySet = keyInputContext.keySet
+        let maxNumberOfSpans = keySet.map { $0.reduce(0) { $0 + $1.span } }.max()!
+        for (_, rowView) in buttonsView.arrangedSubviews.enumerated() {
+            guard let rowStackView = rowView as? UIStackView else { continue }
+            for (_, subView) in rowStackView.arrangedSubviews.enumerated() {
+                guard let button = subView as? UIButton else { continue }
+                let key = button.key!
+                let keyWidth = calculateKeyWidth(
+                    span: key.span,
+                    spanTotal: maxNumberOfSpans,
+                    containerSize: view.bounds.width,
+                    spacing: 5
+                )
+                button.widthAnchor.constraint(equalToConstant: keyWidth).isActive = true
+            }
+        }
     }
     
     override func textWillChange(_ textInput: UITextInput?) {
@@ -94,7 +112,7 @@ class KeyboardViewController: UIInputViewController {
         for row in keyInputContext.keySet {
             let rowStackView = UIStackView()
             rowStackView.axis = .horizontal
-            rowStackView.distribution = .fillEqually
+            rowStackView.distribution = .fill
             rowStackView.spacing = buttonSpacing
             rowStackView.translatesAutoresizingMaskIntoConstraints = false
             
@@ -103,7 +121,7 @@ class KeyboardViewController: UIInputViewController {
                 rowStackView.addArrangedSubview(button)
             }
             
-            let minimumRowHeight: CGFloat = 50.0
+            let minimumRowHeight: CGFloat = 45.0
             let constraint = rowStackView
                 .heightAnchor
                 .constraint(greaterThanOrEqualToConstant: minimumRowHeight)
@@ -142,13 +160,15 @@ class KeyboardViewController: UIInputViewController {
     @objc func keyTapped(sender: UIButton) {
         let key = sender.key!
         handleDoubleTap(key: key)
-        let isShiftKey = key.isShift
-        key.onTap(uiKeyInput: textDocumentProxy, context: keyInputContext)
-        if !keyInputContext.isCapsLocked && !isShiftKey {
+        key.onTap(document: textDocumentProxy, context: keyInputContext)
+        let isShiftKey = key.id == shift.id
+        let isCapsLocked = keyInputContext.isCapsLocked
+        if !isCapsLocked && !isShiftKey {
             keyInputContext.isShifted = false
-            shift.setTitle(newTitle: TITLE_SHIFT_DEFAULT)
+            shift.title = TITLE_SHIFT_DEFAULT
         }
         mountButtons()
+        adjustButtonSizes()
     }
     
     private var firstTappedKey: Key?
