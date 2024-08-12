@@ -7,31 +7,6 @@
 
 import UIKit
 
-typealias OnTapUtilKey = (UtilKey, UITextDocumentProxy, KeyInputContext) -> Void
-
-class UtilKey: Key {
-    let id: String
-    var title: String
-    let span: Int
-    var _onTap: OnTapUtilKey
-
-    init(
-        id: String,
-        title: String,
-        span: Int = 1,
-        onTap: @escaping OnTapUtilKey
-    ) {
-        self.id = id
-        self.title = title
-        self.span = span
-        self._onTap = onTap
-    }
-
-    func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
-        self._onTap(self, document, context)
-    }
-}
-
 private func trimSpacesBefore(document: UITextDocumentProxy) {
     while document.documentContextBeforeInput?.last == " " {
         document.deleteBackward()
@@ -46,7 +21,7 @@ let backSpace = UtilKey(
             // Delete backward to the beginning of the line
             let beforeText = document.documentContextBeforeInput
             let lastLetter = beforeText?.last
-            if lastLetter == "\n" { return document.deleteBackward()  }
+            if lastLetter == "\n" { return document.deleteBackward() }
             guard let lastLine = beforeText?.split(separator: "\n").last else { return }
             for _ in 0 ..< lastLine.count {
                 document.deleteBackward()
@@ -99,7 +74,7 @@ let shift = UtilKey(
     }
 )
 
-let space = SingleKey(title: " ", span: 2)
+let space = SingleKey(title: " ", span: 4)
 
 let enter = UtilKey(
     id: "enter",
@@ -113,10 +88,20 @@ let changeKeySet = UtilKey(
     id: "changeKeySet",
     title: "☆",
     onTap: { _, _, context in
-        if context.keySet[0][0].id == dash.id {
+        let firstKey = context.keySet[0][0]
+        if firstKey.id == dash.id {
             context.keySet = englishKeySet
+        } else if firstKey.id == KQ.id {
+            context.keySet = koreanKeySet
         } else {
             context.keySet = symbolKeySet
         }
     }
+)
+
+let blank = UtilKey(
+    id: "blank",
+    title: "",
+    backgroundColor: UIColor.clear,
+    onTap: { _, _, _ in }
 )

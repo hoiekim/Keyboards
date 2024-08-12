@@ -15,21 +15,24 @@ private let _6 = SingleKey(title: "6")
 private let _7 = SingleKey(title: "7")
 private let _8 = SingleKey(title: "8")
 private let _9 = SingleKey(title: "9")
-private let period = DoubleKey(title:". ,", first: ".", second: ",")
-private let question = DoubleKey(title:"? /", first: "?", second: "/")
-private let exclamation = DoubleKey(title:"! ~", first: "!", second: "~")
-private let at = DoubleKey(title:"@ #", first: "@", second: "#")
-private let dollar = DoubleKey(title:"$ %", first: "$", second: "%")
-private let colon = DoubleKey(title:": ;", first: ":", second: ";")
-private let paranthesis = DoubleKey(title:"( )", first: "(", second: ")")
-private let and = DoubleKey(title:"& |", first: "&", second: "|")
-let dash = DoubleKey(title:"- _", first: "-", second: "_")
-private let equals = DoubleKey(title:"= +", first: "=", second: "+")
-private let asterisk = DoubleKey(title:"* ^", first: "*", second: "^")
+private let period = DoubleKey(title: ". ,", first: ".", second: ",")
+private let question = DoubleKey(title: "? /", first: "?", second: "/")
+private let exclamation = DoubleKey(title: "! ~", first: "!", second: "~")
+private let at = DoubleKey(title: "@ #", first: "@", second: "#")
+private let dollar = DoubleKey(title: "$ %", first: "$", second: "%")
+private let colon = DoubleKey(title: ": ;", first: ":", second: ";")
+private let comparison = DoubleKey(title: "< >", first: "<", second: ">")
+private let paranthesis = DoubleKey(title: "( )", first: "(", second: ")")
+private let bracket = DoubleKey(title: "[ ]", first: "[", second: "]")
+private let and = DoubleKey(title: "& |", first: "&", second: "|")
+let dash = DoubleKey(title: "- _", first: "-", second: "_")
+private let equals = DoubleKey(title: "= +", first: "=", second: "+")
+private let asterisk = DoubleKey(title: "* ^", first: "*", second: "^")
+private let quote = DoubleKey(title: "' \"", first: "'", second: "\"")
 
 let symbolKeySet: [[Key]] = [
-    [dash, equals, asterisk, at, _7, _8, _9],
-    [dollar, colon, paranthesis, and, _4, _5, _6],
-    [period, question, exclamation, _0, _1, _2, _3],
+    [dash, equals, asterisk, dollar, at, _7, _8, _9],
+    [quote, comparison, bracket, paranthesis, and, _4, _5, _6],
+    [period, colon, question, exclamation, _0, _1, _2, _3],
     [shift, changeKeySet, space, enter, backSpace]
 ]

@@ -14,6 +14,8 @@ class KeyboardViewController: UIInputViewController {
         isDoubleTap: false,
         keySet: englishKeySet
     )
+    
+    let buttonSpacing: CGFloat = 5
 
     @IBOutlet var nextKeyboardButton: UIButton!
     
@@ -45,7 +47,7 @@ class KeyboardViewController: UIInputViewController {
                     span: key.span,
                     spanTotal: maxNumberOfSpans,
                     containerSize: view.bounds.width,
-                    spacing: 5
+                    spacing: buttonSpacing
                 )
                 button.widthAnchor.constraint(equalToConstant: keyWidth).isActive = true
             }
@@ -106,13 +108,10 @@ class KeyboardViewController: UIInputViewController {
         buttonsView.distribution = .fillEqually
         buttonsView.spacing = 5
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let buttonSpacing: CGFloat = 5
 
         for row in keyInputContext.keySet {
             let rowStackView = UIStackView()
             rowStackView.axis = .horizontal
-            rowStackView.distribution = .fill
             rowStackView.spacing = buttonSpacing
             rowStackView.translatesAutoresizingMaskIntoConstraints = false
             
@@ -149,7 +148,7 @@ class KeyboardViewController: UIInputViewController {
             button.setTitle(key.title.lowercased(), for: .normal)
         }
         
-        button.backgroundColor = UIColor.darkGray
+        button.backgroundColor = key.backgroundColor ?? UIColor.darkGray
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 5
         button.addTarget(self, action: #selector(keyTapped), for: .touchUpInside)
