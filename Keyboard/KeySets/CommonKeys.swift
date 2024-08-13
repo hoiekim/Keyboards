@@ -74,14 +74,17 @@ let shift = UtilKey(
     }
 )
 
-let space = SingleKey(title: " ", span: 4)
+let space = UtilKey(
+    id: "space",
+    title: " ",
+    span: 4,
+    onTap: { _, document, _ in document.insertText(" ") }
+)
 
 let enter = UtilKey(
     id: "enter",
     title: "⏎",
-    onTap: { _, document, _ in
-        document.insertText("\n")
-    }
+    onTap: { _, document, _ in document.insertText("\n") }
 )
 
 let changeKeySet = UtilKey(
