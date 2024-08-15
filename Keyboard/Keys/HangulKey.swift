@@ -87,6 +87,7 @@ let JUNGSEONG_ㅡ: UInt32 = 0x1173
 let JUNGSEONG_ㅢ: UInt32 = 0x1174
 let JUNGSEONG_ㅣ: UInt32 = 0x1175
 
+let JONGSEONG_PLACEHOLDER: UInt32 = 0x11a7
 let JONGSEONG_ᆨ: UInt32 = 0x11a8
 let JONGSEONG_ᆩ: UInt32 = 0x11a9
 let JONGSEONG_ᆪ: UInt32 = 0x11aa
@@ -140,15 +141,16 @@ class HangulKey: Key {
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
         let isSecond = context.isShifted || context.isCapsLocked
         let key = isSecond && second != nil ? second! : first
-
-        guard let beforeText = document.documentContextBeforeInput else { return document.insertText(key) }
-        guard let components = decompose(beforeText) else { return document.insertText(key) }
-
+        
         let isConsonant = isConsonant(key)
         let isVowel = isVowel(key)
         
         // invalid key
         if isConsonant == isVowel { return }
+
+        guard let beforeText = document.documentContextBeforeInput else { return document.insertText(key) }
+        guard let lastString = beforeText.last else { return document.insertText(key) }
+        guard let components = decompose(String(lastString)) else { return document.insertText(key) }
 
         let (initial, medial, final) = components
 
@@ -157,45 +159,54 @@ class HangulKey: Key {
             if isConsonant {
                 if let combined = combineJongseong(final!, key) {
                     document.deleteBackward()
-                    return document.insertText(compose(initial!, medial!, combined)!)
+                    let syllable = compose(initial!, medial!, combined)!
+                    document.insertText(syllable)
                 } else {
-                    return document.insertText(key)
+                    document.insertText(key)
                 }
             } else {
+                let jungseong = letterToJungseong(key)!
                 if let (jongseoung, choseoung) = splitJongseoung(final!) {
-                    let jungseong = letterToJungseong(key)!
+                    let syllable1 = compose(initial!, medial!, jongseoung)!
+                    let syllable2 = compose(choseoung, jungseong)!
                     document.deleteBackward()
-                    document.insertText(compose(initial!, medial!, jongseoung)!)
-                    return document.insertText(compose(choseoung, jungseong)!)
+                    document.insertText(syllable1)
+                    document.insertText(syllable2)
                 } else {
+                    let choseong = jongseongToChoseong(final!)!
+                    let syllable1 = compose(initial!, medial!)!
+                    let syllable2 = compose(choseong, jungseong)!
                     document.deleteBackward()
-                    document.insertText(compose(initial!, medial!)!)
-                    return document.insertText(compose(final!, key)!)
+                    document.insertText(syllable1)
+                    document.insertText(syllable2)
                 }
             }
         case (.some, .some, nil):
             if isConsonant {
                 if let jongseong = letterToJongseong(key) {
+                    let syllable = compose(initial!, medial!, jongseong)!
                     document.deleteBackward()
-                    return document.insertText(compose(initial!, medial!, jongseong)!)
+                    document.insertText(syllable)
                 } else {
-                    return document.insertText(key)
+                    document.insertText(key)
                 }
             } else {
                 if let combined = combineVowels(medial!, key) {
+                    let syllable = compose(initial!, combined)!
                     document.deleteBackward()
-                    return document.insertText(compose(initial!, combined)!)
+                    document.insertText(syllable)
                 } else {
-                    return document.insertText(key)
+                    document.insertText(key)
                 }
             }
         case (.some, nil, nil):
             if isConsonant {
-                return document.insertText(key)
+                document.insertText(key)
             } else {
-                document.deleteBackward()
                 let jungseong = letterToJungseong(key)!
-                return document.insertText(compose(initial!, jungseong)!)
+                let syllable = compose(initial!, jungseong)!
+                document.deleteBackward()
+                document.insertText(syllable)
             }
         default:
             document.insertText(key)
@@ -209,6 +220,10 @@ class HangulKey: Key {
             title = first
         }
     }
+}
+
+private func unicodeToString(_ unicode: UInt32) -> String {
+    return String(Character(UnicodeScalar(unicode)!))
 }
 
 typealias Components = (initial: String?, medial: String?, final: String?)
@@ -310,14 +325,10 @@ private func decompose(_ string: String) -> Components? {
     return (initialString, medialString, finalString)
 }
 
-private func unicodeToString(_ unicode: UInt32) -> String {
-    return String(Character(UnicodeScalar(unicode)!))
-}
-
 private func compose(_ initial: String, _ medial: String, _ final: String? = nil) -> String? {
     let initialIndex = initial.unicodeScalars.first!.value - CHOSEONG_ㄱ
     let medialIndex = medial.unicodeScalars.first!.value - JUNGSEONG_ㅏ
-    let finalIndex = final != nil ? final!.unicodeScalars.first!.value - JONGSEONG_ᆨ : 0
+    let finalIndex = final != nil ? final!.unicodeScalars.first!.value - JONGSEONG_PLACEHOLDER : 0
     let syllableValue = syllableBase + (initialIndex * 21 * 28) + (medialIndex * 28) + finalIndex
     let syllable = unicodeToString(syllableValue)
     if isSyllable(syllable) { return syllable }
@@ -337,6 +348,30 @@ private func isVowel(_ string: String) -> Bool {
 private func isSyllable(_ string: String) -> Bool {
     let unicode = string.unicodeScalars.first!.value
     return unicode >= syllableBase && unicode <= syllableEnd
+}
+
+private func jongseongToChoseong(_ string: String) -> String? {
+    if !isConsonant(string) { return nil }
+    let unicode = string.unicodeScalars.first!.value
+    switch unicode {
+    case JONGSEONG_ᆨ: return unicodeToString(CHOSEONG_ㄱ)
+    case JONGSEONG_ᆩ: return unicodeToString(CHOSEONG_ㄲ)
+    case JONGSEONG_ᆫ: return unicodeToString(CHOSEONG_ㄴ)
+    case JONGSEONG_ᆮ: return unicodeToString(CHOSEONG_ㄷ)
+    case JONGSEONG_ᆯ: return unicodeToString(CHOSEONG_ㄹ)
+    case JONGSEONG_ᆷ: return unicodeToString(CHOSEONG_ㅁ)
+    case JONGSEONG_ᆸ: return unicodeToString(CHOSEONG_ㅂ)
+    case JONGSEONG_ᆺ: return unicodeToString(CHOSEONG_ㅅ)
+    case JONGSEONG_ᆻ: return unicodeToString(CHOSEONG_ㅆ)
+    case JONGSEONG_ᆼ: return unicodeToString(CHOSEONG_ㅇ)
+    case JONGSEONG_ᆽ: return unicodeToString(CHOSEONG_ㅈ)
+    case JONGSEONG_ᆾ: return unicodeToString(CHOSEONG_ㅊ)
+    case JONGSEONG_ᆿ: return unicodeToString(CHOSEONG_ㅋ)
+    case JONGSEONG_ᇀ: return unicodeToString(CHOSEONG_ㅌ)
+    case JONGSEONG_ᇁ: return unicodeToString(CHOSEONG_ㅍ)
+    case JONGSEONG_ᇂ: return unicodeToString(CHOSEONG_ㅎ)
+    default: return nil
+    }
 }
 
 private func letterToChoseong(_ string: String) -> String? {
@@ -446,7 +481,7 @@ private func splitJongseoung(_ jongseoung: String) -> (String?, String)? {
     let unicode = jongseoung.unicodeScalars.first!.value
     switch unicode {
     case JONGSEONG_ᆨ: return (nil, unicodeToString(CHOSEONG_ㄱ))
-    case JONGSEONG_ᆩ: return (unicodeToString(JONGSEONG_ᆨ), unicodeToString(CHOSEONG_ㄱ))
+    case JONGSEONG_ᆩ: return (nil, unicodeToString(CHOSEONG_ㄲ))
     case JONGSEONG_ᆪ: return (unicodeToString(JONGSEONG_ᆨ), unicodeToString(CHOSEONG_ㅅ))
     case JONGSEONG_ᆫ: return (nil, unicodeToString(CHOSEONG_ㄴ))
     case JONGSEONG_ᆬ: return (unicodeToString(JONGSEONG_ᆫ), unicodeToString(CHOSEONG_ㅈ))
@@ -464,7 +499,7 @@ private func splitJongseoung(_ jongseoung: String) -> (String?, String)? {
     case JONGSEONG_ᆸ: return (nil, unicodeToString(CHOSEONG_ㅂ))
     case JONGSEONG_ᆹ: return (unicodeToString(JONGSEONG_ᆸ), unicodeToString(CHOSEONG_ㅅ))
     case JONGSEONG_ᆺ: return (nil, unicodeToString(CHOSEONG_ㅅ))
-    case JONGSEONG_ᆻ: return (unicodeToString(JONGSEONG_ᆺ), unicodeToString(CHOSEONG_ㅅ))
+    case JONGSEONG_ᆻ: return (nil, unicodeToString(CHOSEONG_ㅆ))
     case JONGSEONG_ᆼ: return (nil, unicodeToString(CHOSEONG_ㅇ))
     case JONGSEONG_ᆽ: return (nil, unicodeToString(CHOSEONG_ㅈ))
     case JONGSEONG_ᆾ: return (nil, unicodeToString(CHOSEONG_ㅊ))
