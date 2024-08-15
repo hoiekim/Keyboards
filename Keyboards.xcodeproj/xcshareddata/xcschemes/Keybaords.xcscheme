@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5798A4A82C5DFE4400FCAA66"
-               BuildableName = "Keybaords.app"
-               BlueprintName = "Keybaords"
-               ReferencedContainer = "container:Keybaords.xcodeproj">
+               BuildableName = "Keyboards.app"
+               BlueprintName = "Keyboards"
+               ReferencedContainer = "container:Keyboards.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5798A4A82C5DFE4400FCAA66"
-            BuildableName = "Keybaords.app"
-            BlueprintName = "Keybaords"
-            ReferencedContainer = "container:Keybaords.xcodeproj">
+            BuildableName = "Keyboards.app"
+            BlueprintName = "Keyboards"
+            ReferencedContainer = "container:Keyboards.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5798A4A82C5DFE4400FCAA66"
-            BuildableName = "Keybaords.app"
-            BlueprintName = "Keybaords"
-            ReferencedContainer = "container:Keybaords.xcodeproj">
+            BuildableName = "Keyboards.app"
+            BlueprintName = "Keyboards"
+            ReferencedContainer = "container:Keyboards.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

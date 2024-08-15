@@ -54,7 +54,7 @@
 		579762862C6A759300FB5BD4 /* HangulKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangulKey.swift; sourceTree = "<group>"; };
 		579762882C6A760E00FB5BD4 /* UtilKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilKey.swift; sourceTree = "<group>"; };
 		5797628A2C6B90D200FB5BD4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		5798A4A92C5DFE4400FCAA66 /* Keybaords.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keybaords.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5798A4A92C5DFE4400FCAA66 /* Keyboards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keyboards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5798A4AC2C5DFE4400FCAA66 /* KeybaordsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeybaordsApp.swift; sourceTree = "<group>"; };
 		5798A4AE2C5DFE4400FCAA66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5798A4B02C5DFE4600FCAA66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 		5798A4AA2C5DFE4400FCAA66 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5798A4A92C5DFE4400FCAA66 /* Keybaords.app */,
+				5798A4A92C5DFE4400FCAA66 /* Keyboards.app */,
 				5798A4BE2C5EE8AD00FCAA66 /* Keyboard.appex */,
 			);
 			name = Products;
@@ -178,9 +178,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5798A4A82C5DFE4400FCAA66 /* Keybaords */ = {
+		5798A4A82C5DFE4400FCAA66 /* Keyboards */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5798A4B72C5DFE4600FCAA66 /* Build configuration list for PBXNativeTarget "Keybaords" */;
+			buildConfigurationList = 5798A4B72C5DFE4600FCAA66 /* Build configuration list for PBXNativeTarget "Keyboards" */;
 			buildPhases = (
 				5798A4A52C5DFE4400FCAA66 /* Sources */,
 				5798A4A62C5DFE4400FCAA66 /* Frameworks */,
@@ -192,9 +192,9 @@
 			dependencies = (
 				5798A4C42C5EE8AD00FCAA66 /* PBXTargetDependency */,
 			);
-			name = Keybaords;
+			name = Keyboards;
 			productName = Keybaords;
-			productReference = 5798A4A92C5DFE4400FCAA66 /* Keybaords.app */;
+			productReference = 5798A4A92C5DFE4400FCAA66 /* Keyboards.app */;
 			productType = "com.apple.product-type.application";
 		};
 		5798A4BD2C5EE8AD00FCAA66 /* Keyboard */ = {
@@ -232,7 +232,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5798A4A42C5DFE4400FCAA66 /* Build configuration list for PBXProject "Keybaords" */;
+			buildConfigurationList = 5798A4A42C5DFE4400FCAA66 /* Build configuration list for PBXProject "Keyboards" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -245,7 +245,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5798A4A82C5DFE4400FCAA66 /* Keybaords */,
+				5798A4A82C5DFE4400FCAA66 /* Keyboards */,
 				5798A4BD2C5EE8AD00FCAA66 /* Keyboard */,
 			);
 		};
@@ -540,7 +540,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5798A4A42C5DFE4400FCAA66 /* Build configuration list for PBXProject "Keybaords" */ = {
+		5798A4A42C5DFE4400FCAA66 /* Build configuration list for PBXProject "Keyboards" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5798A4B52C5DFE4600FCAA66 /* Debug */,
@@ -549,7 +549,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5798A4B72C5DFE4600FCAA66 /* Build configuration list for PBXNativeTarget "Keybaords" */ = {
+		5798A4B72C5DFE4600FCAA66 /* Build configuration list for PBXNativeTarget "Keyboards" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5798A4B82C5DFE4600FCAA66 /* Debug */,
