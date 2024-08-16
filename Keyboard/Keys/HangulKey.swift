@@ -161,17 +161,26 @@ class HangulKey: Key {
 
         // invalid key
         if isConsonant == isVowel { return }
-        
-        isComposing = true
 
-        guard let beforeText = document.documentContextBeforeInput else { return document.insertText(key) }
-        guard let lastString = beforeText.last else { return document.insertText(key) }
-        guard let components = decompose(String(lastString)) else { return document.insertText(key) }
+        guard let beforeText = document.documentContextBeforeInput else {
+            isComposing = true
+            return document.insertText(key)
+        }
+        guard let lastString = beforeText.last else {
+            isComposing = true
+            return document.insertText(key)
+        }
+        guard let components = decompose(String(lastString)) else {
+            isComposing = true
+            return document.insertText(key)
+        }
 
         let (initial, medial, final) = components
 
         let isDoubleTappedVowel = second != nil && context.isDoubleTapped && isVowel
-        if isDoubleTappedVowel {
+        if !isComposing {
+            document.insertText(key)
+        } else if isDoubleTappedVowel {
             switch (initial, medial, final) {
             case (.some, .some, nil):
                 document.deleteBackward()
@@ -241,6 +250,8 @@ class HangulKey: Key {
                 document.insertText(key)
             }
         }
+
+        isComposing = true
     }
 }
 
