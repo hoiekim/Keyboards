@@ -40,3 +40,7 @@ func isKeySetsEqual(_ keySet1: [[Key]], _ keySet2: [[Key]]) -> Bool {
     }
     return true
 }
+
+let customGray1 = UIColor(white: 0.25, alpha: 1.0)
+let customGray2 = UIColor(white: 0.35, alpha: 1.0)
+let customGray3 = UIColor(white: 0.4, alpha: 1.0)

@@ -7,10 +7,35 @@
 
 import UIKit
 
-private func trimSpacesBefore(document: UITextDocumentProxy) {
+func trimSpacesBefore(_ document: UITextDocumentProxy) {
     while document.documentContextBeforeInput?.last == " " {
         document.deleteBackward()
     }
+}
+
+func deleteLine(_ document: UITextDocumentProxy) {
+    let beforeText = document.documentContextBeforeInput
+    let lastLetter = beforeText?.last
+    if lastLetter == "\n" { return document.deleteBackward() }
+    guard let lastLine = beforeText?.split(separator: "\n").last else { return }
+    for _ in 0 ..< lastLine.count {
+        document.deleteBackward()
+    }
+}
+
+func deleteWord(_ document: UITextDocumentProxy) {
+    guard let beforeText = document.documentContextBeforeInput else { return }
+    if beforeText.last == "\n" { return document.deleteBackward() }
+    trimSpacesBefore(document)
+    guard let beforeText = document.documentContextBeforeInput else { return }
+    if beforeText.last == "\n" { return }
+    let lineStart = beforeText.split(separator: "\n").last?.count
+    let wordStart = beforeText.split(separator: " ").last?.count
+    let deleteCount = minOfCoalesced(lineStart, wordStart) ?? beforeText.count
+    for _ in 0 ..< deleteCount {
+        document.deleteBackward()
+    }
+    trimSpacesBefore(document)
 }
 
 let backSpace = UtilKey(
@@ -18,30 +43,10 @@ let backSpace = UtilKey(
     defaultImage: "delete.backward",
     onTap: { document, context in
         if context.isCapsLocked {
-            // Delete backward to the beginning of the line
-            let beforeText = document.documentContextBeforeInput
-            let lastLetter = beforeText?.last
-            if lastLetter == "\n" { return document.deleteBackward() }
-            guard let lastLine = beforeText?.split(separator: "\n").last else { return }
-            for _ in 0 ..< lastLine.count {
-                document.deleteBackward()
-            }
+            deleteLine(document)
         } else if context.isShifted {
-            // Delete backward to one word before
-            guard let beforeText = document.documentContextBeforeInput else { return }
-            if beforeText.last == "\n" { return document.deleteBackward() }
-            trimSpacesBefore(document: document)
-            guard let beforeText = document.documentContextBeforeInput else { return }
-            if beforeText.last == "\n" { return }
-            let lineStart = beforeText.split(separator: "\n").last?.count
-            let wordStart = beforeText.split(separator: " ").last?.count
-            let deleteCount = minOfCoalesced(lineStart, wordStart) ?? beforeText.count
-            for _ in 0 ..< deleteCount {
-                document.deleteBackward()
-            }
-            trimSpacesBefore(document: document)
+            deleteWord(document)
         } else {
-            // Delte backword to one character
             document.deleteBackward()
         }
     }
@@ -50,8 +55,8 @@ let backSpace = UtilKey(
 let shift = UtilKey(
     id: "shift",
     defaultImage: "shift",
-    imageOnShift: "capslock",
-    imageOnCapsLock: "eject",
+    imageOnShift: "shift.fill",
+    imageOnCapsLock: "capslock.fill",
     onTap: { _, context in
         if context.isDoubleTapped {
             context.isCapsLocked = true

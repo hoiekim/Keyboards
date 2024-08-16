@@ -5,16 +5,18 @@
 //  Created by Hoie Kim on 8/9/24.
 //
 
-private let _0 = SymbolKey(first: "0")
-private let _1 = SymbolKey(first: "1")
-private let _2 = SymbolKey(first: "2")
-private let _3 = SymbolKey(first: "3")
-private let _4 = SymbolKey(first: "4")
-private let _5 = SymbolKey(first: "5")
-private let _6 = SymbolKey(first: "6")
-private let _7 = SymbolKey(first: "7")
-private let _8 = SymbolKey(first: "8")
-private let _9 = SymbolKey(first: "9")
+import UIKit
+
+private let _0 = SymbolKey(first: "0", backgroundColor: customGray3)
+private let _1 = SymbolKey(first: "1", backgroundColor: customGray3)
+private let _2 = SymbolKey(first: "2", backgroundColor: customGray3)
+private let _3 = SymbolKey(first: "3", backgroundColor: customGray3)
+private let _4 = SymbolKey(first: "4", backgroundColor: customGray3)
+private let _5 = SymbolKey(first: "5", backgroundColor: customGray3)
+private let _6 = SymbolKey(first: "6", backgroundColor: customGray3)
+private let _7 = SymbolKey(first: "7", backgroundColor: customGray3)
+private let _8 = SymbolKey(first: "8", backgroundColor: customGray3)
+private let _9 = SymbolKey(first: "9", backgroundColor: customGray3)
 private let period = SymbolKey(first: ".", second: ",", third: "∙")
 private let question = SymbolKey(first: "/", second: "\\")
 private let exclamation = SymbolKey(first: "?", second: "!")

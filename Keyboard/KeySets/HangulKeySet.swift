@@ -12,27 +12,41 @@ private let ㅈ = HangulKey(firstUnicode: LETTER_ㅈ, secondUnicode: LETTER_ㅉ)
 private let ㄷ = HangulKey(firstUnicode: LETTER_ㄷ, secondUnicode: LETTER_ㄸ)
 private let ㄱ = HangulKey(firstUnicode: LETTER_ㄱ, secondUnicode: LETTER_ㄲ)
 private let ㅅ = HangulKey(firstUnicode: LETTER_ㅅ, secondUnicode: LETTER_ㅆ)
-private let ㅗ = HangulKey(firstUnicode: LETTER_ㅗ, secondUnicode: LETTER_ㅛ)
-private let ㅐ = HangulKey(firstUnicode: LETTER_ㅐ, secondUnicode: LETTER_ㅒ)
-private let ㅔ = HangulKey(firstUnicode: LETTER_ㅔ, secondUnicode: LETTER_ㅖ)
-private let ㅣ = HangulKey(firstUnicode: LETTER_ㅣ)
+private let ㅗ = HangulKey(firstUnicode: LETTER_ㅗ, secondUnicode: LETTER_ㅛ, backgroundColor: customGray3)
+private let ㅐ = HangulKey(firstUnicode: LETTER_ㅐ, secondUnicode: LETTER_ㅒ, backgroundColor: customGray3)
+private let ㅔ = HangulKey(firstUnicode: LETTER_ㅔ, secondUnicode: LETTER_ㅖ, backgroundColor: customGray3)
+private let ㅣ = HangulKey(firstUnicode: LETTER_ㅣ, backgroundColor: customGray3)
 private let ㅁ = HangulKey(firstUnicode: LETTER_ㅁ)
 private let ㄴ = HangulKey(firstUnicode: LETTER_ㄴ)
 private let ㅇ = HangulKey(firstUnicode: LETTER_ㅇ)
 private let ㄹ = HangulKey(firstUnicode: LETTER_ㄹ)
 private let ㅎ = HangulKey(firstUnicode: LETTER_ㅎ)
-private let ㅓ = HangulKey(firstUnicode: LETTER_ㅓ, secondUnicode: LETTER_ㅕ)
-private let ㅏ = HangulKey(firstUnicode: LETTER_ㅏ, secondUnicode: LETTER_ㅑ)
+private let ㅓ = HangulKey(firstUnicode: LETTER_ㅓ, secondUnicode: LETTER_ㅕ, backgroundColor: customGray3)
+private let ㅏ = HangulKey(firstUnicode: LETTER_ㅏ, secondUnicode: LETTER_ㅑ, backgroundColor: customGray3)
 private let ㅋ = HangulKey(firstUnicode: LETTER_ㅋ)
 private let ㅌ = HangulKey(firstUnicode: LETTER_ㅌ)
 private let ㅊ = HangulKey(firstUnicode: LETTER_ㅊ)
 private let ㅍ = HangulKey(firstUnicode: LETTER_ㅍ)
-private let ㅜ = HangulKey(firstUnicode: LETTER_ㅜ, secondUnicode: LETTER_ㅠ)
-private let ㅡ = HangulKey(firstUnicode: LETTER_ㅡ)
+private let ㅜ = HangulKey(firstUnicode: LETTER_ㅜ, secondUnicode: LETTER_ㅠ, backgroundColor: customGray3)
+private let ㅡ = HangulKey(firstUnicode: LETTER_ㅡ, backgroundColor: customGray3)
+
+let hangulBackSpace = UtilKey(
+    id: "hangulBackSpace",
+    defaultImage: "delete.backward",
+    onTap: { document, context in
+        if context.isCapsLocked {
+            deleteLine(document)
+        } else if context.isShifted {
+            deleteWord(document)
+        } else {
+            deleteHangulComponent(document)
+        }
+    }
+)
 
 let koreanKeySet: [[Key]] = [
     [ㅂ, ㅈ, ㄷ, ㄱ, ㅅ, ㅗ, ㅐ, ㅔ],
     [ㅁ, ㄴ, ㅇ, ㄹ, ㅎ, ㅓ, ㅏ, ㅣ],
     [blank, ㅋ, ㅌ, ㅊ, ㅍ, ㅜ, ㅡ, changeLanguage],
-    [shift, symbols, space, enter, backSpace]
+    [shift, symbols, space, enter, hangulBackSpace]
 ]

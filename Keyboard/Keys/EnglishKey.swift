@@ -12,11 +12,13 @@ class EnglishKey: Key {
     let span: Int = 1
     let first: String
     let second: String?
+    let _backgroundColor: UIColor?
 
-    init(first: String, second: String? = nil) {
+    init(first: String, second: String? = nil, backgroundColor: UIColor? = nil) {
         self.id = "EnglishKey_" + (second == nil ? first : first + "_" + second!)
         self.first = first
         self.second = second
+        self._backgroundColor = backgroundColor
     }
 
     func getTitle(_ context: KeyInputContext) -> String? {
@@ -33,7 +35,7 @@ class EnglishKey: Key {
     }
 
     func getBackgroundColor(_ context: KeyInputContext) -> UIColor? {
-        return UIColor.systemIndigo
+        return self._backgroundColor ?? customGray2
     }
 
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {

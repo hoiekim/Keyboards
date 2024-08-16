@@ -41,17 +41,17 @@ class UtilKey: Key {
     }
 
     func getImage(_ context: KeyInputContext) -> String? {
-        if context.isShifted {
-            return self._imageOnShift ?? self._defaultImage
-        } else if context.isCapsLocked {
+        if context.isCapsLocked {
             return self._imageOnCapsLock ?? self._defaultImage
+        } else if context.isShifted {
+            return self._imageOnShift ?? self._defaultImage
         } else {
             return self._defaultImage
         }
     }
 
     func getBackgroundColor(_ context: KeyInputContext) -> UIColor? {
-        return self._backgroundColor ?? UIColor.gray
+        return self._backgroundColor ?? customGray1
     }
 
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {

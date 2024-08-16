@@ -121,16 +121,19 @@ class HangulKey: Key {
     let first: String
     let second: String?
     let span: Int = 1
+    var _backgroundColor: UIColor?
 
     init(
         firstUnicode: UInt32,
-        secondUnicode: UInt32? = nil
+        secondUnicode: UInt32? = nil,
+        backgroundColor: UIColor? = nil
     ) {
         let first = unicodeToString(firstUnicode)
         let second = secondUnicode != nil ? unicodeToString(secondUnicode!) : nil
         self.id = "HangulKey_" + (second == nil ? first : first + "_" + second!)
         self.first = first
         self.second = second
+        self._backgroundColor = backgroundColor
     }
 
     func getTitle(_ context: KeyInputContext) -> String? {
@@ -146,7 +149,7 @@ class HangulKey: Key {
     }
 
     func getBackgroundColor(_ context: KeyInputContext) -> UIColor? {
-        return UIColor.systemBlue
+        return _backgroundColor ?? customGray2
     }
 
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
@@ -158,6 +161,8 @@ class HangulKey: Key {
 
         // invalid key
         if isConsonant == isVowel { return }
+        
+        isComposing = true
 
         guard let beforeText = document.documentContextBeforeInput else { return document.insertText(key) }
         guard let lastString = beforeText.last else { return document.insertText(key) }
@@ -368,7 +373,6 @@ private func isSyllable(_ string: String) -> Bool {
 }
 
 private func jongseongToChoseong(_ string: String) -> String? {
-    if !isConsonant(string) { return nil }
     let unicode = string.unicodeScalars.first!.value
     switch unicode {
     case JONGSEONG_ᆨ: return unicodeToString(CHOSEONG_ㄱ)
@@ -392,7 +396,6 @@ private func jongseongToChoseong(_ string: String) -> String? {
 }
 
 private func letterToChoseong(_ string: String) -> String? {
-    if !isConsonant(string) { return nil }
     let unicode = string.unicodeScalars.first!.value
     switch unicode {
     case LETTER_ㄱ: return unicodeToString(CHOSEONG_ㄱ)
@@ -419,7 +422,6 @@ private func letterToChoseong(_ string: String) -> String? {
 }
 
 private func choseongToLetter(_ string: String) -> String? {
-    if !isConsonant(string) { return nil }
     let unicode = string.unicodeScalars.first!.value
     switch unicode {
     case CHOSEONG_ㄱ: return unicodeToString(LETTER_ㄱ)
@@ -446,7 +448,6 @@ private func choseongToLetter(_ string: String) -> String? {
 }
 
 private func letterToJungseong(_ string: String) -> String? {
-    if isConsonant(string) { return nil }
     let unicode = string.unicodeScalars.first!.value
     switch unicode {
     case LETTER_ㅏ: return unicodeToString(JUNGSEONG_ㅏ)
@@ -468,7 +469,6 @@ private func letterToJungseong(_ string: String) -> String? {
 }
 
 private func letterToJongseong(_ string: String) -> String? {
-    if !isConsonant(string) { return nil }
     let unicode = string.unicodeScalars.first!.value
     switch unicode {
     case LETTER_ㄱ: return unicodeToString(JONGSEONG_ᆨ)
@@ -571,5 +571,36 @@ private func combineVowels(_ first: String, _ second: String) -> String? {
     case (JUNGSEONG_ㅜ, LETTER_ㅣ): return unicodeToString(JUNGSEONG_ㅟ)
     case (JUNGSEONG_ㅡ, LETTER_ㅣ): return unicodeToString(JUNGSEONG_ㅢ)
     default: return nil
+    }
+}
+
+var isComposing = false
+
+func deleteHangulComponent(_ document: UITextDocumentProxy) {
+    guard let beforeText = document.documentContextBeforeInput else { return }
+    guard let last = beforeText.last else { return }
+    let lastString = String(last)
+
+    if isComposing {
+        guard let components = decompose(lastString) else { return }
+
+        document.deleteBackward()
+
+        let (initial, medial, final) = components
+
+        switch (initial, medial, final) {
+        case (.some, .some, .some):
+            if let syllable = compose(initial!, medial!) {
+                document.insertText(syllable)
+            }
+        case (.some, .some, nil):
+            if let letter = choseongToLetter(initial!) {
+                document.insertText(letter)
+            }
+        default:
+            isComposing = false
+        }
+    } else {
+        document.deleteBackward()
     }
 }

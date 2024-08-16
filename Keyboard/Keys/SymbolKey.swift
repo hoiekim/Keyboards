@@ -13,17 +13,20 @@ class SymbolKey: Key {
     let first: String
     let second: String?
     let third: String?
+    var _backgroundColor: UIColor?
 
     init(
         first: String,
         second: String? = nil,
-        third: String? = nil
+        third: String? = nil,
+        backgroundColor: UIColor? = nil
     ) {
         let values: [String] = [first, second, third].compactMap { $0 }
         self.id = "SymbolKey_" + values.joined(separator: "_")
         self.first = first
         self.second = second
         self.third = third
+        self._backgroundColor = backgroundColor
     }
 
     func getTitle(_ context: KeyInputContext) -> String? {
@@ -40,7 +43,7 @@ class SymbolKey: Key {
     }
 
     func getBackgroundColor(_ context: KeyInputContext) -> UIColor? {
-        return UIColor.systemPurple
+        return self._backgroundColor ?? customGray2
     }
 
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
