@@ -76,7 +76,14 @@ let shift = UtilKey(
 let space = UtilKey(
     id: "space",
     span: 3,
-    onTap: { document, _ in document.insertText(" ") }
+    imageOnShift: "arrow.forward.to.line",
+    onTap: { document, context in
+        if context.isShifted && !context.isCapsLocked {
+            document.insertText("\t")
+        } else {
+            document.insertText(" ")
+        }
+    }
 )
 
 let enter = UtilKey(

@@ -171,10 +171,10 @@
 		5798A4BF2C5EE8AD00FCAA66 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
+				5797627C2C645F6C00FB5BD4 /* Keys */,
 				579762852C6A756000FB5BD4 /* KeySets */,
 				5797627E2C65CAEA00FB5BD4 /* Utils */,
 				5797627D2C645FAB00FB5BD4 /* Extentions */,
-				5797627C2C645F6C00FB5BD4 /* Keys */,
 				5798A4C02C5EE8AD00FCAA66 /* KeyboardViewController.swift */,
 				5798A4C22C5EE8AD00FCAA66 /* Info.plist */,
 			);
