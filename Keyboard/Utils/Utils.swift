@@ -28,3 +28,15 @@ func calculateKeyWidth(
     let mergedSpacing = CGFloat(max(0, span - 1)) * spacing
     return (oneSpanSize * CGFloat(span)) + mergedSpacing
 }
+
+func isKeySetsEqual(_ keySet1: [[Key]], _ keySet2: [[Key]]) -> Bool {
+    if keySet1.count != keySet2.count { return false }
+    for (index, keyArray1) in keySet1.enumerated() {
+        let keyArray2 = keySet2[index]
+        if keyArray1.count != keyArray2.count { return false }
+        for (key1, key2) in zip(keyArray1, keyArray2) {
+            if key1.id != key2.id { return false }
+        }
+    }
+    return true
+}

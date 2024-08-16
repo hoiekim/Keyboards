@@ -81,15 +81,14 @@ let enter = UtilKey(
     onTap: { document, _ in document.insertText("\n") }
 )
 
-var lastLang: [[Key]] = englishKeySet
+var lastLanguage: [[Key]] = englishKeySet
 
 let symbols = UtilKey(
     id: "symbols",
     defaultImage: "dollarsign",
     onTap: { _, context in
-        let firstKey = context.keySet[0][0]
-        if firstKey.id == dash.id {
-            context.keySet = lastLang
+        if isKeySetsEqual(context.keySet, symbolKeySet) {
+            context.keySet = lastLanguage
             symbols._defaultImage = "dollarsign"
         } else {
             context.keySet = symbolKeySet
@@ -102,13 +101,12 @@ let changeLanguage = UtilKey(
     id: "changeLanguage",
     defaultImage: "globe",
     onTap: { _, context in
-        let firstKey = context.keySet[0][0]
-        if firstKey.id == KQ.id {
-            lastLang = koreanKeySet
+        if isKeySetsEqual(context.keySet, englishKeySet) {
+            lastLanguage = koreanKeySet
         } else {
-            lastLang = englishKeySet
+            lastLanguage = englishKeySet
         }
-        context.keySet = lastLang
+        context.keySet = lastLanguage
     }
 )
 

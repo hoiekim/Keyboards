@@ -165,62 +165,76 @@ class HangulKey: Key {
 
         let (initial, medial, final) = components
 
-        switch (initial, medial, final) {
-        case (.some, .some, .some):
-            if isConsonant {
-                if let combined = combineJongseong(final!, key) {
-                    document.deleteBackward()
-                    let syllable = compose(initial!, medial!, combined)!
-                    document.insertText(syllable)
-                } else {
-                    document.insertText(key)
-                }
-            } else {
-                let jungseong = letterToJungseong(key)!
-                if let (jongseoung, choseoung) = splitJongseoung(final!) {
-                    let syllable1 = compose(initial!, medial!, jongseoung)!
-                    let syllable2 = compose(choseoung, jungseong)!
-                    document.deleteBackward()
-                    document.insertText(syllable1)
-                    document.insertText(syllable2)
-                } else {
-                    let choseong = jongseongToChoseong(final!)!
-                    let syllable1 = compose(initial!, medial!)!
-                    let syllable2 = compose(choseong, jungseong)!
-                    document.deleteBackward()
-                    document.insertText(syllable1)
-                    document.insertText(syllable2)
-                }
-            }
-        case (.some, .some, nil):
-            if isConsonant {
-                if let jongseong = letterToJongseong(key) {
-                    let syllable = compose(initial!, medial!, jongseong)!
-                    document.deleteBackward()
-                    document.insertText(syllable)
-                } else {
-                    document.insertText(key)
-                }
-            } else {
-                if let combined = combineVowels(medial!, key) {
-                    let syllable = compose(initial!, combined)!
-                    document.deleteBackward()
-                    document.insertText(syllable)
-                } else {
-                    document.insertText(key)
-                }
-            }
-        case (.some, nil, nil):
-            if isConsonant {
-                document.insertText(key)
-            } else {
-                let jungseong = letterToJungseong(key)!
-                let syllable = compose(initial!, jungseong)!
+        let isDoubleTappedVowel = second != nil && context.isDoubleTapped && isVowel
+        if isDoubleTappedVowel {
+            switch (initial, medial, final) {
+            case (.some, .some, nil):
                 document.deleteBackward()
+                let jungseong = letterToJungseong(second!)!
+                let syllable = compose(initial!, jungseong)!
                 document.insertText(syllable)
+            default:
+                document.deleteBackward()
+                document.insertText(second!)
             }
-        default:
-            document.insertText(key)
+        } else {
+            switch (initial, medial, final) {
+            case (.some, .some, .some):
+                if isConsonant {
+                    if let combined = combineJongseong(final!, key) {
+                        document.deleteBackward()
+                        let syllable = compose(initial!, medial!, combined)!
+                        document.insertText(syllable)
+                    } else {
+                        document.insertText(key)
+                    }
+                } else {
+                    let jungseong = letterToJungseong(key)!
+                    if let (jongseoung, choseoung) = splitJongseoung(final!) {
+                        let syllable1 = compose(initial!, medial!, jongseoung)!
+                        let syllable2 = compose(choseoung, jungseong)!
+                        document.deleteBackward()
+                        document.insertText(syllable1)
+                        document.insertText(syllable2)
+                    } else {
+                        let choseong = jongseongToChoseong(final!)!
+                        let syllable1 = compose(initial!, medial!)!
+                        let syllable2 = compose(choseong, jungseong)!
+                        document.deleteBackward()
+                        document.insertText(syllable1)
+                        document.insertText(syllable2)
+                    }
+                }
+            case (.some, .some, nil):
+                if isConsonant {
+                    if let jongseong = letterToJongseong(key) {
+                        let syllable = compose(initial!, medial!, jongseong)!
+                        document.deleteBackward()
+                        document.insertText(syllable)
+                    } else {
+                        document.insertText(key)
+                    }
+                } else {
+                    if let combined = combineVowels(medial!, key) {
+                        let syllable = compose(initial!, combined)!
+                        document.deleteBackward()
+                        document.insertText(syllable)
+                    } else {
+                        document.insertText(key)
+                    }
+                }
+            case (.some, nil, nil):
+                if isConsonant {
+                    document.insertText(key)
+                } else {
+                    let jungseong = letterToJungseong(key)!
+                    let syllable = compose(initial!, jungseong)!
+                    document.deleteBackward()
+                    document.insertText(syllable)
+                }
+            default:
+                document.insertText(key)
+            }
         }
     }
 }
@@ -400,6 +414,33 @@ private func letterToChoseong(_ string: String) -> String? {
     case LETTER_ㅌ: return unicodeToString(CHOSEONG_ㅌ)
     case LETTER_ㅍ: return unicodeToString(CHOSEONG_ㅍ)
     case LETTER_ㅎ: return unicodeToString(CHOSEONG_ㅎ)
+    default: return nil
+    }
+}
+
+private func choseongToLetter(_ string: String) -> String? {
+    if !isConsonant(string) { return nil }
+    let unicode = string.unicodeScalars.first!.value
+    switch unicode {
+    case CHOSEONG_ㄱ: return unicodeToString(LETTER_ㄱ)
+    case CHOSEONG_ㄲ: return unicodeToString(LETTER_ㄲ)
+    case CHOSEONG_ㄴ: return unicodeToString(LETTER_ㄴ)
+    case CHOSEONG_ㄷ: return unicodeToString(LETTER_ㄷ)
+    case CHOSEONG_ㄸ: return unicodeToString(LETTER_ㄸ)
+    case CHOSEONG_ㄹ: return unicodeToString(LETTER_ㄹ)
+    case CHOSEONG_ㅁ: return unicodeToString(LETTER_ㅁ)
+    case CHOSEONG_ㅂ: return unicodeToString(LETTER_ㅂ)
+    case CHOSEONG_ㅃ: return unicodeToString(LETTER_ㅃ)
+    case CHOSEONG_ㅅ: return unicodeToString(LETTER_ㅅ)
+    case CHOSEONG_ㅆ: return unicodeToString(LETTER_ㅆ)
+    case CHOSEONG_ㅇ: return unicodeToString(LETTER_ㅇ)
+    case CHOSEONG_ㅈ: return unicodeToString(LETTER_ㅈ)
+    case CHOSEONG_ㅉ: return unicodeToString(LETTER_ㅉ)
+    case CHOSEONG_ㅊ: return unicodeToString(LETTER_ㅊ)
+    case CHOSEONG_ㅋ: return unicodeToString(LETTER_ㅋ)
+    case CHOSEONG_ㅌ: return unicodeToString(LETTER_ㅌ)
+    case CHOSEONG_ㅍ: return unicodeToString(LETTER_ㅍ)
+    case CHOSEONG_ㅎ: return unicodeToString(LETTER_ㅎ)
     default: return nil
     }
 }

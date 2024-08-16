@@ -5,7 +5,7 @@
 //  Created by Hoie Kim on 8/4/24.
 //
 
-let KQ = EnglishKey(first: "K", second: "Q")
+private let KQ = EnglishKey(first: "K", second: "Q")
 private let D = EnglishKey(first: "D")
 private let T = EnglishKey(first: "T")
 private let G = EnglishKey(first: "G")
