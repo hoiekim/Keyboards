@@ -7,6 +7,10 @@
 
 import UIKit
 
+func coalesce<T>(_ elements: T?...) -> [T] {
+    return elements.compactMap { $0 }
+}
+
 func minOfCoalesced(_ numbers: Int?...) -> Int? {
     let validNumbers = numbers.compactMap { $0 }
     return validNumbers.min()

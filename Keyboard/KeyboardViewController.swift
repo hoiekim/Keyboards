@@ -141,14 +141,25 @@ class KeyboardViewController: UIInputViewController {
     private func createButton(withKey key: Key) -> UIButton {
         let button = UIButton(type: .system)
         button.key = key
+        let title = key.getTitle(keyInputContext)
+        let image = key.getImage(keyInputContext)
+        let backgroundColor = key.getBackgroundColor(keyInputContext)
         
-        if keyInputContext.isShifted || keyInputContext.isCapsLocked {
-            button.setTitle(key.title.uppercased(), for: .normal)
-        } else {
-            button.setTitle(key.title.lowercased(), for: .normal)
+        if image != nil {
+            let uiImageConfig = UIImage.SymbolConfiguration(scale: .medium)
+            let uiImage = UIImage(
+                systemName: image!,
+                withConfiguration: uiImageConfig
+            )
+            button.setImage(uiImage, for: .normal)
+            button.tintColor = .white
         }
         
-        button.backgroundColor = key.backgroundColor ?? UIColor.darkGray
+        if title != nil {
+            button.setTitle(title, for: .normal)
+        }
+        
+        button.backgroundColor = backgroundColor ?? UIColor.darkGray
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 5
         button.addTarget(self, action: #selector(keyTapped), for: .touchUpInside)
@@ -164,7 +175,6 @@ class KeyboardViewController: UIInputViewController {
         let isCapsLocked = keyInputContext.isCapsLocked
         if !isCapsLocked && !isShiftKey {
             keyInputContext.isShifted = false
-            shift.title = TITLE_SHIFT_DEFAULT
         }
         mountButtons()
         adjustButtonSizes()

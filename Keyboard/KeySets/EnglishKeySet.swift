@@ -5,34 +5,34 @@
 //  Created by Hoie Kim on 8/4/24.
 //
 
-let KQ = DoubleKey(title: "K Q", first: "K", second: "Q")
-private let D = SingleKey(title: "D")
-private let T = SingleKey(title: "T")
-private let G = SingleKey(title: "G")
-private let J = SingleKey(title: "J")
-private let H = SingleKey(title: "H")
-private let Y = SingleKey(title: "Y")
-private let I = SingleKey(title: "I")
-private let BV = DoubleKey(title: "B V", first: "B", second: "V")
-private let S = SingleKey(title: "S")
-private let Z = SingleKey(title: "Z")
-private let R = SingleKey(title: "R")
-private let C = SingleKey(title: "C")
-private let W = SingleKey(title: "W")
-private let O = SingleKey(title: "O")
-private let A = SingleKey(title: "A")
-private let P = SingleKey(title: "P")
-private let F = SingleKey(title: "F")
-private let N = SingleKey(title: "N")
-private let M = SingleKey(title: "M")
-private let L = SingleKey(title: "L")
-private let X = SingleKey(title: "X")
-private let E = SingleKey(title: "E")
-private let U = SingleKey(title: "U")
+let KQ = EnglishKey(first: "K", second: "Q")
+private let D = EnglishKey(first: "D")
+private let T = EnglishKey(first: "T")
+private let G = EnglishKey(first: "G")
+private let J = EnglishKey(first: "J")
+private let H = EnglishKey(first: "H")
+private let Y = EnglishKey(first: "Y")
+private let I = EnglishKey(first: "I")
+private let BV = EnglishKey(first: "B", second: "V")
+private let S = EnglishKey(first: "S")
+private let ZX = EnglishKey(first: "Z", second: "X")
+private let R = EnglishKey(first: "R")
+private let C = EnglishKey(first: "C")
+private let W = EnglishKey(first: "W")
+private let O = EnglishKey(first: "O")
+private let A = EnglishKey(first: "A")
+private let P = EnglishKey(first: "P")
+private let F = EnglishKey(first: "F")
+private let N = EnglishKey(first: "N")
+private let M = EnglishKey(first: "M")
+private let L = EnglishKey(first: "L")
+private let X = EnglishKey(first: "X")
+private let E = EnglishKey(first: "E")
+private let U = EnglishKey(first: "U")
 
 let englishKeySet: [[Key]] = [
-    [KQ, D, T, G, J, H, Y, I],
-    [BV, S, Z, R, C, W, O, A],
-    [P, F, N, M, L, X, E, U],
-    [shift, changeKeySet, space, enter, backSpace]
+    [KQ, D, T, G, H, J, O, A],
+    [BV, P, F, R, C, Y, I, E],
+    [ZX, S, N, M, L, W, U, changeLanguage],
+    [shift, symbols, space, enter, backSpace]
 ]

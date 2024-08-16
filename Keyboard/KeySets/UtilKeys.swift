@@ -1,5 +1,5 @@
 //
-//  CommonKeys.swift
+//  UtilKeys.swift
 //  Keyboard
 //
 //  Created by Hoie Kim on 8/6/24.
@@ -15,8 +15,8 @@ private func trimSpacesBefore(document: UITextDocumentProxy) {
 
 let backSpace = UtilKey(
     id: "backSpace",
-    title: "⌫",
-    onTap: { _, document, context in
+    defaultImage: "delete.backward",
+    onTap: { document, context in
         if context.isCapsLocked {
             // Delete backward to the beginning of the line
             let beforeText = document.documentContextBeforeInput
@@ -47,28 +47,22 @@ let backSpace = UtilKey(
     }
 )
 
-let TITLE_SHIFT_DEFAULT = "⇧"
-let TITLE_SHIFT_DEPERRESED = "⇪"
-let TITLE_SHIFT_LOCKED = "⏏︎"
-
 let shift = UtilKey(
     id: "shift",
-    title: TITLE_SHIFT_DEFAULT,
-    onTap: { key, _, context in
+    defaultImage: "shift",
+    imageOnShift: "capslock",
+    imageOnCapsLock: "eject",
+    onTap: { _, context in
         if context.isDoubleTapped {
             context.isCapsLocked = true
-            key.title = TITLE_SHIFT_LOCKED
         } else {
             if context.isCapsLocked {
                 context.isCapsLocked = false
                 context.isShifted = false
-                key.title = TITLE_SHIFT_DEFAULT
             } else if context.isShifted {
                 context.isShifted = false
-                key.title = TITLE_SHIFT_DEFAULT
             } else {
                 context.isShifted = true
-                key.title = TITLE_SHIFT_DEPERRESED
             }
         }
     }
@@ -76,35 +70,50 @@ let shift = UtilKey(
 
 let space = UtilKey(
     id: "space",
-    title: " ",
-    span: 4,
-    onTap: { _, document, _ in document.insertText(" ") }
+    span: 3,
+    onTap: { document, _ in document.insertText(" ") }
 )
 
 let enter = UtilKey(
     id: "enter",
-    title: "⏎",
-    onTap: { _, document, _ in document.insertText("\n") }
+    span: 2,
+    defaultImage: "return",
+    onTap: { document, _ in document.insertText("\n") }
 )
 
-let changeKeySet = UtilKey(
-    id: "changeKeySet",
-    title: "☆",
-    onTap: { _, _, context in
+var lastLang: [[Key]] = englishKeySet
+
+let symbols = UtilKey(
+    id: "symbols",
+    defaultImage: "dollarsign",
+    onTap: { _, context in
         let firstKey = context.keySet[0][0]
         if firstKey.id == dash.id {
-            context.keySet = englishKeySet
-        } else if firstKey.id == KQ.id {
-            context.keySet = koreanKeySet
+            context.keySet = lastLang
+            symbols._defaultImage = "dollarsign"
         } else {
             context.keySet = symbolKeySet
+            symbols._defaultImage = "character"
         }
+    }
+)
+
+let changeLanguage = UtilKey(
+    id: "changeLanguage",
+    defaultImage: "globe",
+    onTap: { _, context in
+        let firstKey = context.keySet[0][0]
+        if firstKey.id == KQ.id {
+            lastLang = koreanKeySet
+        } else {
+            lastLang = englishKeySet
+        }
+        context.keySet = lastLang
     }
 )
 
 let blank = UtilKey(
     id: "blank",
-    title: "",
     backgroundColor: UIColor.clear,
-    onTap: { _, _, _ in }
+    onTap: { _, _ in }
 )

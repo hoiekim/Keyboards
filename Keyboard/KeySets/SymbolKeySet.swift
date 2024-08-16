@@ -5,34 +5,34 @@
 //  Created by Hoie Kim on 8/9/24.
 //
 
-private let _0 = SingleKey(title: "0")
-private let _1 = SingleKey(title: "1")
-private let _2 = SingleKey(title: "2")
-private let _3 = SingleKey(title: "3")
-private let _4 = SingleKey(title: "4")
-private let _5 = SingleKey(title: "5")
-private let _6 = SingleKey(title: "6")
-private let _7 = SingleKey(title: "7")
-private let _8 = SingleKey(title: "8")
-private let _9 = SingleKey(title: "9")
-private let period = DoubleKey(title: ". ,", first: ".", second: ",")
-private let question = DoubleKey(title: "? /", first: "?", second: "/")
-private let exclamation = DoubleKey(title: "! ~", first: "!", second: "~")
-private let at = DoubleKey(title: "@ #", first: "@", second: "#")
-private let dollar = DoubleKey(title: "$ %", first: "$", second: "%")
-private let colon = DoubleKey(title: ": ;", first: ":", second: ";")
-private let comparison = DoubleKey(title: "< >", first: "<", second: ">")
-private let paranthesis = DoubleKey(title: "( )", first: "(", second: ")")
-private let bracket = DoubleKey(title: "[ ]", first: "[", second: "]")
-private let and = DoubleKey(title: "& |", first: "&", second: "|")
-let dash = DoubleKey(title: "- _", first: "-", second: "_")
-private let equals = DoubleKey(title: "= +", first: "=", second: "+")
-private let asterisk = DoubleKey(title: "* ^", first: "*", second: "^")
-private let quote = DoubleKey(title: "' \"", first: "'", second: "\"")
+private let _0 = SymbolKey(first: "0")
+private let _1 = SymbolKey(first: "1")
+private let _2 = SymbolKey(first: "2")
+private let _3 = SymbolKey(first: "3")
+private let _4 = SymbolKey(first: "4")
+private let _5 = SymbolKey(first: "5")
+private let _6 = SymbolKey(first: "6")
+private let _7 = SymbolKey(first: "7")
+private let _8 = SymbolKey(first: "8")
+private let _9 = SymbolKey(first: "9")
+private let period = SymbolKey(first: ".", second: ",", third: "∙")
+private let question = SymbolKey(first: "/", second: "\\")
+private let exclamation = SymbolKey(first: "?", second: "!")
+private let at = SymbolKey(first: "@", second: "#")
+private let dollar = SymbolKey(first: "$", second: "%")
+private let colon = SymbolKey(first: ":", second: ";")
+private let comparison = SymbolKey(first: "<", second: ">")
+private let paranthesis = SymbolKey(first: "(", second: ")")
+private let bracket = SymbolKey(first: "[", second: "]")
+private let and = SymbolKey(first: "&", second: "|")
+let dash = SymbolKey(first: "-", second: "_", third: "~")
+private let equals = SymbolKey(first: "=", second: "+")
+private let asterisk = SymbolKey(first: "*", second: "^")
+private let quote = SymbolKey(first: "'", second: "\"", third: "`")
 
 let symbolKeySet: [[Key]] = [
     [dash, equals, asterisk, dollar, at, _7, _8, _9],
     [quote, comparison, bracket, paranthesis, and, _4, _5, _6],
     [period, colon, question, exclamation, _0, _1, _2, _3],
-    [shift, changeKeySet, space, enter, backSpace]
+    [shift, symbols, space, enter, backSpace]
 ]

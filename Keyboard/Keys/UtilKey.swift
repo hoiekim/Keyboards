@@ -8,29 +8,53 @@
 import UIKit
 
 class UtilKey: Key {
-    typealias OnTapUtilKey = (UtilKey, UITextDocumentProxy, KeyInputContext) -> Void
+    typealias OnTapUtilKey = (UITextDocumentProxy, KeyInputContext) -> Void
 
     let id: String
-    var title: String
     let span: Int
-    var backgroundColor: UIColor?
-    var _onTap: OnTapUtilKey
+    var _defaultImage: String?
+    var _imageOnShift: String?
+    var _imageOnCapsLock: String?
+    var _backgroundColor: UIColor?
+    private let _onTap: OnTapUtilKey
 
     init(
         id: String,
-        title: String,
         span: Int = 1,
+        defaultImage: String? = nil,
+        imageOnShift: String? = nil,
+        imageOnCapsLock: String? = nil,
         backgroundColor: UIColor? = nil,
         onTap: @escaping OnTapUtilKey
     ) {
         self.id = "UtilKey_" + id
-        self.title = title
         self.span = span
-        self.backgroundColor = backgroundColor
+        self._defaultImage = defaultImage
+        self._imageOnShift = imageOnShift
+        self._imageOnCapsLock = imageOnCapsLock
+        self._backgroundColor = backgroundColor
         self._onTap = onTap
     }
 
+    func getTitle(_ context: KeyInputContext) -> String? {
+        return nil
+    }
+
+    func getImage(_ context: KeyInputContext) -> String? {
+        if context.isShifted {
+            return self._imageOnShift ?? self._defaultImage
+        } else if context.isCapsLocked {
+            return self._imageOnCapsLock ?? self._defaultImage
+        } else {
+            return self._defaultImage
+        }
+    }
+
+    func getBackgroundColor(_ context: KeyInputContext) -> UIColor? {
+        return self._backgroundColor ?? UIColor.gray
+    }
+
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
-        _onTap(self, document, context)
+        self._onTap(document, context)
     }
 }

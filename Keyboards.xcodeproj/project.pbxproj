@@ -11,7 +11,7 @@
 		579762842C6658D800FB5BD4 /* SymbolKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579762832C6658D800FB5BD4 /* SymbolKeySet.swift */; };
 		579762872C6A759300FB5BD4 /* HangulKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579762862C6A759300FB5BD4 /* HangulKey.swift */; };
 		579762892C6A760E00FB5BD4 /* UtilKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579762882C6A760E00FB5BD4 /* UtilKey.swift */; };
-		5798A4AD2C5DFE4400FCAA66 /* KeybaordsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4AC2C5DFE4400FCAA66 /* KeybaordsApp.swift */; };
+		5798A4AD2C5DFE4400FCAA66 /* KeyboardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4AC2C5DFE4400FCAA66 /* KeyboardsApp.swift */; };
 		5798A4AF2C5DFE4400FCAA66 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4AE2C5DFE4400FCAA66 /* ContentView.swift */; };
 		5798A4B12C5DFE4600FCAA66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5798A4B02C5DFE4600FCAA66 /* Assets.xcassets */; };
 		5798A4B42C5DFE4600FCAA66 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5798A4B32C5DFE4600FCAA66 /* Preview Assets.xcassets */; };
@@ -21,7 +21,9 @@
 		5798A4CD2C605C8E00FCAA66 /* EnglishKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */; };
 		5798A4CF2C6092B300FCAA66 /* HangulKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4CE2C6092B300FCAA66 /* HangulKeySet.swift */; };
 		5798A4D12C609D1C00FCAA66 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4D02C609D1C00FCAA66 /* UIButton.swift */; };
-		5798A4D32C62961300FCAA66 /* CommonKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4D22C62961300FCAA66 /* CommonKeys.swift */; };
+		5798A4D32C62961300FCAA66 /* UtilKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4D22C62961300FCAA66 /* UtilKeys.swift */; };
+		57E0FB732C6F828C005CDAC2 /* EnglishKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB722C6F828C005CDAC2 /* EnglishKey.swift */; };
+		57E0FB752C6F8B82005CDAC2 /* SymbolKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB742C6F8B82005CDAC2 /* SymbolKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +57,7 @@
 		579762882C6A760E00FB5BD4 /* UtilKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilKey.swift; sourceTree = "<group>"; };
 		5797628A2C6B90D200FB5BD4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		5798A4A92C5DFE4400FCAA66 /* Keyboards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Keyboards.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5798A4AC2C5DFE4400FCAA66 /* KeybaordsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeybaordsApp.swift; sourceTree = "<group>"; };
+		5798A4AC2C5DFE4400FCAA66 /* KeyboardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardsApp.swift; sourceTree = "<group>"; };
 		5798A4AE2C5DFE4400FCAA66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5798A4B02C5DFE4600FCAA66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5798A4B32C5DFE4600FCAA66 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -66,7 +68,9 @@
 		5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishKeySet.swift; sourceTree = "<group>"; };
 		5798A4CE2C6092B300FCAA66 /* HangulKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangulKeySet.swift; sourceTree = "<group>"; };
 		5798A4D02C609D1C00FCAA66 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
-		5798A4D22C62961300FCAA66 /* CommonKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonKeys.swift; sourceTree = "<group>"; };
+		5798A4D22C62961300FCAA66 /* UtilKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilKeys.swift; sourceTree = "<group>"; };
+		57E0FB722C6F828C005CDAC2 /* EnglishKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishKey.swift; sourceTree = "<group>"; };
+		57E0FB742C6F8B82005CDAC2 /* SymbolKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,8 @@
 				5798A4CA2C6055FF00FCAA66 /* Key.swift */,
 				579762862C6A759300FB5BD4 /* HangulKey.swift */,
 				579762882C6A760E00FB5BD4 /* UtilKey.swift */,
+				57E0FB722C6F828C005CDAC2 /* EnglishKey.swift */,
+				57E0FB742C6F8B82005CDAC2 /* SymbolKey.swift */,
 			);
 			path = Keys;
 			sourceTree = "<group>";
@@ -116,7 +122,7 @@
 		579762852C6A756000FB5BD4 /* KeySets */ = {
 			isa = PBXGroup;
 			children = (
-				5798A4D22C62961300FCAA66 /* CommonKeys.swift */,
+				5798A4D22C62961300FCAA66 /* UtilKeys.swift */,
 				5798A4CE2C6092B300FCAA66 /* HangulKeySet.swift */,
 				579762832C6658D800FB5BD4 /* SymbolKeySet.swift */,
 				5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */,
@@ -128,7 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				5797628A2C6B90D200FB5BD4 /* .gitignore */,
-				5798A4AB2C5DFE4400FCAA66 /* Keybaords */,
+				5798A4AB2C5DFE4400FCAA66 /* Keyboards */,
 				5798A4BF2C5EE8AD00FCAA66 /* Keyboard */,
 				5798A4AA2C5DFE4400FCAA66 /* Products */,
 			);
@@ -143,15 +149,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5798A4AB2C5DFE4400FCAA66 /* Keybaords */ = {
+		5798A4AB2C5DFE4400FCAA66 /* Keyboards */ = {
 			isa = PBXGroup;
 			children = (
-				5798A4AC2C5DFE4400FCAA66 /* KeybaordsApp.swift */,
+				5798A4AC2C5DFE4400FCAA66 /* KeyboardsApp.swift */,
 				5798A4AE2C5DFE4400FCAA66 /* ContentView.swift */,
 				5798A4B02C5DFE4600FCAA66 /* Assets.xcassets */,
 				5798A4B22C5DFE4600FCAA66 /* Preview Content */,
 			);
-			path = Keybaords;
+			path = Keyboards;
 			sourceTree = "<group>";
 		};
 		5798A4B22C5DFE4600FCAA66 /* Preview Content */ = {
@@ -276,7 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5798A4AF2C5DFE4400FCAA66 /* ContentView.swift in Sources */,
-				5798A4AD2C5DFE4400FCAA66 /* KeybaordsApp.swift in Sources */,
+				5798A4AD2C5DFE4400FCAA66 /* KeyboardsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,15 +290,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57E0FB732C6F828C005CDAC2 /* EnglishKey.swift in Sources */,
 				579762842C6658D800FB5BD4 /* SymbolKeySet.swift in Sources */,
 				579762892C6A760E00FB5BD4 /* UtilKey.swift in Sources */,
 				579762872C6A759300FB5BD4 /* HangulKey.swift in Sources */,
 				5798A4C12C5EE8AD00FCAA66 /* KeyboardViewController.swift in Sources */,
+				57E0FB752C6F8B82005CDAC2 /* SymbolKey.swift in Sources */,
 				5798A4CB2C6055FF00FCAA66 /* Key.swift in Sources */,
 				5798A4CF2C6092B300FCAA66 /* HangulKeySet.swift in Sources */,
 				579762802C65CAFA00FB5BD4 /* Utils.swift in Sources */,
 				5798A4CD2C605C8E00FCAA66 /* EnglishKeySet.swift in Sources */,
-				5798A4D32C62961300FCAA66 /* CommonKeys.swift in Sources */,
+				5798A4D32C62961300FCAA66 /* UtilKeys.swift in Sources */,
 				5798A4D12C609D1C00FCAA66 /* UIButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,6 +373,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = Keyboards;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -421,6 +430,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = Keyboards;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
@@ -435,7 +445,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Keybaords/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Keyboards/Preview Content\"";
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -449,7 +459,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keybaords;
+				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -465,7 +475,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Keybaords/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Keyboards/Preview Content\"";
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -479,7 +489,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keybaords;
+				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -503,7 +513,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keybaords.Keyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards.Keyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -528,7 +538,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keybaords.Keyboard;
+				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards.Keyboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -1,5 +1,5 @@
 //
-//  Key.swift
+//  HangulKey.swift
 //  Keyboard
 //
 //  Created by Hoie Kim on 8/4/24.
@@ -118,33 +118,44 @@ let JONGSEONG_ᇂ: UInt32 = 0x11c2
 
 class HangulKey: Key {
     let id: String
-    var title: String
     let first: String
     let second: String?
     let span: Int = 1
-    var backgroundColor: UIColor?
 
     init(
         firstUnicode: UInt32,
-        secondUnicode: UInt32? = nil,
-        backgroundColor: UIColor? = nil
+        secondUnicode: UInt32? = nil
     ) {
         let first = unicodeToString(firstUnicode)
         let second = secondUnicode != nil ? unicodeToString(secondUnicode!) : nil
         self.id = "HangulKey_" + (second == nil ? first : first + "_" + second!)
-        self.title = first
         self.first = first
         self.second = second
-        self.backgroundColor = backgroundColor
+    }
+
+    func getTitle(_ context: KeyInputContext) -> String? {
+        if (context.isShifted || context.isCapsLocked) && second != nil {
+            return second!
+        } else {
+            return first
+        }
+    }
+
+    func getImage(_ context: KeyInputContext) -> String? {
+        return nil
+    }
+
+    func getBackgroundColor(_ context: KeyInputContext) -> UIColor? {
+        return UIColor.systemBlue
     }
 
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
         let isSecond = context.isShifted || context.isCapsLocked
         let key = isSecond && second != nil ? second! : first
-        
+
         let isConsonant = isConsonant(key)
         let isVowel = isVowel(key)
-        
+
         // invalid key
         if isConsonant == isVowel { return }
 
@@ -210,14 +221,6 @@ class HangulKey: Key {
             }
         default:
             document.insertText(key)
-        }
-    }
-
-    func updateTitle(context: KeyInputContext) {
-        if (context.isShifted || context.isCapsLocked) && second != nil {
-            title = second!
-        } else {
-            title = first
         }
     }
 }

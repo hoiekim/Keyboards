@@ -33,6 +33,6 @@ private let ㅡ = HangulKey(firstUnicode: LETTER_ㅡ)
 let koreanKeySet: [[Key]] = [
     [ㅂ, ㅈ, ㄷ, ㄱ, ㅅ, ㅗ, ㅐ, ㅔ],
     [ㅁ, ㄴ, ㅇ, ㄹ, ㅎ, ㅓ, ㅏ, ㅣ],
-    [blank, ㅋ, ㅌ, ㅊ, ㅍ, ㅜ, ㅡ, blank],
-    [shift, changeKeySet, space, enter, backSpace]
+    [blank, ㅋ, ㅌ, ㅊ, ㅍ, ㅜ, ㅡ, changeLanguage],
+    [shift, symbols, space, enter, backSpace]
 ]
