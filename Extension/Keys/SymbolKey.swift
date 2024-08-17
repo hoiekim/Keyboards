@@ -10,6 +10,8 @@ import UIKit
 class SymbolKey: Key {
     let id: String
     let span: Int = 1
+    let remountOnTap = false
+    let updateButtonImagesOnTap = false
     let first: String
     let second: String?
     let third: String?

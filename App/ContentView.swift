@@ -28,7 +28,6 @@ struct ContentView: View {
             Text("Settings → General → Keyboard → Keyboards")
                 .font(.system(size: 14, weight: .light))
                 .frame(alignment: Alignment.center)
-                .padding(.bottom, 20.0)
         }
 
         List {
@@ -43,7 +42,6 @@ struct ContentView: View {
                     .labelStyle(.titleAndIcon)
                 TextEditor(text: $profileText)
                     .focused($isTestAreaFocused, equals: true)
-                    .foregroundColor(.black)
             }
             .onAppear {
                 isTestAreaFocused = true

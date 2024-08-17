@@ -23,8 +23,10 @@ class KeyInputContext {
 
 protocol Key {
     var id: String { get }
-    func onTap(document: UITextDocumentProxy, context: KeyInputContext) -> Void
     var span: Int { get }
+    var remountOnTap: Bool { get }
+    var updateButtonImagesOnTap: Bool { get }
+    func onTap(document: UITextDocumentProxy, context: KeyInputContext) -> Void
     func getTitle(_ context: KeyInputContext) -> String?
     func getImage(_ context: KeyInputContext) -> String?
     func getBackgroundColor(_ context: KeyInputContext) -> UIColor?

@@ -54,6 +54,7 @@ let backSpace = UtilKey(
 
 let shift = UtilKey(
     id: "shift",
+    updateButtonImagesOnTap: true,
     defaultImage: "shift",
     imageOnShift: "shift.fill",
     imageOnCapsLock: "capslock.fill",
@@ -97,6 +98,7 @@ var lastLanguage: [[Key]] = englishKeySet
 
 let symbols = UtilKey(
     id: "symbols",
+    remountOnTap: true,
     defaultImage: "dollarsign",
     onTap: { _, context in
         if isKeySetsEqual(context.keySet, symbolKeySet) {
@@ -111,6 +113,7 @@ let symbols = UtilKey(
 
 let changeLanguage = UtilKey(
     id: "changeLanguage",
+    remountOnTap: true,
     defaultImage: "globe",
     onTap: { _, context in
         if isKeySetsEqual(context.keySet, englishKeySet) {

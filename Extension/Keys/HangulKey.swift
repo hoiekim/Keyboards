@@ -121,6 +121,8 @@ class HangulKey: Key {
     let first: String
     let second: String?
     let span: Int = 1
+    let remountOnTap = false
+    let updateButtonImagesOnTap = false
     var _backgroundColor: UIColor?
 
     init(

@@ -12,15 +12,19 @@ class UtilKey: Key {
 
     let id: String
     let span: Int
+    let remountOnTap: Bool
+    let updateButtonImagesOnTap: Bool
+    private let _onTap: OnTapUtilKey
     var _defaultImage: String?
     var _imageOnShift: String?
     var _imageOnCapsLock: String?
     var _backgroundColor: UIColor?
-    private let _onTap: OnTapUtilKey
 
     init(
         id: String,
         span: Int = 1,
+        remountOnTap: Bool = false,
+        updateButtonImagesOnTap: Bool = false,
         defaultImage: String? = nil,
         imageOnShift: String? = nil,
         imageOnCapsLock: String? = nil,
@@ -29,6 +33,8 @@ class UtilKey: Key {
     ) {
         self.id = "UtilKey_" + id
         self.span = span
+        self.remountOnTap = remountOnTap
+        self.updateButtonImagesOnTap = updateButtonImagesOnTap
         self._defaultImage = defaultImage
         self._imageOnShift = imageOnShift
         self._imageOnCapsLock = imageOnCapsLock

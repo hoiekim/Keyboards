@@ -139,7 +139,7 @@ class KeyboardViewController: UIInputViewController {
     }
     
     private func createButton(withKey key: Key) -> UIButton {
-        let button = UIButton(type: .system)
+        let button = UIButton(type: .custom)
         button.key = key
         let title = key.getTitle(keyInputContext)
         let image = key.getImage(keyInputContext)
@@ -167,17 +167,39 @@ class KeyboardViewController: UIInputViewController {
         return button
     }
     
+    private func updateButtonImages() {
+        for (_, rowView) in buttonsView.arrangedSubviews.enumerated() {
+            guard let rowStackView = rowView as? UIStackView else { continue }
+            for (_, subView) in rowStackView.arrangedSubviews.enumerated() {
+                guard let button = subView as? UIButton else { continue }
+                button.updateImage(keyInputContext)
+            }
+        }
+    }
+    
+    let haptic = UIImpactFeedbackGenerator(style: .soft)
+    
     @objc func keyTapped(sender: UIButton) {
         let key = sender.key!
         handleDoubleTap(key: key)
         key.onTap(document: textDocumentProxy, context: keyInputContext)
+        haptic.impactOccurred()
+        
         let isShiftKey = key.id == shift.id
         let isCapsLocked = keyInputContext.isCapsLocked
+        
+        var shouldUpdateButtonImages = key.updateButtonImagesOnTap
         if !isCapsLocked && !isShiftKey {
             keyInputContext.isShifted = false
+            shouldUpdateButtonImages = true
         }
-        mountButtons()
-        adjustButtonSizes()
+        
+        if key.remountOnTap {
+            mountButtons()
+            adjustButtonSizes()
+        } else if shouldUpdateButtonImages {
+            updateButtonImages()
+        }
     }
     
     private var firstTappedKey: Key?
