@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5798A4A82C5DFE4400FCAA66"
-               BuildableName = "Keyboards.app"
-               BlueprintName = "Keyboards"
+               BuildableName = "Hoikey.app"
+               BlueprintName = "App"
                ReferencedContainer = "container:Keyboards.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5798A4A82C5DFE4400FCAA66"
-            BuildableName = "Keyboards.app"
-            BlueprintName = "Keyboards"
+            BuildableName = "Hoikey.app"
+            BlueprintName = "App"
             ReferencedContainer = "container:Keyboards.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5798A4A82C5DFE4400FCAA66"
-            BuildableName = "Keyboards.app"
-            BlueprintName = "Keyboards"
+            BuildableName = "Hoikey.app"
+            BlueprintName = "App"
             ReferencedContainer = "container:Keyboards.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
