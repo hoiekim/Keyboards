@@ -7,8 +7,8 @@
 
 import UIKit
 
-private let syllableBase: UInt32 = 0xac00
-private let syllableEnd: UInt32 = 0xd7a3
+private let SYLLABLE_BASE: UInt32 = 0xac00
+private let SYLLABLE_END: UInt32 = 0xd7a3
 
 let LETTER_ㄱ: UInt32 = 0x3131
 let LETTER_ㄲ: UInt32 = 0x3132
@@ -45,76 +45,76 @@ let LETTER_ㅠ: UInt32 = 0x3160
 let LETTER_ㅡ: UInt32 = 0x3161
 let LETTER_ㅣ: UInt32 = 0x3163
 
-let CHOSEONG_ㄱ: UInt32 = 0x1100
-let CHOSEONG_ㄲ: UInt32 = 0x1101
-let CHOSEONG_ㄴ: UInt32 = 0x1102
-let CHOSEONG_ㄷ: UInt32 = 0x1103
-let CHOSEONG_ㄸ: UInt32 = 0x1104
-let CHOSEONG_ㄹ: UInt32 = 0x1105
-let CHOSEONG_ㅁ: UInt32 = 0x1106
-let CHOSEONG_ㅂ: UInt32 = 0x1107
-let CHOSEONG_ㅃ: UInt32 = 0x1108
-let CHOSEONG_ㅅ: UInt32 = 0x1109
-let CHOSEONG_ㅆ: UInt32 = 0x110a
-let CHOSEONG_ㅇ: UInt32 = 0x110b
-let CHOSEONG_ㅈ: UInt32 = 0x110c
-let CHOSEONG_ㅉ: UInt32 = 0x110d
-let CHOSEONG_ㅊ: UInt32 = 0x110e
-let CHOSEONG_ㅋ: UInt32 = 0x110f
-let CHOSEONG_ㅌ: UInt32 = 0x1110
-let CHOSEONG_ㅍ: UInt32 = 0x1111
-let CHOSEONG_ㅎ: UInt32 = 0x1112
+private let CHOSEONG_ㄱ: UInt32 = 0x1100
+private let CHOSEONG_ㄲ: UInt32 = 0x1101
+private let CHOSEONG_ㄴ: UInt32 = 0x1102
+private let CHOSEONG_ㄷ: UInt32 = 0x1103
+private let CHOSEONG_ㄸ: UInt32 = 0x1104
+private let CHOSEONG_ㄹ: UInt32 = 0x1105
+private let CHOSEONG_ㅁ: UInt32 = 0x1106
+private let CHOSEONG_ㅂ: UInt32 = 0x1107
+private let CHOSEONG_ㅃ: UInt32 = 0x1108
+private let CHOSEONG_ㅅ: UInt32 = 0x1109
+private let CHOSEONG_ㅆ: UInt32 = 0x110a
+private let CHOSEONG_ㅇ: UInt32 = 0x110b
+private let CHOSEONG_ㅈ: UInt32 = 0x110c
+private let CHOSEONG_ㅉ: UInt32 = 0x110d
+private let CHOSEONG_ㅊ: UInt32 = 0x110e
+private let CHOSEONG_ㅋ: UInt32 = 0x110f
+private let CHOSEONG_ㅌ: UInt32 = 0x1110
+private let CHOSEONG_ㅍ: UInt32 = 0x1111
+private let CHOSEONG_ㅎ: UInt32 = 0x1112
 
-let JUNGSEONG_ㅏ: UInt32 = 0x1161
-let JUNGSEONG_ㅐ: UInt32 = 0x1162
-let JUNGSEONG_ㅑ: UInt32 = 0x1163
-let JUNGSEONG_ㅒ: UInt32 = 0x1164
-let JUNGSEONG_ㅓ: UInt32 = 0x1165
-let JUNGSEONG_ㅔ: UInt32 = 0x1166
-let JUNGSEONG_ㅕ: UInt32 = 0x1167
-let JUNGSEONG_ㅖ: UInt32 = 0x1168
-let JUNGSEONG_ㅗ: UInt32 = 0x1169
-let JUNGSEONG_ㅘ: UInt32 = 0x116a
-let JUNGSEONG_ㅙ: UInt32 = 0x116b
-let JUNGSEONG_ㅚ: UInt32 = 0x116c
-let JUNGSEONG_ㅛ: UInt32 = 0x116d
-let JUNGSEONG_ㅜ: UInt32 = 0x116e
-let JUNGSEONG_ㅝ: UInt32 = 0x116f
-let JUNGSEONG_ㅞ: UInt32 = 0x1170
-let JUNGSEONG_ㅟ: UInt32 = 0x1171
-let JUNGSEONG_ㅠ: UInt32 = 0x1172
-let JUNGSEONG_ㅡ: UInt32 = 0x1173
-let JUNGSEONG_ㅢ: UInt32 = 0x1174
-let JUNGSEONG_ㅣ: UInt32 = 0x1175
+private let JUNGSEONG_ㅏ: UInt32 = 0x1161
+private let JUNGSEONG_ㅐ: UInt32 = 0x1162
+private let JUNGSEONG_ㅑ: UInt32 = 0x1163
+private let JUNGSEONG_ㅒ: UInt32 = 0x1164
+private let JUNGSEONG_ㅓ: UInt32 = 0x1165
+private let JUNGSEONG_ㅔ: UInt32 = 0x1166
+private let JUNGSEONG_ㅕ: UInt32 = 0x1167
+private let JUNGSEONG_ㅖ: UInt32 = 0x1168
+private let JUNGSEONG_ㅗ: UInt32 = 0x1169
+private let JUNGSEONG_ㅘ: UInt32 = 0x116a
+private let JUNGSEONG_ㅙ: UInt32 = 0x116b
+private let JUNGSEONG_ㅚ: UInt32 = 0x116c
+private let JUNGSEONG_ㅛ: UInt32 = 0x116d
+private let JUNGSEONG_ㅜ: UInt32 = 0x116e
+private let JUNGSEONG_ㅝ: UInt32 = 0x116f
+private let JUNGSEONG_ㅞ: UInt32 = 0x1170
+private let JUNGSEONG_ㅟ: UInt32 = 0x1171
+private let JUNGSEONG_ㅠ: UInt32 = 0x1172
+private let JUNGSEONG_ㅡ: UInt32 = 0x1173
+private let JUNGSEONG_ㅢ: UInt32 = 0x1174
+private let JUNGSEONG_ㅣ: UInt32 = 0x1175
 
-let JONGSEONG_PLACEHOLDER: UInt32 = 0x11a7
-let JONGSEONG_ᆨ: UInt32 = 0x11a8
-let JONGSEONG_ᆩ: UInt32 = 0x11a9
-let JONGSEONG_ᆪ: UInt32 = 0x11aa
-let JONGSEONG_ᆫ: UInt32 = 0x11ab
-let JONGSEONG_ᆬ: UInt32 = 0x11ac
-let JONGSEONG_ᆭ: UInt32 = 0x11ad
-let JONGSEONG_ᆮ: UInt32 = 0x11ae
-let JONGSEONG_ᆯ: UInt32 = 0x11af
-let JONGSEONG_ᆰ: UInt32 = 0x11b0
-let JONGSEONG_ᆱ: UInt32 = 0x11b1
-let JONGSEONG_ᆲ: UInt32 = 0x11b2
-let JONGSEONG_ᆳ: UInt32 = 0x11b3
-let JONGSEONG_ᆴ: UInt32 = 0x11b4
-let JONGSEONG_ᆵ: UInt32 = 0x11b5
-let JONGSEONG_ᆶ: UInt32 = 0x11b6
-let JONGSEONG_ᆷ: UInt32 = 0x11b7
-let JONGSEONG_ᆸ: UInt32 = 0x11b8
-let JONGSEONG_ᆹ: UInt32 = 0x11b9
-let JONGSEONG_ᆺ: UInt32 = 0x11ba
-let JONGSEONG_ᆻ: UInt32 = 0x11bb
-let JONGSEONG_ᆼ: UInt32 = 0x11bc
-let JONGSEONG_ᆽ: UInt32 = 0x11bd
-let JONGSEONG_ᆾ: UInt32 = 0x11be
-let JONGSEONG_ᆿ: UInt32 = 0x11bf
-let JONGSEONG_ᇀ: UInt32 = 0x11c0
-let JONGSEONG_ᇁ: UInt32 = 0x11c1
-let JONGSEONG_ᇂ: UInt32 = 0x11c2
+private let JONGSEONG_PLACEHOLDER: UInt32 = 0x11a7
+private let JONGSEONG_ᆨ: UInt32 = 0x11a8
+private let JONGSEONG_ᆩ: UInt32 = 0x11a9
+private let JONGSEONG_ᆪ: UInt32 = 0x11aa
+private let JONGSEONG_ᆫ: UInt32 = 0x11ab
+private let JONGSEONG_ᆬ: UInt32 = 0x11ac
+private let JONGSEONG_ᆭ: UInt32 = 0x11ad
+private let JONGSEONG_ᆮ: UInt32 = 0x11ae
+private let JONGSEONG_ᆯ: UInt32 = 0x11af
+private let JONGSEONG_ᆰ: UInt32 = 0x11b0
+private let JONGSEONG_ᆱ: UInt32 = 0x11b1
+private let JONGSEONG_ᆲ: UInt32 = 0x11b2
+private let JONGSEONG_ᆳ: UInt32 = 0x11b3
+private let JONGSEONG_ᆴ: UInt32 = 0x11b4
+private let JONGSEONG_ᆵ: UInt32 = 0x11b5
+private let JONGSEONG_ᆶ: UInt32 = 0x11b6
+private let JONGSEONG_ᆷ: UInt32 = 0x11b7
+private let JONGSEONG_ᆸ: UInt32 = 0x11b8
+private let JONGSEONG_ᆹ: UInt32 = 0x11b9
+private let JONGSEONG_ᆺ: UInt32 = 0x11ba
+private let JONGSEONG_ᆻ: UInt32 = 0x11bb
+private let JONGSEONG_ᆼ: UInt32 = 0x11bc
+private let JONGSEONG_ᆽ: UInt32 = 0x11bd
+private let JONGSEONG_ᆾ: UInt32 = 0x11be
+private let JONGSEONG_ᆿ: UInt32 = 0x11bf
+private let JONGSEONG_ᇀ: UInt32 = 0x11c0
+private let JONGSEONG_ᇁ: UInt32 = 0x11c1
+private let JONGSEONG_ᇂ: UInt32 = 0x11c2
 
 class HangulKey: Key {
     let id: String
@@ -162,15 +162,12 @@ class HangulKey: Key {
         // invalid key
         if isConsonant == isVowel { return }
 
-        guard let beforeText = document.documentContextBeforeInput else {
+        guard let last = document.documentContextBeforeInput?.last else {
             isComposing = true
             return document.insertText(key)
         }
-        guard let lastString = beforeText.last else {
-            isComposing = true
-            return document.insertText(key)
-        }
-        guard let components = decompose(String(lastString)) else {
+
+        guard let components = decompose(String(last)) else {
             isComposing = true
             return document.insertText(key)
         }
@@ -259,13 +256,13 @@ private func unicodeToString(_ unicode: UInt32) -> String {
     return String(Character(UnicodeScalar(unicode)!))
 }
 
-typealias Components = (initial: String?, medial: String?, final: String?)
+private typealias Components = (initial: String?, medial: String?, final: String?)
 
 private func decompose(_ string: String) -> Components? {
     if !isSyllable(string) { return letterToComponent(string) }
 
-    guard let scalarValue = string.unicodeScalars.first?.value else { return nil }
-    let syllableIndex = scalarValue - syllableBase
+    let scalarValue = string.unicodeScalars.first?.value
+    let syllableIndex = scalarValue! - SYLLABLE_BASE
 
     let initialIndex = syllableIndex / 28 / 21
     let initials = [
@@ -362,7 +359,7 @@ private func compose(_ initial: String, _ medial: String, _ final: String? = nil
     let initialIndex = initial.unicodeScalars.first!.value - CHOSEONG_ㄱ
     let medialIndex = medial.unicodeScalars.first!.value - JUNGSEONG_ㅏ
     let finalIndex = final != nil ? final!.unicodeScalars.first!.value - JONGSEONG_PLACEHOLDER : 0
-    let syllableValue = syllableBase + (initialIndex * 21 * 28) + (medialIndex * 28) + finalIndex
+    let syllableValue = SYLLABLE_BASE + (initialIndex * 21 * 28) + (medialIndex * 28) + finalIndex
     let syllable = unicodeToString(syllableValue)
     if isSyllable(syllable) { return syllable }
     else { return nil }
@@ -380,7 +377,7 @@ private func isVowel(_ string: String) -> Bool {
 
 private func isSyllable(_ string: String) -> Bool {
     let unicode = string.unicodeScalars.first!.value
-    return unicode >= syllableBase && unicode <= syllableEnd
+    return unicode >= SYLLABLE_BASE && unicode <= SYLLABLE_END
 }
 
 private func jongseongToChoseong(_ string: String) -> String? {
@@ -532,6 +529,20 @@ private func combineJongseong(_ first: String, _ second: String) -> String? {
     }
 }
 
+private func splitJungseoung(_ jungseoung: String) -> (String, String)? {
+    let unicode = jungseoung.unicodeScalars.first!.value
+    switch unicode {
+    case JUNGSEONG_ㅘ: return (unicodeToString(JUNGSEONG_ㅗ), unicodeToString(JUNGSEONG_ㅏ))
+    case JUNGSEONG_ㅙ: return (unicodeToString(JUNGSEONG_ㅗ), unicodeToString(JUNGSEONG_ㅐ))
+    case JUNGSEONG_ㅚ: return (unicodeToString(JUNGSEONG_ㅗ), unicodeToString(JUNGSEONG_ㅣ))
+    case JUNGSEONG_ㅝ: return (unicodeToString(JUNGSEONG_ㅜ), unicodeToString(JUNGSEONG_ㅓ))
+    case JUNGSEONG_ㅞ: return (unicodeToString(JUNGSEONG_ㅜ), unicodeToString(JUNGSEONG_ㅔ))
+    case JUNGSEONG_ㅟ: return (unicodeToString(JUNGSEONG_ㅜ), unicodeToString(JUNGSEONG_ㅣ))
+    case JUNGSEONG_ㅢ: return (unicodeToString(JUNGSEONG_ㅡ), unicodeToString(JUNGSEONG_ㅣ))
+    default: return nil
+    }
+}
+
 private func splitJongseoung(_ jongseoung: String) -> (String?, String)? {
     let unicode = jongseoung.unicodeScalars.first!.value
     switch unicode {
@@ -587,7 +598,7 @@ private func combineVowels(_ first: String, _ second: String) -> String? {
     }
 }
 
-var isComposing = false
+private var isComposing = false
 
 func deleteHangulComponent(_ document: UITextDocumentProxy) {
     guard let beforeText = document.documentContextBeforeInput else { return }
@@ -603,11 +614,19 @@ func deleteHangulComponent(_ document: UITextDocumentProxy) {
 
         switch (initial, medial, final) {
         case (.some, .some, .some):
-            if let syllable = compose(initial!, medial!) {
+            if let (jongseoung, _) = splitJongseoung(final!) {
+                let syllable = compose(initial!, medial!, jongseoung)!
+                document.insertText(syllable)
+            } else {
+                let syllable = compose(initial!, medial!)!
                 document.insertText(syllable)
             }
         case (.some, .some, nil):
-            if let letter = choseongToLetter(initial!) {
+            if let (jungseong, _) = splitJungseoung(medial!) {
+                let syllable = compose(initial!, jungseong)!
+                document.insertText(syllable)
+            } else {
+                let letter = choseongToLetter(initial!)!
                 document.insertText(letter)
             }
         default:

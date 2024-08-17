@@ -18,8 +18,8 @@ private let _7 = SymbolKey(first: "7", backgroundColor: customGray3)
 private let _8 = SymbolKey(first: "8", backgroundColor: customGray3)
 private let _9 = SymbolKey(first: "9", backgroundColor: customGray3)
 private let period = SymbolKey(first: ".", second: ",", third: "∙")
-private let question = SymbolKey(first: "/", second: "\\")
-private let exclamation = SymbolKey(first: "?", second: "!")
+private let slash = SymbolKey(first: "/", second: "\\")
+private let question = SymbolKey(first: "?", second: "!")
 private let at = SymbolKey(first: "@", second: "#")
 private let dollar = SymbolKey(first: "$", second: "%")
 private let colon = SymbolKey(first: ":", second: ";")
@@ -33,8 +33,8 @@ private let asterisk = SymbolKey(first: "*", second: "^")
 private let quote = SymbolKey(first: "'", second: "\"", third: "`")
 
 let symbolKeySet: [[Key]] = [
-    [dash, equals, asterisk, dollar, at, _7, _8, _9],
-    [quote, comparison, bracket, paranthesis, and, _4, _5, _6],
-    [period, colon, question, exclamation, _0, _1, _2, _3],
+    [dash, equals, asterisk, and, question, _7, _8, _9],
+    [period, colon, dollar, slash, at, _4, _5, _6],
+    [quote, comparison, bracket, paranthesis, _0, _1, _2, _3],
     [shift, symbols, space, enter, backSpace]
 ]
