@@ -50,16 +50,12 @@ class EnglishKey: Key {
 
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
         let keyValue = getKeyValue(document: document, context: context)
-        if context.isShiftedDoubleTapped {
+        if context.isCapsLocked {
+            document.insertText(keyValue.uppercased())
+        } else if context.isShifted {
             document.insertText(keyValue.capitalized)
         } else {
-            let isShifted = context.isShifted
-            let isCapsLocked = context.isCapsLocked
-            if isShifted || isCapsLocked {
-                document.insertText(keyValue.uppercased())
-            } else {
-                document.insertText(keyValue.lowercased())
-            }
+            document.insertText(keyValue.lowercased())
         }
     }
 

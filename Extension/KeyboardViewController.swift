@@ -12,7 +12,6 @@ class KeyboardViewController: UIInputViewController {
         isShifted: false,
         isCapsLocked: false,
         isDoubleTap: false,
-        isShiftedDoubleTapped: false,
         keySet: englishKeySet
     )
     
@@ -213,13 +212,12 @@ class KeyboardViewController: UIInputViewController {
     func handleDoubleTap(key: Key) {
         if firstTappedKey?.id == key.id {
             keyInputContext.isDoubleTapped = true
-            keyInputContext.isShiftedDoubleTapped = isFirstTappedKeyShifted
+            keyInputContext.isShifted = isFirstTappedKeyShifted
             doubleTapTimer?.invalidate()
         } else {
-            isFirstTappedKeyShifted = keyInputContext.isShifted
             firstTappedKey = key
+            isFirstTappedKeyShifted = keyInputContext.isShifted
             keyInputContext.isDoubleTapped = false
-            keyInputContext.isShiftedDoubleTapped = false
         }
         doubleTapTimer = Timer.scheduledTimer(
             timeInterval: 0.3,

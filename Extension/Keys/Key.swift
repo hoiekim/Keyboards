@@ -11,14 +11,12 @@ class KeyInputContext {
     var isShifted: Bool
     var isCapsLocked: Bool
     var isDoubleTapped: Bool
-    var isShiftedDoubleTapped: Bool
     var keySet: [[Key]]
 
-    init(isShifted: Bool, isCapsLocked: Bool, isDoubleTap: Bool, isShiftedDoubleTapped: Bool, keySet: [[Key]]) {
+    init(isShifted: Bool, isCapsLocked: Bool, isDoubleTap: Bool, keySet: [[Key]]) {
         self.isShifted = isShifted
         self.isCapsLocked = isCapsLocked
         self.isDoubleTapped = isDoubleTap
-        self.isShiftedDoubleTapped = isShiftedDoubleTapped
         self.keySet = keySet
     }
 }
