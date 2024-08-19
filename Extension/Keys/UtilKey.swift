@@ -45,6 +45,8 @@ class UtilKey: Key {
     func getTitle(_ context: KeyInputContext) -> String? {
         return nil
     }
+    
+    func getTitleSuperscript(_ context: KeyInputContext) -> String? { return nil }
 
     func getImage(_ context: KeyInputContext) -> String? {
         if context.isCapsLocked {

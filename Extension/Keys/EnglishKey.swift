@@ -24,11 +24,19 @@ class EnglishKey: Key {
     }
 
     func getTitle(_ context: KeyInputContext) -> String? {
-        let title = second == nil ? first : [first, second!].joined(separator: " ")
         if context.isShifted || context.isCapsLocked {
-            return title.uppercased()
+            return first.uppercased()
         } else {
-            return title.lowercased()
+            return first.lowercased()
+        }
+    }
+
+    func getTitleSuperscript(_ context: KeyInputContext) -> String? {
+        if second == nil { return nil }
+        if context.isShifted || context.isCapsLocked {
+            return second!.uppercased()
+        } else {
+            return second!.lowercased()
         }
     }
 
@@ -37,15 +45,22 @@ class EnglishKey: Key {
     }
 
     func getBackgroundColor(_ context: KeyInputContext) -> UIColor? {
-        return self._backgroundColor ?? customGray2
+        return _backgroundColor ?? customGray2
     }
 
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
         let keyValue = getKeyValue(document: document, context: context)
-        let isShifted = context.isShifted
-        let isCapsLocked = context.isCapsLocked
-        if isShifted || isCapsLocked { document.insertText(keyValue.uppercased()) }
-        else { document.insertText(keyValue.lowercased()) }
+        if context.isShiftedDoubleTapped {
+            document.insertText(keyValue.capitalized)
+        } else {
+            let isShifted = context.isShifted
+            let isCapsLocked = context.isCapsLocked
+            if isShifted || isCapsLocked {
+                document.insertText(keyValue.uppercased())
+            } else {
+                document.insertText(keyValue.lowercased())
+            }
+        }
     }
 
     private func getKeyValue(

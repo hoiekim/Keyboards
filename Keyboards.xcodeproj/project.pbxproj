@@ -20,10 +20,10 @@
 		5798A4CB2C6055FF00FCAA66 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4CA2C6055FF00FCAA66 /* Key.swift */; };
 		5798A4CD2C605C8E00FCAA66 /* EnglishKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */; };
 		5798A4CF2C6092B300FCAA66 /* HangulKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4CE2C6092B300FCAA66 /* HangulKeySet.swift */; };
-		5798A4D12C609D1C00FCAA66 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4D02C609D1C00FCAA66 /* UIButton.swift */; };
 		5798A4D32C62961300FCAA66 /* UtilKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4D22C62961300FCAA66 /* UtilKeys.swift */; };
 		57E0FB732C6F828C005CDAC2 /* EnglishKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB722C6F828C005CDAC2 /* EnglishKey.swift */; };
 		57E0FB752C6F8B82005CDAC2 /* SymbolKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB742C6F8B82005CDAC2 /* SymbolKey.swift */; };
+		57E0FB7C2C72E8C3005CDAC2 /* UIKeyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB7B2C72E8C3005CDAC2 /* UIKeyButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,10 +67,11 @@
 		5798A4CA2C6055FF00FCAA66 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishKeySet.swift; sourceTree = "<group>"; };
 		5798A4CE2C6092B300FCAA66 /* HangulKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangulKeySet.swift; sourceTree = "<group>"; };
-		5798A4D02C609D1C00FCAA66 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		5798A4D22C62961300FCAA66 /* UtilKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilKeys.swift; sourceTree = "<group>"; };
 		57E0FB722C6F828C005CDAC2 /* EnglishKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishKey.swift; sourceTree = "<group>"; };
 		57E0FB742C6F8B82005CDAC2 /* SymbolKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolKey.swift; sourceTree = "<group>"; };
+		57E0FB7B2C72E8C3005CDAC2 /* UIKeyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyButton.swift; sourceTree = "<group>"; };
+		57E0FB7D2C72F522005CDAC2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,8 +107,8 @@
 		5797627E2C65CAEA00FB5BD4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				5798A4D02C609D1C00FCAA66 /* UIButton.swift */,
 				5797627F2C65CAFA00FB5BD4 /* Utils.swift */,
+				57E0FB7B2C72E8C3005CDAC2 /* UIKeyButton.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -126,6 +127,7 @@
 		5798A4A02C5DFE4400FCAA66 = {
 			isa = PBXGroup;
 			children = (
+				57E0FB7D2C72F522005CDAC2 /* README.md */,
 				5797628A2C6B90D200FB5BD4 /* .gitignore */,
 				5798A4AB2C5DFE4400FCAA66 /* App */,
 				5798A4BF2C5EE8AD00FCAA66 /* Extension */,
@@ -290,10 +292,10 @@
 				57E0FB752C6F8B82005CDAC2 /* SymbolKey.swift in Sources */,
 				5798A4CB2C6055FF00FCAA66 /* Key.swift in Sources */,
 				5798A4CF2C6092B300FCAA66 /* HangulKeySet.swift in Sources */,
+				57E0FB7C2C72E8C3005CDAC2 /* UIKeyButton.swift in Sources */,
 				579762802C65CAFA00FB5BD4 /* Utils.swift in Sources */,
 				5798A4CD2C605C8E00FCAA66 /* EnglishKeySet.swift in Sources */,
 				5798A4D32C62961300FCAA66 /* UtilKeys.swift in Sources */,
-				5798A4D12C609D1C00FCAA66 /* UIButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

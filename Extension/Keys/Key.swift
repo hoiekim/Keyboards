@@ -11,12 +11,14 @@ class KeyInputContext {
     var isShifted: Bool
     var isCapsLocked: Bool
     var isDoubleTapped: Bool
+    var isShiftedDoubleTapped: Bool
     var keySet: [[Key]]
 
-    init(isShifted: Bool, isCapsLocked: Bool, isDoubleTap: Bool, keySet: [[Key]]) {
+    init(isShifted: Bool, isCapsLocked: Bool, isDoubleTap: Bool, isShiftedDoubleTapped: Bool, keySet: [[Key]]) {
         self.isShifted = isShifted
         self.isCapsLocked = isCapsLocked
         self.isDoubleTapped = isDoubleTap
+        self.isShiftedDoubleTapped = isShiftedDoubleTapped
         self.keySet = keySet
     }
 }
@@ -28,6 +30,7 @@ protocol Key {
     var updateButtonImagesOnTap: Bool { get }
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) -> Void
     func getTitle(_ context: KeyInputContext) -> String?
+    func getTitleSuperscript(_ context: KeyInputContext) -> String?
     func getImage(_ context: KeyInputContext) -> String?
     func getBackgroundColor(_ context: KeyInputContext) -> UIColor?
 }

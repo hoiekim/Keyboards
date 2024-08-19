@@ -145,6 +145,8 @@ class HangulKey: Key {
             return first
         }
     }
+    
+    func getTitleSuperscript(_ context: KeyInputContext) -> String? { return nil }
 
     func getImage(_ context: KeyInputContext) -> String? {
         return nil

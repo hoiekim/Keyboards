@@ -12,6 +12,7 @@ class KeyboardViewController: UIInputViewController {
         isShifted: false,
         isCapsLocked: false,
         isDoubleTap: false,
+        isShiftedDoubleTapped: false,
         keySet: englishKeySet
     )
     
@@ -41,7 +42,7 @@ class KeyboardViewController: UIInputViewController {
         for (_, rowView) in buttonsView.arrangedSubviews.enumerated() {
             guard let rowStackView = rowView as? UIStackView else { continue }
             for (_, subView) in rowStackView.arrangedSubviews.enumerated() {
-                guard let button = subView as? UIButton else { continue }
+                guard let button = subView as? UIKeyButton else { continue }
                 let key = button.key!
                 let keyWidth = calculateKeyWidth(
                     span: key.span,
@@ -139,9 +140,10 @@ class KeyboardViewController: UIInputViewController {
     }
     
     private func createButton(withKey key: Key) -> UIButton {
-        let button = UIButton(type: .custom)
+        let button = UIKeyButton(type: .custom)
         button.key = key
         let title = key.getTitle(keyInputContext)
+        let titleSuperscript = key.getTitleSuperscript(keyInputContext)
         let image = key.getImage(keyInputContext)
         let backgroundColor = key.getBackgroundColor(keyInputContext)
         
@@ -159,6 +161,10 @@ class KeyboardViewController: UIInputViewController {
             button.setTitle(title, for: .normal)
         }
         
+        if titleSuperscript != nil {
+            button.setTitleSuperscript(titleSuperscript!)
+        }
+        
         button.backgroundColor = backgroundColor ?? UIColor.darkGray
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 5
@@ -171,19 +177,17 @@ class KeyboardViewController: UIInputViewController {
         for (_, rowView) in buttonsView.arrangedSubviews.enumerated() {
             guard let rowStackView = rowView as? UIStackView else { continue }
             for (_, subView) in rowStackView.arrangedSubviews.enumerated() {
-                guard let button = subView as? UIButton else { continue }
+                guard let button = subView as? UIKeyButton else { continue }
                 button.updateImage(keyInputContext)
             }
         }
     }
     
-    let haptic = UIImpactFeedbackGenerator(style: .soft)
-    
-    @objc func keyTapped(sender: UIButton) {
+    @objc func keyTapped(sender: UIKeyButton) {
         let key = sender.key!
         handleDoubleTap(key: key)
         key.onTap(document: textDocumentProxy, context: keyInputContext)
-        haptic.impactOccurred()
+        UIImpactFeedbackGenerator().impactOccurred()
         
         let isShiftKey = key.id == shift.id
         let isCapsLocked = keyInputContext.isCapsLocked
@@ -203,15 +207,19 @@ class KeyboardViewController: UIInputViewController {
     }
     
     private var firstTappedKey: Key?
+    private var isFirstTappedKeyShifted: Bool = false
     private var doubleTapTimer: Timer?
     
     func handleDoubleTap(key: Key) {
         if firstTappedKey?.id == key.id {
             keyInputContext.isDoubleTapped = true
+            keyInputContext.isShiftedDoubleTapped = isFirstTappedKeyShifted
             doubleTapTimer?.invalidate()
         } else {
+            isFirstTappedKeyShifted = keyInputContext.isShifted
             firstTappedKey = key
             keyInputContext.isDoubleTapped = false
+            keyInputContext.isShiftedDoubleTapped = false
         }
         doubleTapTimer = Timer.scheduledTimer(
             timeInterval: 0.3,

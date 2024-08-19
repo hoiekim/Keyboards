@@ -39,6 +39,8 @@ class SymbolKey: Key {
             return values.joined(separator: " ")
         }
     }
+    
+    func getTitleSuperscript(_ context: KeyInputContext) -> String? { return nil }
 
     func getImage(_ context: KeyInputContext) -> String? {
         return nil

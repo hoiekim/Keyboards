@@ -11,16 +11,16 @@ private let KQ = EnglishKey(first: "K", second: "Q")
 private let BV = EnglishKey(first: "B", second: "V")
 private let ZX = EnglishKey(first: "Z", second: "X")
 private let D = EnglishKey(first: "D")
-private let T = EnglishKey(first: "T")
+private let TTH = EnglishKey(first: "T", second: "TH")
 private let G = EnglishKey(first: "G")
 private let J = EnglishKey(first: "J")
 private let H = EnglishKey(first: "H")
-private let S = EnglishKey(first: "S")
+private let SSH = EnglishKey(first: "S", second: "SH")
 private let R = EnglishKey(first: "R")
-private let C = EnglishKey(first: "C")
-private let P = EnglishKey(first: "P")
+private let CCH = EnglishKey(first: "C", second: "CH")
+private let PPH = EnglishKey(first: "P", second: "PH")
 private let F = EnglishKey(first: "F")
-private let N = EnglishKey(first: "N")
+private let NNG = EnglishKey(first: "N", second: "NG")
 private let M = EnglishKey(first: "M")
 private let L = EnglishKey(first: "L")
 private let X = EnglishKey(first: "X")
@@ -33,8 +33,8 @@ private let E = EnglishKey(first: "E", backgroundColor: customGray3)
 private let U = EnglishKey(first: "U", backgroundColor: customGray3)
 
 let englishKeySet: [[Key]] = [
-    [KQ, D, T, G, H, J, O, A],
-    [BV, F, P, R, C, Y, I, E],
-    [ZX, S, N, M, L, W, U, changeLanguage],
+    [KQ, TTH, D, G, H, J, Y, I],
+    [BV, PPH, F, R, L, O, A, E],
+    [ZX, SSH, CCH, NNG, M, W, U, changeLanguage],
     [shift, symbols, space, enter, backSpace]
 ]
