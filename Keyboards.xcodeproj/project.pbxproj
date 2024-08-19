@@ -24,6 +24,7 @@
 		57E0FB732C6F828C005CDAC2 /* EnglishKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB722C6F828C005CDAC2 /* EnglishKey.swift */; };
 		57E0FB752C6F8B82005CDAC2 /* SymbolKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB742C6F8B82005CDAC2 /* SymbolKey.swift */; };
 		57E0FB7C2C72E8C3005CDAC2 /* UIKeyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB7B2C72E8C3005CDAC2 /* UIKeyButton.swift */; };
+		57E0FB7F2C737B0A005CDAC2 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 57E0FB7E2C737B0A005CDAC2 /* LICENSE */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		57E0FB742C6F8B82005CDAC2 /* SymbolKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolKey.swift; sourceTree = "<group>"; };
 		57E0FB7B2C72E8C3005CDAC2 /* UIKeyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyButton.swift; sourceTree = "<group>"; };
 		57E0FB7D2C72F522005CDAC2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		57E0FB7E2C737B0A005CDAC2 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 		5798A4A02C5DFE4400FCAA66 = {
 			isa = PBXGroup;
 			children = (
+				57E0FB7E2C737B0A005CDAC2 /* LICENSE */,
 				57E0FB7D2C72F522005CDAC2 /* README.md */,
 				5797628A2C6B90D200FB5BD4 /* .gitignore */,
 				5798A4AB2C5DFE4400FCAA66 /* App */,
@@ -265,6 +268,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57E0FB7F2C737B0A005CDAC2 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
