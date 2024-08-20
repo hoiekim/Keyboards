@@ -145,7 +145,7 @@ class HangulKey: Key {
             return first
         }
     }
-    
+
     func getTitleSuperscript(_ context: KeyInputContext) -> String? { return nil }
 
     func getImage(_ context: KeyInputContext) -> String? {
@@ -179,7 +179,10 @@ class HangulKey: Key {
         let (initial, medial, final) = components
 
         let isDoubleTappedVowel = second != nil && context.isDoubleTapped && isVowel
-        if !isComposing {
+        if context.isHeld {
+            if isDoubleTappedVowel { document.insertText(second!) }
+            else { document.insertText(key) }
+        } else if !isComposing {
             document.insertText(key)
         } else if isDoubleTappedVowel {
             switch (initial, medial, final) {

@@ -32,7 +32,7 @@ class UIKeyButton: UIButton {
                 self.setImage(nil, for: .normal)
             }
             self.setTitle(title, for: .normal)
-            self.backgroundColor = backgroundColor ?? UIColor.darkGray
+            self.backgroundColor = backgroundColor ?? customGray1
             
             setTitleSuperscript(titleSuperscript)
         }

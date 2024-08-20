@@ -8,15 +8,13 @@
 import UIKit
 
 class KeyInputContext {
-    var isShifted: Bool
-    var isCapsLocked: Bool
-    var isDoubleTapped: Bool
+    var isShifted = false
+    var isCapsLocked = false
+    var isDoubleTapped = false
+    var isHeld = false
     var keySet: [[Key]]
 
-    init(isShifted: Bool, isCapsLocked: Bool, isDoubleTap: Bool, keySet: [[Key]]) {
-        self.isShifted = isShifted
-        self.isCapsLocked = isCapsLocked
-        self.isDoubleTapped = isDoubleTap
+    init(keySet: [[Key]]) {
         self.keySet = keySet
     }
 }

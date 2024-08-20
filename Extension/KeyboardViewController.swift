@@ -8,17 +8,12 @@
 import UIKit
 
 class KeyboardViewController: UIInputViewController {
-    let keyInputContext = KeyInputContext(
-        isShifted: false,
-        isCapsLocked: false,
-        isDoubleTap: false,
-        keySet: englishKeySet
-    )
+    let keyInputContext = KeyInputContext(keySet: englishKeySet)
     
     let buttonSpacing: CGFloat = 5
 
-    @IBOutlet var nextKeyboardButton: UIButton!
-    
+    var impactFeedbackGenerator: UIImpactFeedbackGenerator?
+
     override func updateViewConstraints() {
         super.updateViewConstraints()
         adjustButtonSizes()
@@ -26,12 +21,12 @@ class KeyboardViewController: UIInputViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNextKeyboardButton()
         mountButtons()
+        impactFeedbackGenerator = hasFullAccess ? UIImpactFeedbackGenerator(style: .light) : nil
+        impactFeedbackGenerator?.prepare()
     }
     
     override func viewWillLayoutSubviews() {
-        nextKeyboardButton.isHidden = !needsInputModeSwitchKey
         super.viewWillLayoutSubviews()
     }
 
@@ -52,51 +47,6 @@ class KeyboardViewController: UIInputViewController {
                 button.widthAnchor.constraint(equalToConstant: keyWidth).isActive = true
             }
         }
-    }
-    
-    override func textWillChange(_ textInput: UITextInput?) {
-        // The app is about to change the document's contents. Perform any preparation here.
-    }
-    
-    override func textDidChange(_ textInput: UITextInput?) {
-        // The app has just changed the document's contents, the document context has been updated.
-        
-        var textColor: UIColor
-        let proxy = textDocumentProxy
-        if proxy.keyboardAppearance == UIKeyboardAppearance.dark {
-            textColor = UIColor.white
-        } else {
-            textColor = UIColor.black
-        }
-        nextKeyboardButton.setTitleColor(textColor, for: [])
-    }
-    
-    private func setupNextKeyboardButton() {
-        nextKeyboardButton = UIButton(type: .system)
-        
-        nextKeyboardButton.setTitle(
-            NSLocalizedString("Next Keyboard", comment: "Title for 'Next Keyboard' button"),
-            for: []
-        )
-        nextKeyboardButton.sizeToFit()
-        nextKeyboardButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        nextKeyboardButton.addTarget(
-            self,
-            action: #selector(handleInputModeList(from:with:)),
-            for: .allTouchEvents
-        )
-        
-        view.addSubview(nextKeyboardButton)
-        
-        nextKeyboardButton
-            .leftAnchor
-            .constraint(equalTo: view.leftAnchor)
-            .isActive = true
-        nextKeyboardButton
-            .bottomAnchor
-            .constraint(equalTo: view.bottomAnchor)
-            .isActive = true
     }
     
     var buttonsView = UIStackView()
@@ -167,27 +117,40 @@ class KeyboardViewController: UIInputViewController {
         button.backgroundColor = backgroundColor ?? UIColor.darkGray
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 5
-        button.addTarget(self, action: #selector(keyTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(onTouchUpInside), for: .touchUpInside)
+        button.addTarget(self, action: #selector(onTouchDown), for: .touchDown)
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        button.addGestureRecognizer(panGesture)
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        longPressRecognizer.minimumPressDuration = 0.3
+        button.addGestureRecognizer(longPressRecognizer)
         return button
     }
     
-    private func updateButtonImages() {
-        for (_, rowView) in buttonsView.arrangedSubviews.enumerated() {
-            guard let rowStackView = rowView as? UIStackView else { continue }
-            for (_, subView) in rowStackView.arrangedSubviews.enumerated() {
-                guard let button = subView as? UIKeyButton else { continue }
-                button.updateImage(keyInputContext)
-            }
+    private var tapHighlightTimer: Timer?
+    
+    @objc func onTouchDown(sender: UIKeyButton) {
+        handleDoubleTap(sender.key!)
+        impactFeedbackGenerator?.impactOccurred()
+        sender.backgroundColor = .systemIndigo
+        tapHighlightTimer?.invalidate()
+        tapHighlightTimer = Timer.scheduledTimer(
+            withTimeInterval: 0.3,
+            repeats: false
+        ) { _ in
+            let backgroundColor = sender.key?.getBackgroundColor(self.keyInputContext)
+            sender.backgroundColor = backgroundColor ?? customGray1
         }
     }
     
-    @objc func keyTapped(sender: UIKeyButton) {
+    @objc func onTouchUpInside(sender: UIKeyButton) {
         let key = sender.key!
-        handleDoubleTap(key: key)
         key.onTap(document: textDocumentProxy, context: keyInputContext)
-        UIImpactFeedbackGenerator().impactOccurred()
-        
+        afterTap(key)
+    }
+    
+    func afterTap(_ key: Key) {
         let isShiftKey = key.id == shift.id
         let isCapsLocked = keyInputContext.isCapsLocked
         
@@ -205,31 +168,118 @@ class KeyboardViewController: UIInputViewController {
         }
     }
     
-    private var firstTappedKey: Key?
+    private var lastTappedKey: Key? = nil
     private var isFirstTappedKeyShifted: Bool = false
     private var doubleTapTimer: Timer?
     
-    func handleDoubleTap(key: Key) {
-        if firstTappedKey?.id == key.id {
+    func handleDoubleTap(_ key: Key) {
+        if lastTappedKey?.id == key.id {
             keyInputContext.isDoubleTapped = true
             keyInputContext.isShifted = isFirstTappedKeyShifted
             doubleTapTimer?.invalidate()
+            doubleTapTimer = Timer.scheduledTimer(
+                timeInterval: 0.35,
+                target: self,
+                selector: #selector(resetDoubleTap),
+                userInfo: nil,
+                repeats: false
+            )
         } else {
-            firstTappedKey = key
+            lastTappedKey = key
             isFirstTappedKeyShifted = keyInputContext.isShifted
             keyInputContext.isDoubleTapped = false
         }
-        doubleTapTimer = Timer.scheduledTimer(
-            timeInterval: 0.3,
-            target: self,
-            selector: #selector(resetDoubleTap),
-            userInfo: nil,
-            repeats: false
-        )
     }
 
     @objc private func resetDoubleTap() {
-        firstTappedKey = nil
+        lastTappedKey = nil
         keyInputContext.isDoubleTapped = false
+    }
+    
+    private func updateButtonImages() {
+        for (_, rowView) in buttonsView.arrangedSubviews.enumerated() {
+            guard let rowStackView = rowView as? UIStackView else { continue }
+            for (_, subView) in rowStackView.arrangedSubviews.enumerated() {
+                guard let button = subView as? UIKeyButton else { continue }
+                button.updateImage(keyInputContext)
+            }
+        }
+    }
+    
+    var lastTimestamp: TimeInterval?
+    var lastUpdatedTranslationX = CGFloat(0)
+    var backSpaceCache = ""
+    
+    @objc func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        guard let button = gesture.view as? UIKeyButton else { return }
+        guard let key = button.key else { return }
+        
+        let currentTime = Date().timeIntervalSince1970
+        let translationX = gesture.translation(in: view).x
+        var offsetMultiplier = CGFloat(30)
+        
+        if let lastTimestamp = lastTimestamp {
+            let distance = translationX - lastUpdatedTranslationX
+            let timeElapsed = currentTime - lastTimestamp
+            let speed = abs(distance / CGFloat(timeElapsed))
+            offsetMultiplier *= max(min(speed / 300, 2), 1)
+        }
+
+        let distance = translationX - lastUpdatedTranslationX
+        let offset = Int((distance / view.bounds.width) * offsetMultiplier)
+        if offset > 0 || offset < 0 {
+            impactFeedbackGenerator?.impactOccurred()
+            if key.id == backSpace.id || key.id == hangulBackSpace.id {
+                if offset < 0 {
+                    for _ in 0 ..< abs(offset) {
+                        let before = textDocumentProxy.documentContextBeforeInput
+                        guard let last = before?.last else { continue }
+                        backSpaceCache.insert(last, at: backSpaceCache.startIndex)
+                        textDocumentProxy.deleteBackward()
+                    }
+                } else {
+                    for _ in 0 ..< offset {
+                        guard let first = backSpaceCache.first else { continue }
+                        backSpaceCache.removeFirst()
+                        textDocumentProxy.insertText(String(first))
+                    }
+                }
+            } else {
+                textDocumentProxy.adjustTextPosition(byCharacterOffset: offset)
+            }
+            lastUpdatedTranslationX = translationX
+            lastTimestamp = currentTime
+        }
+        
+        if gesture.state == .ended {
+            lastUpdatedTranslationX = CGFloat(0)
+            lastTimestamp = nil
+            backSpaceCache = ""
+        }
+    }
+    
+    var holdTimer: Timer?
+    
+    @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard let button = gesture.view as? UIKeyButton else { return }
+        guard let key = button.key else { return }
+        if gesture.state == .began {
+            self.doubleTapTimer?.invalidate()
+            self.impactFeedbackGenerator?.impactOccurred()
+            key.onTap(document: self.textDocumentProxy, context: self.keyInputContext)
+            self.keyInputContext.isHeld = true
+            holdTimer = Timer.scheduledTimer(
+                withTimeInterval: 0.1,
+                repeats: true
+            ) { _ in
+                self.impactFeedbackGenerator?.impactOccurred()
+                key.onTap(document: self.textDocumentProxy, context: self.keyInputContext)
+            }
+        } else if gesture.state == .ended {
+            holdTimer?.invalidate()
+            self.afterTap(key)
+            self.resetDoubleTap()
+            self.keyInputContext.isHeld = false
+        }
     }
 }

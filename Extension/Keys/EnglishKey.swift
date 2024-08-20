@@ -58,6 +58,8 @@ class EnglishKey: Key {
             document.insertText(keyValue.lowercased())
         }
     }
+    
+    private var isSingleKeyRemoved = false
 
     private func getKeyValue(
         document: UITextDocumentProxy,
@@ -65,9 +67,13 @@ class EnglishKey: Key {
     ) -> String {
         if second == nil { return first }
         else if context.isDoubleTapped {
-            document.deleteBackward()
+            if !isSingleKeyRemoved {
+                document.deleteBackward()
+                isSingleKeyRemoved = true
+            }
             return second!
         } else {
+            isSingleKeyRemoved = false
             return first
         }
     }
