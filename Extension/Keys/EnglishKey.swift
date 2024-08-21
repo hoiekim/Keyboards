@@ -40,7 +40,7 @@ class EnglishKey: Key {
         }
     }
 
-    func getImage(_ context: KeyInputContext) -> String? {
+    func getImage(_ context: KeyInputContext) -> UIImage? {
         return nil
     }
 

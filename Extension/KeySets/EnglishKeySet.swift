@@ -95,5 +95,5 @@ let englishKeySet: [[Key]] = [
     [KQ, TTH, D, R, L, W, U, E],
     [BV, PPH, F, G, H, J, Y, I],
     [shift, ZX, SSH, CCH, NNG, M, O, A],
-    [symbols, changeLanguage, englishSpace, enter, backSpace]
+    [changeToSymbols, changeToKorean, englishSpace, enter, backSpace]
 ]

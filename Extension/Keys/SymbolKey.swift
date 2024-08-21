@@ -40,9 +40,11 @@ class SymbolKey: Key {
         }
     }
     
-    func getTitleSuperscript(_ context: KeyInputContext) -> String? { return nil }
+    func getTitleSuperscript(_ context: KeyInputContext) -> String? {
+        return nil
+    }
 
-    func getImage(_ context: KeyInputContext) -> String? {
+    func getImage(_ context: KeyInputContext) -> UIImage? {
         return nil
     }
 

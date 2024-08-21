@@ -83,32 +83,32 @@ let enter = UtilKey(
 
 var lastLanguage: [[Key]] = englishKeySet
 
-let symbols = UtilKey(
-    id: "symbols",
+let changeToSymbols = UtilKey(
+    id: "changeToSymbol",
     remountOnTap: true,
-    defaultImage: "dollarsign",
+    title: "$1",
     onTap: { _, context in
-        if isKeySetsEqual(context.keySet, symbolKeySet) {
-            context.keySet = lastLanguage
-        } else {
-            lastLanguage = context.keySet
-            context.keySet = symbolKeySet
-        }
+        context.keySet = symbolKeySet
     }
 )
 
-let changeLanguage = UtilKey(
-    id: "changeLanguage",
+let changeToEnglish = UtilKey(
+    id: "changeToEnglish",
     remountOnTap: true,
-    defaultImage: "globe",
+    defaultImage: "character",
+    locale: "en-US",
     onTap: { _, context in
-        if isKeySetsEqual(context.keySet, symbolKeySet) {
-            context.keySet = lastLanguage
-        } else if isKeySetsEqual(context.keySet, englishKeySet) {
-            context.keySet = koreanKeySet
-        } else {
-            context.keySet = englishKeySet
-        }
+        context.keySet = englishKeySet
+    }
+)
+
+let changeToKorean = UtilKey(
+    id: "changeToKorean",
+    remountOnTap: true,
+    defaultImage: "character",
+    locale: "ko-KR",
+    onTap: { _, context in
+        context.keySet = koreanKeySet
     }
 )
 

@@ -18,25 +18,19 @@ class UIKeyButton: UIButton {
         self.addTarget(self, action: #selector(onTouchDown), for: .touchDown)
     }
     
-    func updateImage(_ context: KeyInputContext) {
+    func updateImage() {
         guard let key = self.key else { return }
+        guard let context = self.context else { return }
         let title = key.getTitle(context)
         let titleSuperscript = key.getTitleSuperscript(context)
         let image = key.getImage(context)
         let backgroundColor = key.getBackgroundColor(context)
         
         UIView.performWithoutAnimation {
-            if image != nil {
-                let uiImage = UIImage(
-                    systemName: image!,
-                    withConfiguration: UIImage.SymbolConfiguration(scale: .medium)
-                )
-                self.setImage(uiImage, for: .normal)
-                self.tintColor = .white
-            } else {
-                self.setImage(nil, for: .normal)
-            }
+            self.setImage(image, for: .normal)
+            self.tintColor = .white
             self.setTitle(title, for: .normal)
+            self.setTitleColor(UIColor.white, for: .normal)
             self.backgroundColor = backgroundColor ?? customGray1
             
             setTitleSuperscript(titleSuperscript)

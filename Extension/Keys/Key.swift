@@ -27,6 +27,6 @@ protocol Key {
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) -> Void
     func getTitle(_ context: KeyInputContext) -> String?
     func getTitleSuperscript(_ context: KeyInputContext) -> String?
-    func getImage(_ context: KeyInputContext) -> String?
+    func getImage(_ context: KeyInputContext) -> UIImage?
     func getBackgroundColor(_ context: KeyInputContext) -> UIColor?
 }

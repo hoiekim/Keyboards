@@ -46,5 +46,5 @@ let koreanKeySet: [[Key]] = [
     [ㅂ, ㅈ, ㄷ, ㄱ, ㅅ, ㅗ, ㅐ, ㅔ],
     [ㅁ, ㄴ, ㅇ, ㄹ, ㅎ, ㅓ, ㅏ, ㅣ],
     [shift, ㅋ, ㅌ, ㅊ, ㅍ, ㅜ, ㅡ, blank],
-    [symbols, changeLanguage, space, enter, hangulBackSpace]
+    [changeToSymbols, changeToEnglish, space, enter, hangulBackSpace]
 ]
