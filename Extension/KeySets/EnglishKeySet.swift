@@ -32,9 +32,68 @@ private let I = EnglishKey(first: "I", backgroundColor: customGray3)
 private let E = EnglishKey(first: "E", backgroundColor: customGray3)
 private let U = EnglishKey(first: "U", backgroundColor: customGray3)
 
+let englishSpace = UtilKey(
+    id: "space",
+    span: 4,
+    imageOnShift: "arrow.forward.to.line",
+    onTap: { document, context in
+        if context.isShifted, !context.isCapsLocked {
+            document.insertText("\t")
+        } else {
+            let beforeText = document.documentContextBeforeInput
+            if let lastWord = beforeText?.split(separator: " ").last {
+                let replacement: String? = switch lastWord {
+                case "Dont": "Don't"
+                case "dont": "don't"
+                case "Cant": "Can't"
+                case "cant": "can't"
+                case "Wont": "Won't"
+                case "wont": "won't"
+                case "Havent": "Haven't"
+                case "havent": "haven't"
+                case "Hasnt": "Hasn't"
+                case "hasnt": "hasn't"
+                case "Isnt": "Isn't"
+                case "isnt": "isn't"
+                case "Im": "I'm"
+                case "Ive": "I've"
+                case "Youre": "You're"
+                case "youre": "you're"
+                case "Youve": "You've"
+                case "youve": "you've"
+                case "Theyre": "They're"
+                case "theyre": "they're"
+                case "Theyve": "They've"
+                case "theyve": "they've"
+                case "Shes": "She's"
+                case "shes": "she's"
+                case "Hes": "He's"
+                case "hes": "he's"
+                case "Its": "It's"
+                case "its": "it's"
+                case "Couldve": "Could've"
+                case "couldve": "could've"
+                case "Shouldnt": "Shouldn't"
+                case "shouldnt": "shouldn't"
+                case "Mustve": "Must've"
+                case "mustve": "must've"
+                default: nil
+                }
+                if replacement != nil {
+                    for _ in 0 ..< lastWord.count {
+                        document.deleteBackward()
+                    }
+                    document.insertText(replacement!)
+                }
+            }
+            document.insertText(" ")
+        }
+    }
+)
+
 let englishKeySet: [[Key]] = [
-    [KQ, TTH, D, G, H, J, Y, I],
-    [BV, PPH, F, R, L, O, A, E],
-    [ZX, SSH, CCH, NNG, M, W, U, changeLanguage],
-    [shift, symbols, space, enter, backSpace]
+    [KQ, TTH, D, R, L, W, U, E],
+    [BV, PPH, F, G, H, J, Y, I],
+    [shift, ZX, SSH, CCH, NNG, M, O, A],
+    [symbols, changeLanguage, englishSpace, enter, backSpace]
 ]

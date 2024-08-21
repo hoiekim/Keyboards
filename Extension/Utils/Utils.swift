@@ -41,6 +41,15 @@ func isKeySetsEqual(_ keySet1: [[Key]], _ keySet2: [[Key]]) -> Bool {
     return true
 }
 
+func isKeyInKeySet(_ key: Key, _ keySet: [[Key]]) -> Bool {
+    for (_, keyArray) in keySet.enumerated() {
+        for (_, keyInKeySet) in keyArray.enumerated() {
+            if key.id == keyInKeySet.id { return true }
+        }
+    }
+    return false
+}
+
 let customGray1 = UIColor(white: 0.25, alpha: 1.0)
 let customGray2 = UIColor(white: 0.35, alpha: 1.0)
 let customGray3 = UIColor(white: 0.4, alpha: 1.0)

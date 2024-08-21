@@ -75,6 +75,7 @@ class SymbolKey: Key {
                 }
                 return second!
             } else {
+                isSingleKeyRemoved = false
                 return first
             }
         }

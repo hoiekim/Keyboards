@@ -13,6 +13,11 @@ class UIKeyButton: UIButton {
     var key: Key? = nil
     let cornerLabel = UILabel()
     
+    convenience init() {
+        self.init(type: .custom)
+        self.addTarget(self, action: #selector(onTouchDown), for: .touchDown)
+    }
+    
     func updateImage(_ context: KeyInputContext) {
         guard let key = self.key else { return }
         let title = key.getTitle(context)
@@ -53,5 +58,36 @@ class UIKeyButton: UIButton {
             cornerLabel.topAnchor.constraint(equalTo: topAnchor, constant: 2),
             cornerLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5)
         ])
+    }
+    
+    private var context: KeyInputContext?
+    
+    func setContext(_ context: KeyInputContext) {
+        self.context = context
+    }
+    
+    private var impactFeedbackGenerator: UIImpactFeedbackGenerator?
+    
+    func setImpactFeedbackGenerator(_ generator: UIImpactFeedbackGenerator) {
+        self.impactFeedbackGenerator = generator
+    }
+    
+    private var tapHighlightTimer: Timer?
+    
+    @objc func onTouchDown(sender: UIKeyButton) {
+        impactFeedbackGenerator?.impactOccurred()
+        sender.backgroundColor = .systemIndigo
+        tapHighlightTimer?.invalidate()
+        tapHighlightTimer = Timer.scheduledTimer(
+            withTimeInterval: 0.3,
+            repeats: false
+        ) { _ in
+            sender.backgroundColor = self.key!.getBackgroundColor(self.context!)
+        }
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let hitView = super.hitTest(point, with: event)
+        return hitView == self ? self : hitView
     }
 }

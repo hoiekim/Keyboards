@@ -13,16 +13,6 @@ func trimSpacesBefore(_ document: UITextDocumentProxy) {
     }
 }
 
-func deleteLine(_ document: UITextDocumentProxy) {
-    let beforeText = document.documentContextBeforeInput
-    let lastLetter = beforeText?.last
-    if lastLetter == "\n" { return document.deleteBackward() }
-    guard let lastLine = beforeText?.split(separator: "\n").last else { return }
-    for _ in 0 ..< lastLine.count {
-        document.deleteBackward()
-    }
-}
-
 func deleteWord(_ document: UITextDocumentProxy) {
     guard let beforeText = document.documentContextBeforeInput else { return }
     if beforeText.last == "\n" { return document.deleteBackward() }
@@ -42,9 +32,7 @@ let backSpace = UtilKey(
     id: "backSpace",
     defaultImage: "delete.backward",
     onTap: { document, context in
-        if context.isCapsLocked {
-            deleteLine(document)
-        } else if context.isShifted {
+        if context.isCapsLocked || context.isShifted {
             deleteWord(document)
         } else {
             document.deleteBackward()
@@ -76,7 +64,7 @@ let shift = UtilKey(
 
 let space = UtilKey(
     id: "space",
-    span: 3,
+    span: 4,
     imageOnShift: "arrow.forward.to.line",
     onTap: { document, context in
         if context.isShifted && !context.isCapsLocked {
@@ -89,7 +77,6 @@ let space = UtilKey(
 
 let enter = UtilKey(
     id: "enter",
-    span: 2,
     defaultImage: "return",
     onTap: { document, _ in document.insertText("\n") }
 )
@@ -103,10 +90,9 @@ let symbols = UtilKey(
     onTap: { _, context in
         if isKeySetsEqual(context.keySet, symbolKeySet) {
             context.keySet = lastLanguage
-            symbols._defaultImage = "dollarsign"
         } else {
+            lastLanguage = context.keySet
             context.keySet = symbolKeySet
-            symbols._defaultImage = "character"
         }
     }
 )
@@ -116,12 +102,13 @@ let changeLanguage = UtilKey(
     remountOnTap: true,
     defaultImage: "globe",
     onTap: { _, context in
-        if isKeySetsEqual(context.keySet, englishKeySet) {
-            lastLanguage = koreanKeySet
+        if isKeySetsEqual(context.keySet, symbolKeySet) {
+            context.keySet = lastLanguage
+        } else if isKeySetsEqual(context.keySet, englishKeySet) {
+            context.keySet = koreanKeySet
         } else {
-            lastLanguage = englishKeySet
+            context.keySet = englishKeySet
         }
-        context.keySet = lastLanguage
     }
 )
 

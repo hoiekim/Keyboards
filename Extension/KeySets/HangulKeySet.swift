@@ -34,9 +34,7 @@ let hangulBackSpace = UtilKey(
     id: "hangulBackSpace",
     defaultImage: "delete.backward",
     onTap: { document, context in
-        if context.isCapsLocked {
-            deleteLine(document)
-        } else if context.isShifted {
+        if context.isCapsLocked || context.isShifted {
             deleteWord(document)
         } else {
             deleteHangulComponent(document)
@@ -47,6 +45,6 @@ let hangulBackSpace = UtilKey(
 let koreanKeySet: [[Key]] = [
     [ㅂ, ㅈ, ㄷ, ㄱ, ㅅ, ㅗ, ㅐ, ㅔ],
     [ㅁ, ㄴ, ㅇ, ㄹ, ㅎ, ㅓ, ㅏ, ㅣ],
-    [blank, ㅋ, ㅌ, ㅊ, ㅍ, ㅜ, ㅡ, changeLanguage],
-    [shift, symbols, space, enter, hangulBackSpace]
+    [shift, ㅋ, ㅌ, ㅊ, ㅍ, ㅜ, ㅡ, blank],
+    [symbols, changeLanguage, space, enter, hangulBackSpace]
 ]

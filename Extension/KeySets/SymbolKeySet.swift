@@ -23,18 +23,32 @@ private let question = SymbolKey(first: "?", second: "!")
 private let at = SymbolKey(first: "@", second: "#")
 private let dollar = SymbolKey(first: "$", second: "%")
 private let colon = SymbolKey(first: ":", second: ";")
-private let comparison = SymbolKey(first: "<", second: ">")
-private let paranthesis = SymbolKey(first: "(", second: ")")
-private let bracket = SymbolKey(first: "[", second: "]")
+private let comparison = SymbolKey(first: "<", second: ">", third: "[")
+private let paranthesis = SymbolKey(first: "(", second: ")", third: "]")
 private let and = SymbolKey(first: "&", second: "|")
 private let dash = SymbolKey(first: "-", second: "_", third: "~")
 private let equals = SymbolKey(first: "=", second: "+")
 private let asterisk = SymbolKey(first: "*", second: "^")
 private let quote = SymbolKey(first: "'", second: "\"", third: "`")
 
+let language = UtilKey(
+    id: "symbols",
+    span: 2,
+    remountOnTap: true,
+    defaultImage: "character",
+    onTap: { _, context in
+        if isKeySetsEqual(context.keySet, symbolKeySet) {
+            context.keySet = lastLanguage
+        } else {
+            lastLanguage = context.keySet
+            context.keySet = symbolKeySet
+        }
+    }
+)
+
 let symbolKeySet: [[Key]] = [
-    [dash, equals, asterisk, and, question, _7, _8, _9],
-    [period, colon, dollar, slash, at, _4, _5, _6],
-    [quote, comparison, bracket, paranthesis, _0, _1, _2, _3],
-    [shift, symbols, space, enter, backSpace]
+    [question, dash, equals, asterisk, and, _7, _8, _9],
+    [at, dollar, quote, comparison, paranthesis, _4, _5, _6],
+    [shift, period, colon, slash, _0, _1, _2, _3],
+    [language, space, enter, backSpace]
 ]
