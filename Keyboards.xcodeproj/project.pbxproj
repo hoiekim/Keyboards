@@ -25,6 +25,7 @@
 		57E0FB752C6F8B82005CDAC2 /* SymbolKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB742C6F8B82005CDAC2 /* SymbolKey.swift */; };
 		57E0FB7C2C72E8C3005CDAC2 /* UIKeyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB7B2C72E8C3005CDAC2 /* UIKeyButton.swift */; };
 		57E0FB7F2C737B0A005CDAC2 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 57E0FB7E2C737B0A005CDAC2 /* LICENSE */; };
+		57EE9CC22C77791400EA1EF2 /* Info.app.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57EE9CC12C77791400EA1EF2 /* Info.app.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +65,7 @@
 		5798A4B32C5DFE4600FCAA66 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5798A4BE2C5EE8AD00FCAA66 /* Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Extension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5798A4C02C5EE8AD00FCAA66 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
-		5798A4C22C5EE8AD00FCAA66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5798A4C22C5EE8AD00FCAA66 /* Info.extension.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.extension.plist; sourceTree = "<group>"; };
 		5798A4CA2C6055FF00FCAA66 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishKeySet.swift; sourceTree = "<group>"; };
 		5798A4CE2C6092B300FCAA66 /* HangulKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangulKeySet.swift; sourceTree = "<group>"; };
@@ -74,6 +75,7 @@
 		57E0FB7B2C72E8C3005CDAC2 /* UIKeyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyButton.swift; sourceTree = "<group>"; };
 		57E0FB7D2C72F522005CDAC2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		57E0FB7E2C737B0A005CDAC2 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		57EE9CC12C77791400EA1EF2 /* Info.app.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.app.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,7 +131,8 @@
 		5798A4A02C5DFE4400FCAA66 = {
 			isa = PBXGroup;
 			children = (
-				5798A4C22C5EE8AD00FCAA66 /* Info.plist */,
+				57EE9CC12C77791400EA1EF2 /* Info.app.plist */,
+				5798A4C22C5EE8AD00FCAA66 /* Info.extension.plist */,
 				57E0FB7E2C737B0A005CDAC2 /* LICENSE */,
 				57E0FB7D2C72F522005CDAC2 /* README.md */,
 				5797628A2C6B90D200FB5BD4 /* .gitignore */,
@@ -261,6 +264,7 @@
 			files = (
 				5798A4B42C5DFE4600FCAA66 /* Preview Assets.xcassets in Resources */,
 				5798A4B12C5DFE4600FCAA66 /* Assets.xcassets in Resources */,
+				57EE9CC22C77791400EA1EF2 /* Info.app.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,7 +451,7 @@
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Info.app.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -478,7 +482,7 @@
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Info.app.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -504,7 +508,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Info.extension.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Hoikey;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -529,7 +533,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Info.extension.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Hoikey;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
