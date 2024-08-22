@@ -157,7 +157,7 @@ class HangulKey: Key {
     }
 
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
-        let isSecond = context.isShifted || context.isCapsLocked
+        let isSecond = (context.isShifted && !context.isDoubleTapped) || context.isCapsLocked
         let key = isSecond && second != nil ? second! : first
 
         let isConsonant = isConsonant(key)

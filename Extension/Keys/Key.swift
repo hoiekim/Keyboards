@@ -13,6 +13,8 @@ class KeyInputContext {
     var isDoubleTapped = false
     var isHeld = false
     var keySet: [[Key]]
+    var undoStack: [String] = []
+    var redoStack: [String] = []
 
     init(keySet: [[Key]]) {
         self.keySet = keySet
@@ -29,4 +31,13 @@ protocol Key {
     func getTitleSuperscript(_ context: KeyInputContext) -> String?
     func getImage(_ context: KeyInputContext) -> UIImage?
     func getBackgroundColor(_ context: KeyInputContext) -> UIColor?
+}
+
+func updateUndoStack(_ document: UITextDocumentProxy, _ context: KeyInputContext) {
+    context.redoStack.removeAll()
+    let beforeText = document.documentContextBeforeInput ?? ""
+    let afterText = document.documentContextAfterInput ?? ""
+    context.undoStack.append(beforeText + afterText)
+    print(context.undoStack)
+    print(context.redoStack)
 }

@@ -162,6 +162,12 @@ class KeyboardViewController: UIInputViewController {
             userInfo: nil,
             repeats: false
         )
+        if keyInputContext.isHeld {
+            keyInputContext.isHeld = false
+        } else {
+            guard let key = sender.key else { return }
+            key.onTap(document: textDocumentProxy, context: keyInputContext)
+        }
     }
 
     @objc private func resetDoubleTap() {
@@ -170,13 +176,8 @@ class KeyboardViewController: UIInputViewController {
     }
     
     @objc private func onTouchUpInside(sender: UIKeyButton) {
-        if keyInputContext.isHeld {
-            keyInputContext.isHeld = false
-        } else {
-            guard let key = sender.key else { return }
-            key.onTap(document: textDocumentProxy, context: keyInputContext)
-            afterTap(key)
-        }
+        guard let key = sender.key else { return }
+        afterTap(key)
     }
     
     private func afterTap(_ key: Key) {

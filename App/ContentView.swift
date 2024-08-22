@@ -24,8 +24,12 @@ struct ContentView: View {
             Text("Add a new keyboard in:")
                 .font(.system(size: 14, weight: .light))
                 .frame(alignment: Alignment.center)
-                .padding(.bottom, 5.0)
+                .padding(.bottom, 2.0)
             Text("Settings → General → Keyboard → Keyboards")
+                .font(.system(size: 14, weight: .light))
+                .frame(alignment: Alignment.center)
+                .padding(.bottom, 2.0)
+            Text("Allow full access to enable haptic feedback.")
                 .font(.system(size: 14, weight: .light))
                 .frame(alignment: Alignment.center)
         }

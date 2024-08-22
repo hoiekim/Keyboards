@@ -79,9 +79,4 @@ class UIKeyButton: UIButton {
             sender.backgroundColor = self.key!.getBackgroundColor(self.context!)
         }
     }
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let hitView = super.hitTest(point, with: event)
-        return hitView == self ? self : hitView
-    }
 }
