@@ -129,6 +129,7 @@
 		5798A4A02C5DFE4400FCAA66 = {
 			isa = PBXGroup;
 			children = (
+				5798A4C22C5EE8AD00FCAA66 /* Info.plist */,
 				57E0FB7E2C737B0A005CDAC2 /* LICENSE */,
 				57E0FB7D2C72F522005CDAC2 /* README.md */,
 				5797628A2C6B90D200FB5BD4 /* .gitignore */,
@@ -173,7 +174,6 @@
 				579762852C6A756000FB5BD4 /* KeySets */,
 				5797627E2C65CAEA00FB5BD4 /* Utils */,
 				5798A4C02C5EE8AD00FCAA66 /* KeyboardViewController.swift */,
-				5798A4C22C5EE8AD00FCAA66 /* Info.plist */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -447,6 +447,7 @@
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -477,6 +478,7 @@
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -502,7 +504,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Extension/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Hoikey;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -527,7 +529,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Extension/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Hoikey;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
