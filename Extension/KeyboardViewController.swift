@@ -204,6 +204,18 @@ class KeyboardViewController: UIInputViewController {
         guard let button = gesture.view as? UIKeyButton else { return }
         guard let key = button.key else { return }
         
+        if key.id == shift.id { return }
+        if key.id == changeToKorean.id { return }
+        if key.id == changeToEnglish.id { return }
+        if key.id == changeToSymbols.id { return }
+        if key.id == enter.id { return }
+        if key.id == space.id { return }
+        if key.id == englishSpace.id { return }
+        
+        if gesture.state == .began {
+            key.onCancelTap(document: textDocumentProxy, context: keyInputContext)
+        }
+        
         let currentTime = Date().timeIntervalSince1970
         let translationX = gesture.translation(in: view).x
         var offsetMultiplier = CGFloat(30)

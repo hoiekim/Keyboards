@@ -173,10 +173,10 @@
 		5798A4BF2C5EE8AD00FCAA66 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				5798A4C02C5EE8AD00FCAA66 /* KeyboardViewController.swift */,
 				5797627C2C645F6C00FB5BD4 /* Keys */,
 				579762852C6A756000FB5BD4 /* KeySets */,
 				5797627E2C65CAEA00FB5BD4 /* Utils */,
-				5798A4C02C5EE8AD00FCAA66 /* KeyboardViewController.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";

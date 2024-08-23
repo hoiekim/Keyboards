@@ -256,6 +256,16 @@ class HangulKey: Key {
         }
 
         isComposing = true
+        isCanceled = false
+    }
+    
+    private var isCanceled = true
+    
+    func onCancelTap(document: UITextDocumentProxy, context: KeyInputContext) {
+        if !isCanceled {
+            deleteHangulComponent(document)
+            isCanceled = true
+        }
     }
 }
 
@@ -606,6 +616,10 @@ private func combineVowels(_ first: String, _ second: String) -> String? {
 }
 
 private var isComposing = false
+
+func isSingletonLetter(_ string: String) -> Bool {
+    return isConsonant(string) || isVowel(string)
+}
 
 func deleteHangulComponent(_ document: UITextDocumentProxy) {
     guard let beforeText = document.documentContextBeforeInput else { return }

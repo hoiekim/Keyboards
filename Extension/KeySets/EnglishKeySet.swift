@@ -32,11 +32,15 @@ private let I = EnglishKey(first: "I", backgroundColor: customGray3)
 private let E = EnglishKey(first: "E", backgroundColor: customGray3)
 private let U = EnglishKey(first: "U", backgroundColor: customGray3)
 
+private var beforeChangeCache = ""
+private var afterChangeCahce = ""
+
 let englishSpace = UtilKey(
     id: "space",
     span: 4,
     imageOnShift: "arrow.forward.to.line",
     onTap: { document, context in
+        beforeChangeCache = document.documentContextBeforeInput ?? ""
         if context.isShifted, !context.isCapsLocked {
             document.insertText("\t")
         } else {
@@ -57,20 +61,31 @@ let englishSpace = UtilKey(
                 case "isnt": "isn't"
                 case "Im": "I'm"
                 case "Ive": "I've"
+                case "Ill": "I'll"
                 case "Youre": "You're"
                 case "youre": "you're"
                 case "Youve": "You've"
                 case "youve": "you've"
+                case "Youll": "You'll"
+                case "youll": "you'll"
                 case "Theyre": "They're"
                 case "theyre": "they're"
                 case "Theyve": "They've"
                 case "theyve": "they've"
+                case "Theyll": "They'll"
+                case "theyll": "they'll"
                 case "Shes": "She's"
                 case "shes": "she's"
                 case "Hes": "He's"
                 case "hes": "he's"
                 case "Its": "It's"
                 case "its": "it's"
+                case "Itll": "It'll"
+                case "itll": "it'll"
+                case "Thats": "That's"
+                case "thats": "that's"
+                case "Thatll": "That'll"
+                case "thatll": "that'll"
                 case "Couldve": "Could've"
                 case "couldve": "could've"
                 case "Shouldnt": "Shouldn't"
@@ -79,6 +94,7 @@ let englishSpace = UtilKey(
                 case "mustve": "must've"
                 default: nil
                 }
+                
                 if replacement != nil {
                     for _ in 0 ..< lastWord.count {
                         document.deleteBackward()
@@ -88,12 +104,19 @@ let englishSpace = UtilKey(
             }
             document.insertText(" ")
         }
+        afterChangeCahce = document.documentContextBeforeInput ?? ""
+    },
+    onCancelTap: { document, _ in
+        for _ in 0 ..< beforeChangeCache.count {
+            document.deleteBackward()
+        }
+        document.insertText(afterChangeCahce)
     }
 )
 
 let englishKeySet: [[Key]] = [
-    [KQ, TTH, D, R, L, W, U, E],
-    [BV, PPH, F, G, H, J, Y, I],
-    [shift, ZX, SSH, CCH, NNG, M, O, A],
+    [KQ, TTH, D, R, L, U, I, O],
+    [BV, PPH, F, G, H, J, A, E],
+    [shift, ZX, SSH, CCH, NNG, M, W, Y],
     [changeToSymbols, changeToKorean, englishSpace, enter, backSpace]
 ]

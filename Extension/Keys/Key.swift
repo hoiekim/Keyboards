@@ -19,6 +19,26 @@ class KeyInputContext {
     init(keySet: [[Key]]) {
         self.keySet = keySet
     }
+    
+    convenience init(_ copyFrom: KeyInputContext) {
+        self.init(keySet: copyFrom.keySet)
+        self.isShifted = copyFrom.isShifted
+        self.isCapsLocked = copyFrom.isCapsLocked
+        self.isDoubleTapped = copyFrom.isDoubleTapped
+        self.isHeld = copyFrom.isHeld
+        self.undoStack = copyFrom.undoStack
+        self.redoStack = copyFrom.redoStack
+    }
+    
+    func copyFrom(_ context: KeyInputContext) {
+        self.keySet = context.keySet
+        self.isShifted = context.isShifted
+        self.isCapsLocked = context.isCapsLocked
+        self.isDoubleTapped = context.isDoubleTapped
+        self.isHeld = context.isHeld
+        self.undoStack = context.undoStack
+        self.redoStack = context.redoStack
+    }
 }
 
 protocol Key {
@@ -27,6 +47,7 @@ protocol Key {
     var remountOnTap: Bool { get }
     var updateButtonImagesOnTap: Bool { get }
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) -> Void
+    func onCancelTap(document: UITextDocumentProxy, context: KeyInputContext) -> Void
     func getTitle(_ context: KeyInputContext) -> String?
     func getTitleSuperscript(_ context: KeyInputContext) -> String?
     func getImage(_ context: KeyInputContext) -> UIImage?
