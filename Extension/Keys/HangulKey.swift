@@ -117,6 +117,9 @@ private let JONGSEONG_ᇁ: UInt32 = 0x11c1
 private let JONGSEONG_ᇂ: UInt32 = 0x11c2
 
 class HangulKey: Key {
+    static let className = "HangulKey"
+    let className = "HangulKey"
+    
     let id: String
     let first: String
     let second: String?

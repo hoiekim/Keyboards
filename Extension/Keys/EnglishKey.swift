@@ -8,6 +8,9 @@
 import UIKit
 
 class EnglishKey: Key {
+    static let className = "EnglishKey"
+    let className = "EnglishKey"
+    
     let id: String
     let span: Int = 1
     let remountOnTap = false

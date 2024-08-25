@@ -39,6 +39,9 @@ class KeyboardViewController: UIInputViewController {
                 r.isEnabled = false
             }
         }
+        
+        handleAutoCapitalization()
+        updateButtonImages()
     }
     
     override func viewWillLayoutSubviews() {
@@ -125,6 +128,7 @@ class KeyboardViewController: UIInputViewController {
                     containerSize: view.bounds.width,
                     spacing: buttonSpacing
                 )
+                button.removeConstraints(button.constraints)
                 button.widthAnchor.constraint(equalToConstant: keyWidth).isActive = true
             }
         }
@@ -189,6 +193,10 @@ class KeyboardViewController: UIInputViewController {
             keyInputContext.isShifted = false
         }
         
+        if key.id == space.id || key.id == englishSpace.id || key.id == enter.id {
+            handleAutoCapitalization()
+        }
+        
         if key.remountOnTap {
             mountButtons()
             adjustButtonSizes()
@@ -206,13 +214,9 @@ class KeyboardViewController: UIInputViewController {
         guard let button = gesture.view as? UIKeyButton else { return }
         guard let key = button.key else { return }
         
-        if key.id == shift.id { return }
-        if key.id == changeToKorean.id { return }
-        if key.id == changeToEnglish.id { return }
-        if key.id == changeToSymbols.id { return }
-        if key.id == enter.id { return }
-        if key.id == space.id { return }
-        if key.id == englishSpace.id { return }
+        let isUtilKey = key.className == UtilKey.className
+        let isBackSpace = key.id == backSpace.id || key.id == hangulBackSpace.id
+        if isUtilKey && !isBackSpace { return }
         
         let currentTime = Date().timeIntervalSince1970
         let translationX = gesture.translation(in: view).x
@@ -235,7 +239,7 @@ class KeyboardViewController: UIInputViewController {
             
             impactFeedbackGenerator?.impactOccurred()
             
-            if key.id == backSpace.id || key.id == hangulBackSpace.id {
+            if isBackSpace {
                 if offset < 0 {
                     for _ in 0 ..< abs(offset) {
                         let before = textDocumentProxy.documentContextBeforeInput
@@ -297,6 +301,18 @@ class KeyboardViewController: UIInputViewController {
             afterTap(key)
             resetDoubleTap()
             keyInputContext.isHeld = false
+        }
+    }
+    
+    func handleAutoCapitalization() {
+        if !isKeySetsEqual(keyInputContext.keySet, englishKeySet) { return }
+        let last = textDocumentProxy.documentContextBeforeInput?.last
+        let lastTwo = textDocumentProxy.documentContextBeforeInput?.suffix(2)
+        let isBeginningOfAll = last == nil
+        let isBeginningOfSentence = lastTwo == ". "
+        let isBeginningOfParagraph = last != nil && last == "\n"
+        if  isBeginningOfAll || isBeginningOfSentence || isBeginningOfParagraph {
+            keyInputContext.isShifted = true
         }
     }
 }

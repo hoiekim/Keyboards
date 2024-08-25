@@ -8,6 +8,9 @@
 import UIKit
 
 class UtilKey: Key {
+    static let className = "UtilKey"
+    let className = "UtilKey"
+    
     typealias OnTapUtilKey = (UITextDocumentProxy, KeyInputContext) -> Void
 
     let id: String

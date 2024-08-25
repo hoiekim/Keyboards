@@ -42,6 +42,7 @@ class KeyInputContext {
 }
 
 protocol Key {
+    var className: String { get }
     var id: String { get }
     var span: Int { get }
     var remountOnTap: Bool { get }

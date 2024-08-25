@@ -8,6 +8,9 @@
 import UIKit
 
 class SymbolKey: Key {
+    static let className = "SymbolKey"
+    let className = "SymbolKey"
+    
     let id: String
     let span: Int = 1
     let remountOnTap = false

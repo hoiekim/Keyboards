@@ -33,7 +33,6 @@ private let E = EnglishKey(first: "E", backgroundColor: customGray3)
 private let U = EnglishKey(first: "U", backgroundColor: customGray3)
 
 private var beforeChangeCache = ""
-private var afterChangeCahce = ""
 
 let englishSpace = UtilKey(
     id: "space",
@@ -43,31 +42,66 @@ let englishSpace = UtilKey(
         beforeChangeCache = document.documentContextBeforeInput ?? ""
         if context.isShifted, !context.isCapsLocked {
             document.insertText("\t")
+        } else if context.isDoubleTapped {
+            document.deleteBackward()
+            document.insertText(". ")
+            context.isShifted = true
         } else {
             let beforeText = document.documentContextBeforeInput
             if let lastWord = beforeText?.split(separator: " ").last {
                 let replacement: String? = switch lastWord {
                 case "Dont": "Don't"
                 case "dont": "don't"
+                case "Didnt": "Didn't"
+                case "didnt": "didn't"
                 case "Cant": "Can't"
                 case "cant": "can't"
+                case "Couldnt": "Couldn't"
+                case "couldnt": "couldn't"
+                case "Couldve": "Could've"
+                case "couldve": "could've"
+                case "Shouldnt": "Shouldn't"
+                case "shouldnt": "shouldn't"
+                case "Shouldve": "Should've"
+                case "shouldve": "should've"
                 case "Wont": "Won't"
                 case "wont": "won't"
+                case "Wouldnt": "Wouldn't"
+                case "wouldnt": "wouldn't"
+                case "Wouldve": "Would've"
+                case "wouldve": "would've"
+                case "Mustnt": "Mustn't"
+                case "mustnt": "mustn't"
+                case "Mustve": "Must've"
+                case "mustve": "must've"
                 case "Havent": "Haven't"
                 case "havent": "haven't"
                 case "Hasnt": "Hasn't"
                 case "hasnt": "hasn't"
+                case "Hadnt": "Hadn't"
+                case "hadnt": "hadn't"
                 case "Isnt": "Isn't"
                 case "isnt": "isn't"
+                case "Wasnt": "Wasn't"
+                case "wasnt": "wasn't"
+                case "Arent": "Aren't"
+                case "arent": "aren't"
+                case "Werent": "Weren't"
+                case "werent": "weren't"
+                case "Aint": "Ain't"
+                case "aint": "ain't"
                 case "Im": "I'm"
                 case "Ive": "I've"
                 case "Ill": "I'll"
+                case "Id": "I'd"
                 case "Youre": "You're"
                 case "youre": "you're"
                 case "Youve": "You've"
                 case "youve": "you've"
                 case "Youll": "You'll"
                 case "youll": "you'll"
+                case "Youd": "You'd"
+                case "youd": "you'd"
                 case "Theyre": "They're"
                 case "theyre": "they're"
                 case "Theyve": "They've"
@@ -82,16 +116,15 @@ let englishSpace = UtilKey(
                 case "its": "it's"
                 case "Itll": "It'll"
                 case "itll": "it'll"
+                case "Itd": "It'd"
+                case "itd": "it'd"
                 case "Thats": "That's"
                 case "thats": "that's"
                 case "Thatll": "That'll"
                 case "thatll": "that'll"
-                case "Couldve": "Could've"
-                case "couldve": "could've"
-                case "Shouldnt": "Shouldn't"
-                case "shouldnt": "shouldn't"
-                case "Mustve": "Must've"
-                case "mustve": "must've"
+                case "Thatd": "That'd"
+                case "thatd": "that'd"
+                case "Lets": "Let's"
                 default: nil
                 }
                 
@@ -104,13 +137,15 @@ let englishSpace = UtilKey(
             }
             document.insertText(" ")
         }
-        afterChangeCahce = document.documentContextBeforeInput ?? ""
     },
     onCancelTap: { document, _ in
-        for _ in 0 ..< beforeChangeCache.count {
-            document.deleteBackward()
+        if let beforeText = document.documentContextBeforeInput {
+            for _ in 0 ..< beforeText.count {
+                document.deleteBackward()
+            }
         }
-        document.insertText(afterChangeCahce)
+        document.insertText(beforeChangeCache)
+        beforeChangeCache = ""
     }
 )
 
