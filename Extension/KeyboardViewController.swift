@@ -167,6 +167,7 @@ class KeyboardViewController: UIInputViewController {
         } else {
             guard let key = sender.key else { return }
             key.onTap(document: textDocumentProxy, context: keyInputContext)
+            isTapCanceled = false
         }
     }
 
@@ -198,6 +199,7 @@ class KeyboardViewController: UIInputViewController {
     
     private var lastPanTimestamp: TimeInterval?
     private var lastUpdatedPanTranslationX = CGFloat(0)
+    private var isTapCanceled = false
     private var backSpaceCache = ""
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
@@ -211,10 +213,6 @@ class KeyboardViewController: UIInputViewController {
         if key.id == enter.id { return }
         if key.id == space.id { return }
         if key.id == englishSpace.id { return }
-        
-        if gesture.state == .began {
-            key.onCancelTap(document: textDocumentProxy, context: keyInputContext)
-        }
         
         let currentTime = Date().timeIntervalSince1970
         let translationX = gesture.translation(in: view).x
@@ -230,7 +228,13 @@ class KeyboardViewController: UIInputViewController {
         let distance = translationX - lastUpdatedPanTranslationX
         let offset = Int((distance / view.bounds.width) * offsetMultiplier)
         if offset > 0 || offset < 0 {
+            if !isTapCanceled {
+                key.onCancelTap(document: textDocumentProxy, context: keyInputContext)
+                isTapCanceled = true
+            }
+            
             impactFeedbackGenerator?.impactOccurred()
+            
             if key.id == backSpace.id || key.id == hangulBackSpace.id {
                 if offset < 0 {
                     for _ in 0 ..< abs(offset) {
@@ -249,6 +253,7 @@ class KeyboardViewController: UIInputViewController {
             } else {
                 textDocumentProxy.adjustTextPosition(byCharacterOffset: offset)
             }
+            
             lastUpdatedPanTranslationX = translationX
             lastPanTimestamp = currentTime
         }
