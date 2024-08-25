@@ -25,7 +25,6 @@
 		57E0FB752C6F8B82005CDAC2 /* SymbolKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB742C6F8B82005CDAC2 /* SymbolKey.swift */; };
 		57E0FB7C2C72E8C3005CDAC2 /* UIKeyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB7B2C72E8C3005CDAC2 /* UIKeyButton.swift */; };
 		57E0FB7F2C737B0A005CDAC2 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 57E0FB7E2C737B0A005CDAC2 /* LICENSE */; };
-		57EE9CC22C77791400EA1EF2 /* Info.app.plist in Resources */ = {isa = PBXBuildFile; fileRef = 57EE9CC12C77791400EA1EF2 /* Info.app.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -264,7 +263,6 @@
 			files = (
 				5798A4B42C5DFE4600FCAA66 /* Preview Assets.xcassets in Resources */,
 				5798A4B12C5DFE4600FCAA66 /* Assets.xcassets in Resources */,
-				57EE9CC22C77791400EA1EF2 /* Info.app.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
