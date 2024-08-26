@@ -85,12 +85,11 @@ class KeyboardViewController: UIInputViewController {
     }
     
     private func createButton(withKey key: Key) -> UIButton {
-        let button = UIKeyButton()
-        button.setContext(keyInputContext)
-        if impactFeedbackGenerator != nil {
-            button.setImpactFeedbackGenerator(impactFeedbackGenerator!)
-        }
-        button.key = key
+        let button = UIKeyButton(
+            key: key,
+            context: keyInputContext,
+            impactFeedbackGenerator: impactFeedbackGenerator
+        )
         
         button.layer.cornerRadius = 5
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -121,7 +120,7 @@ class KeyboardViewController: UIInputViewController {
             guard let rowStackView = rowView as? UIStackView else { continue }
             for (_, subView) in rowStackView.arrangedSubviews.enumerated() {
                 guard let button = subView as? UIKeyButton else { continue }
-                let key = button.key!
+                let key = button.key
                 let keyWidth = calculateKeyWidth(
                     span: key.span,
                     spanTotal: maxNumberOfSpans,
@@ -149,7 +148,7 @@ class KeyboardViewController: UIInputViewController {
     private var doubleTapTimer: Timer?
     
     @objc private func onTouchDown(sender: UIKeyButton) {
-        guard let key = sender.key else { return }
+        let key = sender.key
         if lastTappedKey?.id == key.id {
             keyInputContext.isDoubleTapped = true
             keyInputContext.isShifted = isFirstTappedKeyShifted
@@ -169,8 +168,7 @@ class KeyboardViewController: UIInputViewController {
         if keyInputContext.isHeld {
             keyInputContext.isHeld = false
         } else {
-            guard let key = sender.key else { return }
-            key.onTap(document: textDocumentProxy, context: keyInputContext)
+            sender.key.onTap(document: textDocumentProxy, context: keyInputContext)
             isTapCanceled = false
         }
     }
@@ -181,8 +179,7 @@ class KeyboardViewController: UIInputViewController {
     }
     
     @objc private func onTouchUpInside(sender: UIKeyButton) {
-        guard let key = sender.key else { return }
-        afterTap(key)
+        afterTap(sender.key)
     }
     
     private func afterTap(_ key: Key) {
@@ -212,7 +209,7 @@ class KeyboardViewController: UIInputViewController {
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         guard let button = gesture.view as? UIKeyButton else { return }
-        guard let key = button.key else { return }
+        let key = button.key
         
         let isUtilKey = key.className == UtilKey.className
         let isBackSpace = key.id == backSpace.id || key.id == hangulBackSpace.id
@@ -273,7 +270,7 @@ class KeyboardViewController: UIInputViewController {
     
     @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard let button = gesture.view as? UIKeyButton else { return }
-        guard let key = button.key else { return }
+        let key = button.key
         
         if key.id == shift.id { return }
         if key.id == changeToKorean.id { return }

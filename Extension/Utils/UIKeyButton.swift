@@ -10,17 +10,26 @@ import UIKit
 private var keyAssociationKey: UInt8 = 0
 
 class UIKeyButton: UIButton {
-    var key: Key? = nil
+    var key: Key = blank
+    var context = KeyInputContext(keySet: englishKeySet)
+    var impactFeedbackGenerator: UIImpactFeedbackGenerator?
     let cornerLabel = UILabel()
     
-    convenience init() {
+    convenience init(
+        key: Key,
+        context: KeyInputContext,
+        impactFeedbackGenerator: UIImpactFeedbackGenerator?
+    ) {
         self.init(type: .custom)
+        self.key = key
+        self.context = context
+        self.impactFeedbackGenerator = impactFeedbackGenerator
         self.addTarget(self, action: #selector(onTouchDown), for: .touchDown)
     }
     
     func updateImage() {
-        guard let key = self.key else { return }
-        guard let context = self.context else { return }
+        let key = self.key
+        let context = self.context
         let title = key.getTitle(context)
         let titleSuperscript = key.getTitleSuperscript(context)
         let image = key.getImage(context)
@@ -42,7 +51,7 @@ class UIKeyButton: UIButton {
         if titleSuperscript == nil { return }
         
         cornerLabel.text = titleSuperscript
-        cornerLabel.font = UIFont.systemFont(ofSize: 12)
+        cornerLabel.font = UIFont.systemFont(ofSize: 10)
         cornerLabel.textColor = .white
         cornerLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -54,21 +63,10 @@ class UIKeyButton: UIButton {
         ])
     }
     
-    private var context: KeyInputContext?
-    
-    func setContext(_ context: KeyInputContext) {
-        self.context = context
-    }
-    
-    private var impactFeedbackGenerator: UIImpactFeedbackGenerator?
-    
-    func setImpactFeedbackGenerator(_ generator: UIImpactFeedbackGenerator) {
-        self.impactFeedbackGenerator = generator
-    }
-    
     private var tapHighlightTimer: Timer?
     
     @objc func onTouchDown(sender: UIKeyButton) {
+        if self.key.id == blank.id { return }
         impactFeedbackGenerator?.impactOccurred()
         sender.backgroundColor = .systemIndigo
         tapHighlightTimer?.invalidate()
@@ -76,7 +74,7 @@ class UIKeyButton: UIButton {
             withTimeInterval: 0.3,
             repeats: false
         ) { _ in
-            sender.backgroundColor = self.key!.getBackgroundColor(self.context!)
+            sender.backgroundColor = self.key.getBackgroundColor(self.context)
         }
     }
 }
