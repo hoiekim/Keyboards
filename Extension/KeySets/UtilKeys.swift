@@ -13,15 +13,12 @@ func trimSpacesBefore(_ document: UITextDocumentProxy) {
     }
 }
 
-func deleteWord(_ document: UITextDocumentProxy) -> String? {
-    guard let beforeText = document.documentContextBeforeInput else { return nil }
-    if beforeText.last == "\n" {
-        document.deleteBackward()
-        return "\n"
-    }
+func deleteWord(_ document: UITextDocumentProxy) {
+    guard let beforeText = document.documentContextBeforeInput else { return }
+    if beforeText.last == "\n" { return document.deleteBackward() }
     trimSpacesBefore(document)
-    guard let beforeText = document.documentContextBeforeInput else { return nil }
-    if beforeText.last == "\n" { return nil }
+    guard let beforeText = document.documentContextBeforeInput else { return }
+    if beforeText.last == "\n" { return }
     let lineStart = beforeText.split(separator: "\n").last
     let lineStartCount = lineStart?.count
     let wordStart = beforeText.split(separator: " ").last
@@ -31,38 +28,23 @@ func deleteWord(_ document: UITextDocumentProxy) -> String? {
         document.deleteBackward()
     }
     trimSpacesBefore(document)
-    switch (lineStartCount, wordStartCount, beforeText) {
-    case (nil, nil, _): return beforeText
-    case (nil, .some, _): return String(wordStart!)
-    case (.some, nil, _): return String(lineStart!)
-    case (.some, .some, _):
-        if lineStartCount! <= wordStartCount! { return String(lineStart!) }
-        else { return String(wordStart!) }
-    }
 }
-
-private var backSpaceCache = ""
 
 let backSpace = UtilKey(
     id: "backSpace",
     defaultImage: "delete.backward",
     onTap: { document, context in
-        if context.isCapsLocked || context.isShifted {
-            backSpaceCache = deleteWord(document) ?? ""
+        if let selectedText = document.selectedText, !selectedText.isEmpty {
+            document.deleteBackward()
+        } else if context.isCapsLocked || context.isShifted {
+            deleteWord(document)
         } else {
             if let last = document.documentContextBeforeInput?.last {
-                backSpaceCache = String(last)
                 document.deleteBackward()
             }
         }
-    },
-    onCancelTap: { document, _ in
-        document.insertText(backSpaceCache)
-        backSpaceCache = ""
     }
 )
-
-var contextCache: KeyInputContext?
 
 let shift = UtilKey(
     id: "shift",
@@ -71,7 +53,6 @@ let shift = UtilKey(
     imageOnShift: "shift.fill",
     imageOnCapsLock: "capslock.fill",
     onTap: { _, context in
-        contextCache = KeyInputContext(context)
         if context.isDoubleTapped {
             context.isCapsLocked = true
         } else {
@@ -84,16 +65,8 @@ let shift = UtilKey(
                 context.isShifted = true
             }
         }
-    },
-    onCancelTap: { _, context in
-        if contextCache != nil {
-            context.copyFrom(contextCache!)
-            contextCache = nil
-        }
     }
 )
-
-private var isSpaceCanceled = true
 
 let space = UtilKey(
     id: "space",
@@ -105,30 +78,14 @@ let space = UtilKey(
         } else {
             document.insertText(" ")
         }
-        isSpaceCanceled = false
-    },
-    onCancelTap: { document, _ in
-        if !isSpaceCanceled {
-            document.deleteBackward()
-            isSpaceCanceled = true
-        }
     }
 )
-
-private var isEnterCanceled = true
 
 let enter = UtilKey(
     id: "enter",
     defaultImage: "return",
     onTap: { document, _ in
         document.insertText("\n")
-        isEnterCanceled = false
-    },
-    onCancelTap: { document, _ in
-        if !isEnterCanceled {
-            document.deleteBackward()
-            isEnterCanceled = true
-        }
     }
 )
 
@@ -139,14 +96,7 @@ let changeToSymbols = UtilKey(
     remountOnTap: true,
     title: "$1",
     onTap: { _, context in
-        contextCache = KeyInputContext(context)
         context.keySet = symbolKeySet
-    },
-    onCancelTap: { _, context in
-        if contextCache != nil {
-            context.copyFrom(contextCache!)
-            contextCache = nil
-        }
     }
 )
 
@@ -156,14 +106,7 @@ let changeToEnglish = UtilKey(
     defaultImage: "character",
     locale: "en-US",
     onTap: { _, context in
-        contextCache = KeyInputContext(context)
         context.keySet = englishKeySet
-    },
-    onCancelTap: { _, context in
-        if contextCache != nil {
-            context.copyFrom(contextCache!)
-            contextCache = nil
-        }
     }
 )
 
@@ -173,20 +116,12 @@ let changeToKorean = UtilKey(
     defaultImage: "character",
     locale: "ko-KR",
     onTap: { _, context in
-        contextCache = KeyInputContext(context)
         context.keySet = koreanKeySet
-    },
-    onCancelTap: { _, context in
-        if contextCache != nil {
-            context.copyFrom(contextCache!)
-            contextCache = nil
-        }
     }
 )
 
 let blank = UtilKey(
     id: "blank",
     backgroundColor: UIColor.clear,
-    onTap: { _, _ in },
-    onCancelTap: { _, _ in }
+    onTap: { _, _ in }
 )

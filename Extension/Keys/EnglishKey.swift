@@ -50,12 +50,9 @@ class EnglishKey: Key {
     func getBackgroundColor(_ context: KeyInputContext) -> UIColor? {
         return _backgroundColor ?? customGray2
     }
-    
-    private var cancelLength = 0
 
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
         let keyValue = getKeyValue(document: document, context: context)
-        cancelLength = keyValue.count
         if context.isCapsLocked {
             document.insertText(keyValue.uppercased())
         } else if context.isShifted {
@@ -82,12 +79,5 @@ class EnglishKey: Key {
             isSingleKeyRemoved = false
             return first
         }
-    }
-    
-    func onCancelTap(document: UITextDocumentProxy, context: KeyInputContext) {
-        for _ in 0 ..< cancelLength {
-            document.deleteBackward()
-        }
-        cancelLength = 0
     }
 }

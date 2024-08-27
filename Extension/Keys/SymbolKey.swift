@@ -54,12 +54,9 @@ class SymbolKey: Key {
     func getBackgroundColor(_ context: KeyInputContext) -> UIColor? {
         return self._backgroundColor ?? customGray2
     }
-    
-    private var cancelLength = 0
 
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
         let keyValue = getKeyValue(document: document, context: context)
-        cancelLength = keyValue.count
         let isShifted = context.isShifted
         let isCapsLocked = context.isCapsLocked
         if isShifted || isCapsLocked { document.insertText(keyValue.uppercased()) }
@@ -87,12 +84,5 @@ class SymbolKey: Key {
                 return first
             }
         }
-    }
-    
-    func onCancelTap(document: UITextDocumentProxy, context: KeyInputContext) {
-        for _ in 0 ..< cancelLength {
-            document.deleteBackward()
-        }
-        cancelLength = 0
     }
 }

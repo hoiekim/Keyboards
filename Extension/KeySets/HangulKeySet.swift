@@ -30,26 +30,18 @@ private let ㅜ = HangulKey(firstUnicode: LETTER_ㅜ, secondUnicode: LETTER_ㅠ,
 private let ㅡ = HangulKey(firstUnicode: LETTER_ㅡ, backgroundColor: customGray3)
 private let ㅣ = HangulKey(firstUnicode: LETTER_ㅣ, backgroundColor: customGray3)
 
-private var backSpaceCache = ""
-
 let hangulBackSpace = UtilKey(
     id: "hangulBackSpace",
     defaultImage: "delete.backward",
     onTap: { document, context in
-        if context.isCapsLocked || context.isShifted {
-            backSpaceCache = deleteWord(document) ?? ""
+        if let selectedText = document.selectedText, !selectedText.isEmpty {
+            document.deleteBackward()
+        } else if context.isCapsLocked || context.isShifted {
+            deleteWord(document)
         } else {
             let last = document.documentContextBeforeInput?.last ?? Character("")
-            backSpaceCache = String(last)
             deleteHangulComponent(document)
         }
-    },
-    onCancelTap: { document, _ in
-        if !isSingletonLetter(backSpaceCache) {
-            document.deleteBackward()
-        }
-        document.insertText(backSpaceCache)
-        backSpaceCache = ""
     }
 )
 

@@ -165,12 +165,6 @@ class KeyboardViewController: UIInputViewController {
             userInfo: nil,
             repeats: false
         )
-        if keyInputContext.isHeld {
-            keyInputContext.isHeld = false
-        } else {
-            sender.key.onTap(document: textDocumentProxy, context: keyInputContext)
-            isTapCanceled = false
-        }
     }
 
     @objc private func resetDoubleTap() {
@@ -179,6 +173,11 @@ class KeyboardViewController: UIInputViewController {
     }
     
     @objc private func onTouchUpInside(sender: UIKeyButton) {
+        if keyInputContext.isHeld {
+            keyInputContext.isHeld = false
+        } else {
+            sender.key.onTap(document: textDocumentProxy, context: keyInputContext)
+        }
         afterTap(sender.key)
     }
     
@@ -204,8 +203,8 @@ class KeyboardViewController: UIInputViewController {
     
     private var lastPanTimestamp: TimeInterval?
     private var lastUpdatedPanTranslationX = CGFloat(0)
-    private var isTapCanceled = false
     private var backSpaceCache = ""
+    private var panAmount = 0
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         guard let button = gesture.view as? UIKeyButton else { return }
@@ -215,25 +214,31 @@ class KeyboardViewController: UIInputViewController {
         let isBackSpace = key.id == backSpace.id || key.id == hangulBackSpace.id
         if isUtilKey && !isBackSpace { return }
         
+        if gesture.state == .began {
+            lastPanTimestamp = nil
+            lastUpdatedPanTranslationX = CGFloat(0)
+            backSpaceCache = ""
+            panAmount = 0
+        } else if gesture.state == .ended {
+            if panAmount == 0 {
+                self.onTouchUpInside(sender: button)
+            }
+        }
+        
         let currentTime = Date().timeIntervalSince1970
         let translationX = gesture.translation(in: view).x
         var offsetMultiplier = CGFloat(30)
         
+        let distance = translationX - lastUpdatedPanTranslationX
+        
         if let lastTimestamp = lastPanTimestamp {
-            let distance = translationX - lastUpdatedPanTranslationX
             let timeElapsed = currentTime - lastTimestamp
             let speed = abs(distance / CGFloat(timeElapsed))
             offsetMultiplier *= max(min(speed / 300, 2), 1)
         }
 
-        let distance = translationX - lastUpdatedPanTranslationX
         let offset = Int((distance / view.bounds.width) * offsetMultiplier)
         if offset > 0 || offset < 0 {
-            if !isTapCanceled {
-                key.onCancelTap(document: textDocumentProxy, context: keyInputContext)
-                isTapCanceled = true
-            }
-            
             impactFeedbackGenerator?.impactOccurred()
             
             if isBackSpace {
@@ -257,12 +262,7 @@ class KeyboardViewController: UIInputViewController {
             
             lastUpdatedPanTranslationX = translationX
             lastPanTimestamp = currentTime
-        }
-        
-        if gesture.state == .ended {
-            lastUpdatedPanTranslationX = CGFloat(0)
-            lastPanTimestamp = nil
-            backSpaceCache = ""
+            panAmount += abs(offset)
         }
     }
     
@@ -303,11 +303,12 @@ class KeyboardViewController: UIInputViewController {
     
     func handleAutoCapitalization() {
         if !isKeySetsEqual(keyInputContext.keySet, englishKeySet) { return }
+        let isEmpty = textDocumentProxy.documentContextBeforeInput?.isEmpty ?? true
         let last = textDocumentProxy.documentContextBeforeInput?.last
         let lastTwo = textDocumentProxy.documentContextBeforeInput?.suffix(2)
-        let isBeginningOfAll = last == nil
-        let isBeginningOfSentence = lastTwo == ". "
-        let isBeginningOfParagraph = last != nil && last == "\n"
+        let isBeginningOfAll = isEmpty || last == nil
+        let isBeginningOfSentence = lastTwo == ". " || lastTwo == "? " || lastTwo == "! "
+        let isBeginningOfParagraph = last == "\n"
         if  isBeginningOfAll || isBeginningOfSentence || isBeginningOfParagraph {
             keyInputContext.isShifted = true
         }

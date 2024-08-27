@@ -259,16 +259,6 @@ class HangulKey: Key {
         }
 
         isComposing = true
-        isCanceled = false
-    }
-    
-    private var isCanceled = true
-    
-    func onCancelTap(document: UITextDocumentProxy, context: KeyInputContext) {
-        if !isCanceled {
-            deleteHangulComponent(document)
-            isCanceled = true
-        }
     }
 }
 

@@ -18,7 +18,6 @@ class UtilKey: Key {
     let remountOnTap: Bool
     let updateButtonImagesOnTap: Bool
     private let _onTap: OnTapUtilKey
-    private let _onCancelTap: OnTapUtilKey
     var title: String?
     var _defaultImage: String?
     var _imageOnShift: String?
@@ -37,8 +36,7 @@ class UtilKey: Key {
         imageOnCapsLock: String? = nil,
         backgroundColor: UIColor? = nil,
         locale: String? = nil,
-        onTap: @escaping OnTapUtilKey,
-        onCancelTap: @escaping OnTapUtilKey
+        onTap: @escaping OnTapUtilKey
     ) {
         self.id = "UtilKey_" + id
         self.span = span
@@ -51,7 +49,6 @@ class UtilKey: Key {
         self._imageOnCapsLock = imageOnCapsLock
         self._backgroundColor = backgroundColor
         self._onTap = onTap
-        self._onCancelTap = onCancelTap
     }
 
     func getTitle(_ context: KeyInputContext) -> String? {
@@ -86,9 +83,5 @@ class UtilKey: Key {
 
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
         self._onTap(document, context)
-    }
-    
-    func onCancelTap(document: UITextDocumentProxy, context: KeyInputContext) {
-        self._onCancelTap(document, context)
     }
 }

@@ -32,14 +32,11 @@ private let I = EnglishKey(first: "I", backgroundColor: customGray3)
 private let E = EnglishKey(first: "E", backgroundColor: customGray3)
 private let U = EnglishKey(first: "U", backgroundColor: customGray3)
 
-private var beforeChangeCache = ""
-
 let englishSpace = UtilKey(
     id: "space",
     span: 4,
     imageOnShift: "arrow.forward.to.line",
     onTap: { document, context in
-        beforeChangeCache = document.documentContextBeforeInput ?? ""
         if context.isShifted, !context.isCapsLocked {
             document.insertText("\t")
         } else if context.isDoubleTapped {
@@ -124,6 +121,8 @@ let englishSpace = UtilKey(
                 case "thatll": "that'll"
                 case "Thatd": "That'd"
                 case "thatd": "that'd"
+                case "Theres": "There's"
+                case "theres": "there's"
                 case "Lets": "Let's"
                 default: nil
                 }
@@ -137,15 +136,6 @@ let englishSpace = UtilKey(
             }
             document.insertText(" ")
         }
-    },
-    onCancelTap: { document, _ in
-        if let beforeText = document.documentContextBeforeInput {
-            for _ in 0 ..< beforeText.count {
-                document.deleteBackward()
-            }
-        }
-        document.insertText(beforeChangeCache)
-        beforeChangeCache = ""
     }
 )
 

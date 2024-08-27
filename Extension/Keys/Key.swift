@@ -48,7 +48,6 @@ protocol Key {
     var remountOnTap: Bool { get }
     var updateButtonImagesOnTap: Bool { get }
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) -> Void
-    func onCancelTap(document: UITextDocumentProxy, context: KeyInputContext) -> Void
     func getTitle(_ context: KeyInputContext) -> String?
     func getTitleSuperscript(_ context: KeyInputContext) -> String?
     func getImage(_ context: KeyInputContext) -> UIImage?
