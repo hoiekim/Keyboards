@@ -75,6 +75,9 @@ let space = UtilKey(
     onTap: { document, context in
         if context.isShifted && !context.isCapsLocked {
             document.insertText("\t")
+        } else if context.isDoubleTapped {
+            document.deleteBackward()
+            document.insertText(". ")
         } else {
             document.insertText(" ")
         }
