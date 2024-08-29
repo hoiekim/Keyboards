@@ -10,7 +10,7 @@ import UIKit
 class KeyboardViewController: UIInputViewController {
     let keyInputContext = KeyInputContext(keySet: englishKeySet)
     var impactFeedbackGenerator: UIImpactFeedbackGenerator?
-    let buttonSpacing: CGFloat = 5
+    let buttonSpacing = CGFloat(5)
     var buttonsView = UIStackView()
 
     override func updateViewConstraints() {
@@ -49,14 +49,18 @@ class KeyboardViewController: UIInputViewController {
     }
     
     private func mountButtons() {
+        let rowHeight = CGFloat(45)
+        
         buttonsView.removeFromSuperview()
         buttonsView = UIStackView()
         buttonsView.axis = .vertical
         buttonsView.distribution = .fillEqually
-        buttonsView.spacing = 5
+        buttonsView.spacing = buttonSpacing
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
 
-        for row in keyInputContext.keySet {
+        let rows = keyInputContext.keySet
+        
+        for row in rows {
             let rowStackView = UIStackView()
             rowStackView.axis = .horizontal
             rowStackView.spacing = buttonSpacing
@@ -67,7 +71,6 @@ class KeyboardViewController: UIInputViewController {
                 rowStackView.addArrangedSubview(button)
             }
             
-            let rowHeight: CGFloat = 45.0
             let constraint = rowStackView
                 .heightAnchor
                 .constraint(equalToConstant: rowHeight)
@@ -77,11 +80,24 @@ class KeyboardViewController: UIInputViewController {
         }
         
         view.addSubview(buttonsView)
+        
         NSLayoutConstraint.activate([
-            buttonsView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
-            buttonsView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
-            buttonsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10)
+            buttonsView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: buttonSpacing
+            ),
+            buttonsView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: -buttonSpacing
+            ),
+            buttonsView.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor,
+                constant: -buttonSpacing
+            )
         ])
+        
+        let viewHeight = CGFloat(rows.count) * (rowHeight + buttonSpacing) + buttonSpacing
+        view.heightAnchor.constraint(equalToConstant: viewHeight).isActive = true
     }
     
     private func createButton(withKey key: Key) -> UIButton {
@@ -148,6 +164,7 @@ class KeyboardViewController: UIInputViewController {
     private var doubleTapTimer: Timer?
     
     @objc private func onTouchDown(sender: UIKeyButton) {
+        // handle double tap
         let key = sender.key
         if lastTappedKey?.id == key.id {
             keyInputContext.isDoubleTapped = true
@@ -183,9 +200,10 @@ class KeyboardViewController: UIInputViewController {
     
     private func afterTap(_ key: Key) {
         let isShiftKey = key.id == shift.id
+        let isShifted = keyInputContext.isShifted
         let isCapsLocked = keyInputContext.isCapsLocked
         
-        if !isCapsLocked && !isShiftKey {
+        if !isCapsLocked && !isShiftKey && isShifted {
             keyInputContext.isShifted = false
         }
         
@@ -196,7 +214,7 @@ class KeyboardViewController: UIInputViewController {
         if key.remountOnTap {
             mountButtons()
             adjustButtonSizes()
-        } else {
+        } else if isShifted != keyInputContext.isShifted || isShiftKey {
             updateButtonImages()
         }
     }

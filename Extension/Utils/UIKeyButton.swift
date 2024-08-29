@@ -71,7 +71,7 @@ class UIKeyButton: UIButton {
         sender.backgroundColor = .systemIndigo
         tapHighlightTimer?.invalidate()
         tapHighlightTimer = Timer.scheduledTimer(
-            withTimeInterval: 0.3,
+            withTimeInterval: 0.15,
             repeats: false
         ) { _ in
             sender.backgroundColor = self.key.getBackgroundColor(self.context)
