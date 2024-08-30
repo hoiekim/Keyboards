@@ -7,33 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		579762802C65CAFA00FB5BD4 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797627F2C65CAFA00FB5BD4 /* Utils.swift */; };
-		579762842C6658D800FB5BD4 /* SymbolKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579762832C6658D800FB5BD4 /* SymbolKeySet.swift */; };
-		579762872C6A759300FB5BD4 /* HangulKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579762862C6A759300FB5BD4 /* HangulKey.swift */; };
-		579762892C6A760E00FB5BD4 /* UtilKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579762882C6A760E00FB5BD4 /* UtilKey.swift */; };
 		5798A4AD2C5DFE4400FCAA66 /* KeyboardsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4AC2C5DFE4400FCAA66 /* KeyboardsApp.swift */; };
 		5798A4AF2C5DFE4400FCAA66 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4AE2C5DFE4400FCAA66 /* ContentView.swift */; };
 		5798A4B12C5DFE4600FCAA66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5798A4B02C5DFE4600FCAA66 /* Assets.xcassets */; };
 		5798A4B42C5DFE4600FCAA66 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5798A4B32C5DFE4600FCAA66 /* Preview Assets.xcassets */; };
-		5798A4C12C5EE8AD00FCAA66 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4C02C5EE8AD00FCAA66 /* KeyboardViewController.swift */; };
-		5798A4C52C5EE8AD00FCAA66 /* Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5798A4BE2C5EE8AD00FCAA66 /* Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		5798A4CB2C6055FF00FCAA66 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4CA2C6055FF00FCAA66 /* Key.swift */; };
-		5798A4CD2C605C8E00FCAA66 /* EnglishKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */; };
-		5798A4CF2C6092B300FCAA66 /* HangulKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4CE2C6092B300FCAA66 /* HangulKeySet.swift */; };
-		5798A4D32C62961300FCAA66 /* UtilKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5798A4D22C62961300FCAA66 /* UtilKeys.swift */; };
-		57E0FB732C6F828C005CDAC2 /* EnglishKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB722C6F828C005CDAC2 /* EnglishKey.swift */; };
-		57E0FB752C6F8B82005CDAC2 /* SymbolKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB742C6F8B82005CDAC2 /* SymbolKey.swift */; };
-		57E0FB7C2C72E8C3005CDAC2 /* UIKeyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E0FB7B2C72E8C3005CDAC2 /* UIKeyButton.swift */; };
-		57E0FB7F2C737B0A005CDAC2 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 57E0FB7E2C737B0A005CDAC2 /* LICENSE */; };
+		57DA76AB2C8201AA00E061A4 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DA76AA2C8201AA00E061A4 /* KeyboardViewController.swift */; };
+		57DA76AF2C8201AA00E061A4 /* KeyboardExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 57DA76A82C8201AA00E061A4 /* KeyboardExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		57DA76C12C82026B00E061A4 /* EnglishKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DA76B32C82026B00E061A4 /* EnglishKeySet.swift */; };
+		57DA76C22C82026B00E061A4 /* HangulKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DA76B42C82026B00E061A4 /* HangulKeySet.swift */; };
+		57DA76C32C82026B00E061A4 /* SymbolKeySet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DA76B52C82026B00E061A4 /* SymbolKeySet.swift */; };
+		57DA76C42C82026B00E061A4 /* UtilKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DA76B62C82026B00E061A4 /* UtilKeys.swift */; };
+		57DA76C52C82026B00E061A4 /* EnglishKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DA76B82C82026B00E061A4 /* EnglishKey.swift */; };
+		57DA76C62C82026B00E061A4 /* HangulKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DA76B92C82026B00E061A4 /* HangulKey.swift */; };
+		57DA76C72C82026B00E061A4 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DA76BA2C82026B00E061A4 /* Key.swift */; };
+		57DA76C82C82026B00E061A4 /* SymbolKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DA76BB2C82026B00E061A4 /* SymbolKey.swift */; };
+		57DA76C92C82026B00E061A4 /* UtilKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DA76BC2C82026B00E061A4 /* UtilKey.swift */; };
+		57DA76CA2C82026B00E061A4 /* UIKeyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DA76BE2C82026B00E061A4 /* UIKeyButton.swift */; };
+		57DA76CB2C82026B00E061A4 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DA76BF2C82026B00E061A4 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		5798A4C32C5EE8AD00FCAA66 /* PBXContainerItemProxy */ = {
+		57DA76AD2C8201AA00E061A4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5798A4A12C5DFE4400FCAA66 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5798A4BD2C5EE8AD00FCAA66;
-			remoteInfo = "Hoie Keyboard";
+			remoteGlobalIDString = 57DA76A72C8201AA00E061A4;
+			remoteInfo = KeyboardExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -44,7 +43,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				5798A4C52C5EE8AD00FCAA66 /* Extension.appex in Embed Foundation Extensions */,
+				57DA76AF2C8201AA00E061A4 /* KeyboardExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,29 +51,29 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5797627F2C65CAFA00FB5BD4 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		579762832C6658D800FB5BD4 /* SymbolKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolKeySet.swift; sourceTree = "<group>"; };
-		579762862C6A759300FB5BD4 /* HangulKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangulKey.swift; sourceTree = "<group>"; };
-		579762882C6A760E00FB5BD4 /* UtilKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilKey.swift; sourceTree = "<group>"; };
 		5797628A2C6B90D200FB5BD4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		5798A4A92C5DFE4400FCAA66 /* Hoikey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hoikey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5798A4AC2C5DFE4400FCAA66 /* KeyboardsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardsApp.swift; sourceTree = "<group>"; };
 		5798A4AE2C5DFE4400FCAA66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5798A4B02C5DFE4600FCAA66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5798A4B32C5DFE4600FCAA66 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		5798A4BE2C5EE8AD00FCAA66 /* Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Extension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		5798A4C02C5EE8AD00FCAA66 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
-		5798A4C22C5EE8AD00FCAA66 /* Info.extension.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.extension.plist; sourceTree = "<group>"; };
-		5798A4CA2C6055FF00FCAA66 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
-		5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishKeySet.swift; sourceTree = "<group>"; };
-		5798A4CE2C6092B300FCAA66 /* HangulKeySet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HangulKeySet.swift; sourceTree = "<group>"; };
-		5798A4D22C62961300FCAA66 /* UtilKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilKeys.swift; sourceTree = "<group>"; };
-		57E0FB722C6F828C005CDAC2 /* EnglishKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishKey.swift; sourceTree = "<group>"; };
-		57E0FB742C6F8B82005CDAC2 /* SymbolKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolKey.swift; sourceTree = "<group>"; };
-		57E0FB7B2C72E8C3005CDAC2 /* UIKeyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKeyButton.swift; sourceTree = "<group>"; };
+		57DA769E2C80DB9E00E061A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		57DA76A82C8201AA00E061A4 /* KeyboardExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KeyboardExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		57DA76AA2C8201AA00E061A4 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
+		57DA76AC2C8201AA00E061A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		57DA76B32C82026B00E061A4 /* EnglishKeySet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnglishKeySet.swift; sourceTree = "<group>"; };
+		57DA76B42C82026B00E061A4 /* HangulKeySet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangulKeySet.swift; sourceTree = "<group>"; };
+		57DA76B52C82026B00E061A4 /* SymbolKeySet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymbolKeySet.swift; sourceTree = "<group>"; };
+		57DA76B62C82026B00E061A4 /* UtilKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilKeys.swift; sourceTree = "<group>"; };
+		57DA76B82C82026B00E061A4 /* EnglishKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnglishKey.swift; sourceTree = "<group>"; };
+		57DA76B92C82026B00E061A4 /* HangulKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangulKey.swift; sourceTree = "<group>"; };
+		57DA76BA2C82026B00E061A4 /* Key.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
+		57DA76BB2C82026B00E061A4 /* SymbolKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymbolKey.swift; sourceTree = "<group>"; };
+		57DA76BC2C82026B00E061A4 /* UtilKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilKey.swift; sourceTree = "<group>"; };
+		57DA76BE2C82026B00E061A4 /* UIKeyButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKeyButton.swift; sourceTree = "<group>"; };
+		57DA76BF2C82026B00E061A4 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		57E0FB7D2C72F522005CDAC2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		57E0FB7E2C737B0A005CDAC2 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		57EE9CC12C77791400EA1EF2 /* Info.app.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.app.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +84,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5798A4BB2C5EE8AD00FCAA66 /* Frameworks */ = {
+		57DA76A52C8201AA00E061A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -95,48 +94,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5797627C2C645F6C00FB5BD4 /* Keys */ = {
-			isa = PBXGroup;
-			children = (
-				5798A4CA2C6055FF00FCAA66 /* Key.swift */,
-				579762862C6A759300FB5BD4 /* HangulKey.swift */,
-				579762882C6A760E00FB5BD4 /* UtilKey.swift */,
-				57E0FB722C6F828C005CDAC2 /* EnglishKey.swift */,
-				57E0FB742C6F8B82005CDAC2 /* SymbolKey.swift */,
-			);
-			path = Keys;
-			sourceTree = "<group>";
-		};
-		5797627E2C65CAEA00FB5BD4 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				5797627F2C65CAFA00FB5BD4 /* Utils.swift */,
-				57E0FB7B2C72E8C3005CDAC2 /* UIKeyButton.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		579762852C6A756000FB5BD4 /* KeySets */ = {
-			isa = PBXGroup;
-			children = (
-				5798A4D22C62961300FCAA66 /* UtilKeys.swift */,
-				5798A4CE2C6092B300FCAA66 /* HangulKeySet.swift */,
-				579762832C6658D800FB5BD4 /* SymbolKeySet.swift */,
-				5798A4CC2C605C8E00FCAA66 /* EnglishKeySet.swift */,
-			);
-			path = KeySets;
-			sourceTree = "<group>";
-		};
 		5798A4A02C5DFE4400FCAA66 = {
 			isa = PBXGroup;
 			children = (
-				57EE9CC12C77791400EA1EF2 /* Info.app.plist */,
-				5798A4C22C5EE8AD00FCAA66 /* Info.extension.plist */,
 				57E0FB7E2C737B0A005CDAC2 /* LICENSE */,
 				57E0FB7D2C72F522005CDAC2 /* README.md */,
 				5797628A2C6B90D200FB5BD4 /* .gitignore */,
 				5798A4AB2C5DFE4400FCAA66 /* App */,
-				5798A4BF2C5EE8AD00FCAA66 /* Extension */,
+				57DA76A92C8201AA00E061A4 /* KeyboardExtension */,
 				5798A4AA2C5DFE4400FCAA66 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -145,7 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				5798A4A92C5DFE4400FCAA66 /* Hoikey.app */,
-				5798A4BE2C5EE8AD00FCAA66 /* Extension.appex */,
+				57DA76A82C8201AA00E061A4 /* KeyboardExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -153,6 +118,7 @@
 		5798A4AB2C5DFE4400FCAA66 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				57DA769E2C80DB9E00E061A4 /* Info.plist */,
 				5798A4AC2C5DFE4400FCAA66 /* KeyboardsApp.swift */,
 				5798A4AE2C5DFE4400FCAA66 /* ContentView.swift */,
 				5798A4B02C5DFE4600FCAA66 /* Assets.xcassets */,
@@ -169,15 +135,48 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		5798A4BF2C5EE8AD00FCAA66 /* Extension */ = {
+		57DA76A92C8201AA00E061A4 /* KeyboardExtension */ = {
 			isa = PBXGroup;
 			children = (
-				5798A4C02C5EE8AD00FCAA66 /* KeyboardViewController.swift */,
-				5797627C2C645F6C00FB5BD4 /* Keys */,
-				579762852C6A756000FB5BD4 /* KeySets */,
-				5797627E2C65CAEA00FB5BD4 /* Utils */,
+				57DA76BD2C82026B00E061A4 /* Keys */,
+				57DA76B72C82026B00E061A4 /* KeySets */,
+				57DA76C02C82026B00E061A4 /* Utils */,
+				57DA76AA2C8201AA00E061A4 /* KeyboardViewController.swift */,
+				57DA76AC2C8201AA00E061A4 /* Info.plist */,
 			);
-			path = Extension;
+			path = KeyboardExtension;
+			sourceTree = "<group>";
+		};
+		57DA76B72C82026B00E061A4 /* KeySets */ = {
+			isa = PBXGroup;
+			children = (
+				57DA76B32C82026B00E061A4 /* EnglishKeySet.swift */,
+				57DA76B42C82026B00E061A4 /* HangulKeySet.swift */,
+				57DA76B52C82026B00E061A4 /* SymbolKeySet.swift */,
+				57DA76B62C82026B00E061A4 /* UtilKeys.swift */,
+			);
+			path = KeySets;
+			sourceTree = "<group>";
+		};
+		57DA76BD2C82026B00E061A4 /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+				57DA76B82C82026B00E061A4 /* EnglishKey.swift */,
+				57DA76B92C82026B00E061A4 /* HangulKey.swift */,
+				57DA76BA2C82026B00E061A4 /* Key.swift */,
+				57DA76BB2C82026B00E061A4 /* SymbolKey.swift */,
+				57DA76BC2C82026B00E061A4 /* UtilKey.swift */,
+			);
+			path = Keys;
+			sourceTree = "<group>";
+		};
+		57DA76C02C82026B00E061A4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				57DA76BE2C82026B00E061A4 /* UIKeyButton.swift */,
+				57DA76BF2C82026B00E061A4 /* Utils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,28 +194,28 @@
 			buildRules = (
 			);
 			dependencies = (
-				5798A4C42C5EE8AD00FCAA66 /* PBXTargetDependency */,
+				57DA76AE2C8201AA00E061A4 /* PBXTargetDependency */,
 			);
 			name = App;
-			productName = Keybaords;
+			productName = Keyboards;
 			productReference = 5798A4A92C5DFE4400FCAA66 /* Hoikey.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5798A4BD2C5EE8AD00FCAA66 /* Extension */ = {
+		57DA76A72C8201AA00E061A4 /* KeyboardExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5798A4C62C5EE8AD00FCAA66 /* Build configuration list for PBXNativeTarget "Extension" */;
+			buildConfigurationList = 57DA76B02C8201AA00E061A4 /* Build configuration list for PBXNativeTarget "KeyboardExtension" */;
 			buildPhases = (
-				5798A4BA2C5EE8AD00FCAA66 /* Sources */,
-				5798A4BB2C5EE8AD00FCAA66 /* Frameworks */,
-				5798A4BC2C5EE8AD00FCAA66 /* Resources */,
+				57DA76A42C8201AA00E061A4 /* Sources */,
+				57DA76A52C8201AA00E061A4 /* Frameworks */,
+				57DA76A62C8201AA00E061A4 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Extension;
-			productName = "Hoie Keyboard";
-			productReference = 5798A4BE2C5EE8AD00FCAA66 /* Extension.appex */;
+			name = KeyboardExtension;
+			productName = KeyboardExtension;
+			productReference = 57DA76A82C8201AA00E061A4 /* KeyboardExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -232,7 +231,7 @@
 					5798A4A82C5DFE4400FCAA66 = {
 						CreatedOnToolsVersion = 15.4;
 					};
-					5798A4BD2C5EE8AD00FCAA66 = {
+					57DA76A72C8201AA00E061A4 = {
 						CreatedOnToolsVersion = 15.4;
 					};
 				};
@@ -251,7 +250,7 @@
 			projectRoot = "";
 			targets = (
 				5798A4A82C5DFE4400FCAA66 /* App */,
-				5798A4BD2C5EE8AD00FCAA66 /* Extension */,
+				57DA76A72C8201AA00E061A4 /* KeyboardExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -266,11 +265,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5798A4BC2C5EE8AD00FCAA66 /* Resources */ = {
+		57DA76A62C8201AA00E061A4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57E0FB7F2C737B0A005CDAC2 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,32 +284,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5798A4BA2C5EE8AD00FCAA66 /* Sources */ = {
+		57DA76A42C8201AA00E061A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57E0FB732C6F828C005CDAC2 /* EnglishKey.swift in Sources */,
-				579762842C6658D800FB5BD4 /* SymbolKeySet.swift in Sources */,
-				579762892C6A760E00FB5BD4 /* UtilKey.swift in Sources */,
-				579762872C6A759300FB5BD4 /* HangulKey.swift in Sources */,
-				5798A4C12C5EE8AD00FCAA66 /* KeyboardViewController.swift in Sources */,
-				57E0FB752C6F8B82005CDAC2 /* SymbolKey.swift in Sources */,
-				5798A4CB2C6055FF00FCAA66 /* Key.swift in Sources */,
-				5798A4CF2C6092B300FCAA66 /* HangulKeySet.swift in Sources */,
-				57E0FB7C2C72E8C3005CDAC2 /* UIKeyButton.swift in Sources */,
-				579762802C65CAFA00FB5BD4 /* Utils.swift in Sources */,
-				5798A4CD2C605C8E00FCAA66 /* EnglishKeySet.swift in Sources */,
-				5798A4D32C62961300FCAA66 /* UtilKeys.swift in Sources */,
+				57DA76C42C82026B00E061A4 /* UtilKeys.swift in Sources */,
+				57DA76CA2C82026B00E061A4 /* UIKeyButton.swift in Sources */,
+				57DA76C92C82026B00E061A4 /* UtilKey.swift in Sources */,
+				57DA76C32C82026B00E061A4 /* SymbolKeySet.swift in Sources */,
+				57DA76C62C82026B00E061A4 /* HangulKey.swift in Sources */,
+				57DA76C52C82026B00E061A4 /* EnglishKey.swift in Sources */,
+				57DA76C22C82026B00E061A4 /* HangulKeySet.swift in Sources */,
+				57DA76C72C82026B00E061A4 /* Key.swift in Sources */,
+				57DA76AB2C8201AA00E061A4 /* KeyboardViewController.swift in Sources */,
+				57DA76C82C82026B00E061A4 /* SymbolKey.swift in Sources */,
+				57DA76C12C82026B00E061A4 /* EnglishKeySet.swift in Sources */,
+				57DA76CB2C82026B00E061A4 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		5798A4C42C5EE8AD00FCAA66 /* PBXTargetDependency */ = {
+		57DA76AE2C8201AA00E061A4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5798A4BD2C5EE8AD00FCAA66 /* Extension */;
-			targetProxy = 5798A4C32C5EE8AD00FCAA66 /* PBXContainerItemProxy */;
+			target = 57DA76A72C8201AA00E061A4 /* KeyboardExtension */;
+			targetProxy = 57DA76AD2C8201AA00E061A4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -449,7 +447,7 @@
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.app.plist;
+				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -462,6 +460,10 @@
 				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards;
 				PRODUCT_NAME = Hoikey;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -480,7 +482,7 @@
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.app.plist;
+				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -493,20 +495,24 @@
 				MARKETING_VERSION = 1.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards;
 				PRODUCT_NAME = Hoikey;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
-		5798A4C72C5EE8AD00FCAA66 /* Debug */ = {
+		57DA76B12C8201AA00E061A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.extension.plist;
+				INFOPLIST_FILE = KeyboardExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Hoikey;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -515,8 +521,8 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0.5;
-				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards.Extension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards.KeyboardExtension;
+				PRODUCT_NAME = KeyboardExtension;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -524,14 +530,14 @@
 			};
 			name = Debug;
 		};
-		5798A4C82C5EE8AD00FCAA66 /* Release */ = {
+		57DA76B22C8201AA00E061A4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LVDPYK299G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.extension.plist;
+				INFOPLIST_FILE = KeyboardExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Hoikey;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -540,8 +546,8 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0.5;
-				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards.Extension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards.KeyboardExtension;
+				PRODUCT_NAME = KeyboardExtension;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -570,11 +576,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5798A4C62C5EE8AD00FCAA66 /* Build configuration list for PBXNativeTarget "Extension" */ = {
+		57DA76B02C8201AA00E061A4 /* Build configuration list for PBXNativeTarget "KeyboardExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5798A4C72C5EE8AD00FCAA66 /* Debug */,
-				5798A4C82C5EE8AD00FCAA66 /* Release */,
+				57DA76B12C8201AA00E061A4 /* Debug */,
+				57DA76B22C8201AA00E061A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,8 +1,8 @@
 //
 //  KeyboardViewController.swift
-//  Keyboard
+//  KeyboardExtension
 //
-//  Created by Hoie Kim on 8/3/24.
+//  Created by Hoie Kim on 8/30/24.
 //
 
 import UIKit
@@ -12,15 +12,18 @@ class KeyboardViewController: UIInputViewController {
     var impactFeedbackGenerator: UIImpactFeedbackGenerator?
     let buttonSpacing = CGFloat(5)
     var buttonsView = UIStackView()
+    let rowHeight = CGFloat(45)
 
     override func updateViewConstraints() {
         super.updateViewConstraints()
         adjustButtonSizes()
+        adjustViewHeight()
         updateButtonImages()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("it should work now")
         impactFeedbackGenerator = hasFullAccess ? UIImpactFeedbackGenerator(style: .light) : nil
         impactFeedbackGenerator?.prepare()
         view.backgroundColor = customGray0
@@ -49,18 +52,14 @@ class KeyboardViewController: UIInputViewController {
     }
     
     private func mountButtons() {
-        let rowHeight = CGFloat(45)
-        
         buttonsView.removeFromSuperview()
         buttonsView = UIStackView()
         buttonsView.axis = .vertical
         buttonsView.distribution = .fillEqually
         buttonsView.spacing = buttonSpacing
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
-
-        let rows = keyInputContext.keySet
         
-        for row in rows {
+        for row in keyInputContext.keySet {
             let rowStackView = UIStackView()
             rowStackView.axis = .horizontal
             rowStackView.spacing = buttonSpacing
@@ -95,9 +94,6 @@ class KeyboardViewController: UIInputViewController {
                 constant: -buttonSpacing
             )
         ])
-        
-        let viewHeight = CGFloat(rows.count) * (rowHeight + buttonSpacing) + buttonSpacing
-        view.heightAnchor.constraint(equalToConstant: viewHeight).isActive = true
     }
     
     private func createButton(withKey key: Key) -> UIButton {
@@ -148,6 +144,17 @@ class KeyboardViewController: UIInputViewController {
             }
         }
     }
+    
+    private func adjustViewHeight() {
+        let rows = keyInputContext.keySet
+        let viewHeight = CGFloat(rows.count) * (rowHeight + buttonSpacing) + buttonSpacing
+        let heightConstraints = view.constraints.filter({ $0.firstAttribute == .height })
+        NSLayoutConstraint.deactivate(heightConstraints)
+        let newHeightConstraint = view.heightAnchor.constraint(equalToConstant: viewHeight)
+        newHeightConstraint.priority = .defaultHigh
+        newHeightConstraint.isActive = true
+    }
+    
     
     private func updateButtonImages() {
         for (_, rowView) in buttonsView.arrangedSubviews.enumerated() {
@@ -214,6 +221,7 @@ class KeyboardViewController: UIInputViewController {
         if key.remountOnTap {
             mountButtons()
             adjustButtonSizes()
+            adjustViewHeight()
         } else if isShifted != keyInputContext.isShifted || isShiftKey {
             updateButtonImages()
         }
