@@ -8,13 +8,14 @@
 import UIKit
 
 class KeyboardViewController: UIInputViewController {
-    let keyInputContext = KeyInputContext(keySet: englishKeySet)
+    let keyInputContext = KeyInputContext()
     var impactFeedbackGenerator: UIImpactFeedbackGenerator?
     let buttonSpacing = CGFloat(5)
     var buttonsView = UIStackView()
     let rowHeight = CGFloat(45)
 
     override func updateViewConstraints() {
+        print("updateViewConstraints")
         super.updateViewConstraints()
         adjustButtonSizes()
         adjustViewHeight()
@@ -22,8 +23,8 @@ class KeyboardViewController: UIInputViewController {
     }
     
     override func viewDidLoad() {
+        print("viewDidLoad")
         super.viewDidLoad()
-        print("it should work now")
         impactFeedbackGenerator = hasFullAccess ? UIImpactFeedbackGenerator(style: .light) : nil
         impactFeedbackGenerator?.prepare()
         view.backgroundColor = customGray0
@@ -31,6 +32,7 @@ class KeyboardViewController: UIInputViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        print("viewDidAppear")
         super.viewDidAppear(animated)
         // removes delays on touches on screen edges
         if let window = view.window,
@@ -48,7 +50,17 @@ class KeyboardViewController: UIInputViewController {
     }
     
     override func viewWillLayoutSubviews() {
+        print("viewWillLayoutSubviews")
         super.viewWillLayoutSubviews()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        print("viewDidLayoutSubviews")
+        super.viewWillLayoutSubviews()
+        if keyInputContext.isPortrait != isPortrait() {
+            keyInputContext.isPortrait = isPortrait()
+            mountButtons()
+        }
     }
     
     private func mountButtons() {
@@ -59,7 +71,7 @@ class KeyboardViewController: UIInputViewController {
         buttonsView.spacing = buttonSpacing
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
         
-        for row in keyInputContext.keySet {
+        for row in keyInputContext.getKeySet() {
             let rowStackView = UIStackView()
             rowStackView.axis = .horizontal
             rowStackView.spacing = buttonSpacing
@@ -126,12 +138,15 @@ class KeyboardViewController: UIInputViewController {
     }
     
     private func adjustButtonSizes() {
-        let keySet = keyInputContext.keySet
+        let keySet = keyInputContext.getKeySet()
         let maxNumberOfSpans = keySet.map { $0.reduce(0) { $0 + $1.span } }.max()!
         for (_, rowView) in buttonsView.arrangedSubviews.enumerated() {
             guard let rowStackView = rowView as? UIStackView else { continue }
-            for (_, subView) in rowStackView.arrangedSubviews.enumerated() {
-                guard let button = subView as? UIKeyButton else { continue }
+            let buttonViews = rowStackView.arrangedSubviews
+            for (i, buttonView) in buttonViews.enumerated() {
+                guard let button = buttonView as? UIKeyButton else { continue }
+                button.removeConstraints(button.constraints)
+                if i == (buttonViews.count - 1) { continue }
                 let key = button.key
                 let keyWidth = calculateKeyWidth(
                     span: key.span,
@@ -139,14 +154,13 @@ class KeyboardViewController: UIInputViewController {
                     containerSize: view.bounds.width,
                     spacing: buttonSpacing
                 )
-                button.removeConstraints(button.constraints)
                 button.widthAnchor.constraint(equalToConstant: keyWidth).isActive = true
             }
         }
     }
     
     private func adjustViewHeight() {
-        let rows = keyInputContext.keySet
+        let rows = keyInputContext.getKeySet()
         let viewHeight = CGFloat(rows.count) * (rowHeight + buttonSpacing) + buttonSpacing
         let heightConstraints = view.constraints.filter({ $0.firstAttribute == .height })
         NSLayoutConstraint.deactivate(heightConstraints)
@@ -214,7 +228,7 @@ class KeyboardViewController: UIInputViewController {
             keyInputContext.isShifted = false
         }
         
-        if key.id == space.id || key.id == englishSpace.id || key.id == enter.id {
+        if key.id == longSpace.id || key.id == longEnglishSpace.id || key.id == enter.id {
             handleAutoCapitalization()
         }
         
@@ -328,7 +342,7 @@ class KeyboardViewController: UIInputViewController {
     }
     
     func handleAutoCapitalization() {
-        if !isKeySetsEqual(keyInputContext.keySet, englishKeySet) { return }
+        if keyInputContext.keySetName != KeySetName.ENGLISH { return }
         let isEmpty = textDocumentProxy.documentContextBeforeInput?.isEmpty ?? true
         let last = textDocumentProxy.documentContextBeforeInput?.last
         let lastTwo = textDocumentProxy.documentContextBeforeInput?.suffix(2)

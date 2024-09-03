@@ -68,21 +68,30 @@ let shift = UtilKey(
     }
 )
 
-let space = UtilKey(
-    id: "space",
+let longSpace = UtilKey(
+    id: "longSpace",
     span: 4,
     imageOnShift: "arrow.forward.to.line",
-    onTap: { document, context in
-        if context.isShifted && !context.isCapsLocked {
-            document.insertText("\t")
-        } else if context.isDoubleTapped {
-            document.deleteBackward()
-            document.insertText(". ")
-        } else {
-            document.insertText(" ")
-        }
-    }
+    onTap: onTapSpace
 )
+
+let shortSpace = UtilKey(
+    id: "shortSpace",
+    span: 2,
+    imageOnShift: "arrow.forward.to.line",
+    onTap: onTapSpace
+)
+
+let onTapSpace: OnTapUtilKey = { document, context in
+    if context.isShifted && !context.isCapsLocked {
+        document.insertText("\t")
+    } else if context.isDoubleTapped {
+        document.deleteBackward()
+        document.insertText(". ")
+    } else {
+        document.insertText(" ")
+    }
+}
 
 let enter = UtilKey(
     id: "enter",
@@ -92,14 +101,14 @@ let enter = UtilKey(
     }
 )
 
-var lastLanguage: [[Key]] = englishKeySet
+var lastLanguage: [[Key]] = shortEnglishKeySet
 
 let changeToSymbols = UtilKey(
     id: "changeToSymbol",
     remountOnTap: true,
     title: "$1",
     onTap: { _, context in
-        context.keySet = symbolKeySet
+        context.setKeySet(KeySetName.SYMBOLS)
     }
 )
 
@@ -109,7 +118,7 @@ let changeToEnglish = UtilKey(
     defaultImage: "character",
     locale: "en-US",
     onTap: { _, context in
-        context.keySet = englishKeySet
+        context.setKeySet(KeySetName.ENGLISH)
     }
 )
 
@@ -119,7 +128,7 @@ let changeToKorean = UtilKey(
     defaultImage: "character",
     locale: "ko-KR",
     onTap: { _, context in
-        context.keySet = koreanKeySet
+        context.setKeySet(KeySetName.KOREAN)
     }
 )
 

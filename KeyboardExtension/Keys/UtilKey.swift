@@ -10,8 +10,6 @@ import UIKit
 class UtilKey: Key {
     static let className = "UtilKey"
     let className = "UtilKey"
-    
-    typealias OnTapUtilKey = (UITextDocumentProxy, KeyInputContext) -> Void
 
     let id: String
     let span: Int
@@ -85,3 +83,5 @@ class UtilKey: Key {
         self._onTap(document, context)
     }
 }
+
+typealias OnTapUtilKey = (UITextDocumentProxy, KeyInputContext) -> Void

@@ -31,9 +31,15 @@ private let period = SymbolKey(first: ".", third: ",")
 private let colon = SymbolKey(first: ":", third: ";")
 private let quote = SymbolKey(first: "'", third: "\"")
 
-let symbolKeySet: [[Key]] = [
+let shortSymbolsKeySet: [[Key]] = [
     [question, exclamation, dash, equals, asterisk, _7, _8, _9],
     [at, dollar, and, paranthesisOpen, paranthesisClose, _4, _5, _6],
     [shift, period, colon, quote, _0, _1, _2, _3],
-    [changeToEnglish, changeToKorean, space, enter, backSpace]
+    [changeToEnglish, changeToKorean, longSpace, enter, backSpace]
+]
+
+let longSymbolsKeySet: [[Key]] = [
+    [question, exclamation, dash, equals, asterisk, _7, _8, _9, changeToEnglish, changeToKorean],
+    [at, dollar, and, paranthesisOpen, paranthesisClose, _4, _5, _6, enter, backSpace],
+    [shift, period, colon, quote, _0, _1, _2, _3, shortSpace]
 ]

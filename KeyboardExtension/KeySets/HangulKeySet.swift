@@ -45,9 +45,15 @@ let hangulBackSpace = UtilKey(
     }
 )
 
-let koreanKeySet: [[Key]] = [
+let shortKoreanKeySet: [[Key]] = [
     [ㅂ, ㅈ, ㄷ, ㄱ, ㅅ, ㅗ, ㅐ, ㅔ],
     [ㅁ, ㄴ, ㅇ, ㄹ, ㅎ, ㅓ, ㅏ, ㅣ],
     [shift, ㅋ, ㅌ, ㅊ, ㅍ, ㅜ, ㅡ, blank],
-    [changeToSymbols, changeToEnglish, space, enter, hangulBackSpace]
+    [changeToSymbols, changeToEnglish, longSpace, enter, hangulBackSpace]
+]
+
+let longKoreanKeySet: [[Key]] = [
+    [ㅂ, ㅈ, ㄷ, ㄱ, ㅅ, ㅗ, ㅐ, ㅔ, changeToSymbols, changeToEnglish],
+    [ㅁ, ㄴ, ㅇ, ㄹ, ㅎ, ㅓ, ㅏ, ㅣ, enter, hangulBackSpace],
+    [shift, ㅋ, ㅌ, ㅊ, ㅍ, ㅜ, ㅡ, blank, shortSpace]
 ]

@@ -11,7 +11,7 @@ private var keyAssociationKey: UInt8 = 0
 
 class UIKeyButton: UIButton {
     var key: Key = blank
-    var context = KeyInputContext(keySet: englishKeySet)
+    var context = KeyInputContext()
     var impactFeedbackGenerator: UIImpactFeedbackGenerator?
     let cornerLabel = UILabel()
     

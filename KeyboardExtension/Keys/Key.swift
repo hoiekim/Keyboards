@@ -12,33 +12,55 @@ class KeyInputContext {
     var isCapsLocked = false
     var isDoubleTapped = false
     var isHeld = false
-    var keySet: [[Key]]
+    var keySetName = KeySetName.ENGLISH
+    var isPortrait = UIScreen.main.bounds.size.width < UIScreen.main.bounds.size.height
+    
     var undoStack: [String] = []
     var redoStack: [String] = []
-
-    init(keySet: [[Key]]) {
-        self.keySet = keySet
-    }
     
     convenience init(_ copyFrom: KeyInputContext) {
-        self.init(keySet: copyFrom.keySet)
+        self.init()
         self.isShifted = copyFrom.isShifted
         self.isCapsLocked = copyFrom.isCapsLocked
         self.isDoubleTapped = copyFrom.isDoubleTapped
         self.isHeld = copyFrom.isHeld
+        self.keySetName = copyFrom.keySetName
         self.undoStack = copyFrom.undoStack
         self.redoStack = copyFrom.redoStack
     }
     
-    func copyFrom(_ context: KeyInputContext) {
-        self.keySet = context.keySet
-        self.isShifted = context.isShifted
-        self.isCapsLocked = context.isCapsLocked
-        self.isDoubleTapped = context.isDoubleTapped
-        self.isHeld = context.isHeld
-        self.undoStack = context.undoStack
-        self.redoStack = context.redoStack
+    static func copyFrom(_ context: KeyInputContext) -> KeyInputContext {
+        let newContext = KeyInputContext()
+        newContext.isShifted = context.isShifted
+        newContext.isCapsLocked = context.isCapsLocked
+        newContext.isDoubleTapped = context.isDoubleTapped
+        newContext.isHeld = context.isHeld
+        newContext.keySetName = context.keySetName
+        newContext.undoStack = context.undoStack
+        newContext.redoStack = context.redoStack
+        return newContext
     }
+    
+    func getKeySet() -> [[Key]] {
+        switch(keySetName) {
+        case KeySetName.ENGLISH:
+            return isPortrait ? shortEnglishKeySet : longEnglishKeySet
+        case KeySetName.KOREAN:
+            return isPortrait ? shortKoreanKeySet : longKoreanKeySet
+        case KeySetName.SYMBOLS:
+            return isPortrait ? shortSymbolsKeySet : longSymbolsKeySet
+        }
+    }
+    
+    func setKeySet(_ name: KeySetName) {
+        self.keySetName = name
+    }
+}
+
+enum KeySetName {
+    case ENGLISH
+    case KOREAN
+    case SYMBOLS
 }
 
 protocol Key {
