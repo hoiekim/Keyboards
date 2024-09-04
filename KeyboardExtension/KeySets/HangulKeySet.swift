@@ -39,7 +39,6 @@ let hangulBackSpace = UtilKey(
         } else if context.isCapsLocked || context.isShifted {
             deleteWord(document)
         } else {
-            let last = document.documentContextBeforeInput?.last ?? Character("")
             deleteHangulComponent(document)
         }
     }
