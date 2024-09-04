@@ -15,7 +15,6 @@ class KeyboardViewController: UIInputViewController {
     let rowHeight = CGFloat(45)
 
     override func updateViewConstraints() {
-        print("updateViewConstraints")
         super.updateViewConstraints()
         adjustButtonSizes()
         adjustViewHeight()
@@ -23,7 +22,6 @@ class KeyboardViewController: UIInputViewController {
     }
     
     override func viewDidLoad() {
-        print("viewDidLoad")
         super.viewDidLoad()
         impactFeedbackGenerator = hasFullAccess ? UIImpactFeedbackGenerator(style: .light) : nil
         impactFeedbackGenerator?.prepare()
@@ -32,7 +30,6 @@ class KeyboardViewController: UIInputViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print("viewDidAppear")
         super.viewDidAppear(animated)
         // removes delays on touches on screen edges
         if let window = view.window,
@@ -45,17 +42,17 @@ class KeyboardViewController: UIInputViewController {
             }
         }
         
+        adjustButtonSizes()
+        adjustViewHeight()
         handleAutoCapitalization()
         updateButtonImages()
     }
     
     override func viewWillLayoutSubviews() {
-        print("viewWillLayoutSubviews")
         super.viewWillLayoutSubviews()
     }
     
     override func viewDidLayoutSubviews() {
-        print("viewDidLayoutSubviews")
         super.viewWillLayoutSubviews()
         if keyInputContext.isPortrait != isPortrait() {
             keyInputContext.isPortrait = isPortrait()
@@ -154,7 +151,9 @@ class KeyboardViewController: UIInputViewController {
                     containerSize: view.bounds.width,
                     spacing: buttonSpacing
                 )
-                button.widthAnchor.constraint(equalToConstant: keyWidth).isActive = true
+                let widthConstraint = button.widthAnchor.constraint(equalToConstant: keyWidth)
+                widthConstraint.priority = .defaultHigh
+                widthConstraint.isActive = true
             }
         }
     }
