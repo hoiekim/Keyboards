@@ -10,7 +10,8 @@ import UIKit
 class KeyboardViewController: UIInputViewController {
     let keyInputContext = KeyInputContext()
     var impactFeedbackGenerator: UIImpactFeedbackGenerator?
-    let buttonSpacing = CGFloat(5)
+    let viewPadding = CGFloat(3)
+    let buttonSpacing = CGFloat(0)
     var buttonsView = UIStackView()
     let rowHeight = CGFloat(45)
 
@@ -89,18 +90,20 @@ class KeyboardViewController: UIInputViewController {
         
         view.addSubview(buttonsView)
         
+        let padding = buttonSpacing + viewPadding
+        
         NSLayoutConstraint.activate([
             buttonsView.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor,
-                constant: buttonSpacing
+                constant: padding
             ),
             buttonsView.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor,
-                constant: -buttonSpacing
+                constant: -padding
             ),
             buttonsView.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor,
-                constant: -buttonSpacing
+                constant: -padding
             )
         ])
     }
@@ -112,7 +115,6 @@ class KeyboardViewController: UIInputViewController {
             impactFeedbackGenerator: impactFeedbackGenerator
         )
         
-        button.layer.cornerRadius = 5
         button.translatesAutoresizingMaskIntoConstraints = false
         
         button.addTarget(self, action: #selector(onTouchUpInside), for: .touchUpInside)
@@ -148,7 +150,7 @@ class KeyboardViewController: UIInputViewController {
                 let keyWidth = calculateKeyWidth(
                     span: key.span,
                     spanTotal: maxNumberOfSpans,
-                    containerSize: view.bounds.width,
+                    containerSize: view.bounds.width - (2 * viewPadding),
                     spacing: buttonSpacing
                 )
                 let widthConstraint = button.widthAnchor.constraint(equalToConstant: keyWidth)
@@ -160,7 +162,7 @@ class KeyboardViewController: UIInputViewController {
     
     private func adjustViewHeight() {
         let rows = keyInputContext.getKeySet()
-        let viewHeight = CGFloat(rows.count) * (rowHeight + buttonSpacing) + buttonSpacing
+        let viewHeight = CGFloat(rows.count) * (rowHeight + buttonSpacing) + buttonSpacing + (2 * viewPadding)
         let heightConstraints = view.constraints.filter({ $0.firstAttribute == .height })
         NSLayoutConstraint.deactivate(heightConstraints)
         let newHeightConstraint = view.heightAnchor.constraint(equalToConstant: viewHeight)

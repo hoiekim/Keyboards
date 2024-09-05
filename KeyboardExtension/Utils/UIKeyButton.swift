@@ -13,6 +13,7 @@ class UIKeyButton: UIButton {
     var key: Key = blank
     var context = KeyInputContext()
     var impactFeedbackGenerator: UIImpactFeedbackGenerator?
+    let visibleBox = UIButton()
     let cornerLabel = UILabel()
     
     convenience init(
@@ -25,24 +26,81 @@ class UIKeyButton: UIButton {
         self.context = context
         self.impactFeedbackGenerator = impactFeedbackGenerator
         self.addTarget(self, action: #selector(onTouchDown), for: .touchDown)
+        self.backgroundColor = .clear
     }
     
     func updateImage() {
-        let key = self.key
-        let context = self.context
-        let title = key.getTitle(context)
-        let titleSuperscript = key.getTitleSuperscript(context)
-        let image = key.getImage(context)
-        let backgroundColor = key.getBackgroundColor(context)
+        visibleBox.removeFromSuperview()
         
-        UIView.performWithoutAnimation {
-            self.setImage(image, for: .normal)
-            self.tintColor = .white
-            self.setTitle(title, for: .normal)
-            self.setTitleColor(UIColor.white, for: .normal)
-            self.backgroundColor = backgroundColor ?? customGray1
+        let padding = CGFloat(3)
+        let cornerRadius = CGFloat(8)
+        
+        visibleBox.translatesAutoresizingMaskIntoConstraints = false
+        visibleBox.layer.cornerRadius = cornerRadius
+        
+        let backgroundColor = key.getBackgroundColor(context)
+        visibleBox.backgroundColor = backgroundColor ?? customGray1
+        
+        
+        let title = key.getTitle(context)
+        visibleBox.setTitle(title, for: .normal)
+        visibleBox.setTitleColor(UIColor.white, for: .normal)
+        
+        let image = key.getImage(context)
+        visibleBox.setImage(image, for: .normal)
+        visibleBox.tintColor = .white
+        
+        visibleBox.isUserInteractionEnabled = false
+        
+        addSubview(visibleBox)
+        
+        let topConstraint = visibleBox.topAnchor.constraint(
+            equalTo: topAnchor,
+            constant: padding
+        )
+        
+        let bottomConstraint = visibleBox.bottomAnchor.constraint(
+            equalTo: bottomAnchor,
+            constant: -padding
+        )
+        
+        let leftConstraint = visibleBox.leadingAnchor.constraint(
+            equalTo: leadingAnchor,
+            constant: padding
+        )
+        
+        let rightConstraint = visibleBox.trailingAnchor.constraint(
+            equalTo: trailingAnchor,
+            constant: -padding
+        )
+        
+        topConstraint.isActive = true
+        bottomConstraint.isActive = true
+        leftConstraint.isActive = true
+        rightConstraint.isActive = true
+        
+        cornerLabel.removeFromSuperview()
+        if let titleSuperscript = key.getTitleSuperscript(context) {
+            cornerLabel.text = titleSuperscript
+            cornerLabel.font = UIFont.systemFont(ofSize: 10)
+            cornerLabel.textColor = .white
+            cornerLabel.translatesAutoresizingMaskIntoConstraints = false
+            cornerLabel.isUserInteractionEnabled = false
             
-            setTitleSuperscript(titleSuperscript)
+            visibleBox.addSubview(cornerLabel)
+            
+            let topConstraint = cornerLabel.topAnchor.constraint(
+                equalTo: visibleBox.topAnchor,
+                constant: 1
+            )
+            
+            let rightConstraint = cornerLabel.trailingAnchor.constraint(
+                equalTo: visibleBox.trailingAnchor,
+                constant: -3
+            )
+            
+            topConstraint.isActive = true
+            rightConstraint.isActive = true
         }
     }
     
@@ -68,13 +126,14 @@ class UIKeyButton: UIButton {
     @objc func onTouchDown(sender: UIKeyButton) {
         if self.key.id == blank.id { return }
         impactFeedbackGenerator?.impactOccurred()
-        sender.backgroundColor = .systemIndigo
+        self.visibleBox.backgroundColor = .systemIndigo
         tapHighlightTimer?.invalidate()
         tapHighlightTimer = Timer.scheduledTimer(
             withTimeInterval: 0.15,
             repeats: false
         ) { _ in
-            sender.backgroundColor = self.key.getBackgroundColor(self.context)
+            let backgroundColor = self.key.getBackgroundColor(self.context)
+            self.visibleBox.backgroundColor = backgroundColor ?? customGray1
         }
     }
 }
