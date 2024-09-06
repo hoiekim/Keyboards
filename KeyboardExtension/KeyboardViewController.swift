@@ -11,9 +11,8 @@ class KeyboardViewController: UIInputViewController {
     let keyInputContext = KeyInputContext()
     var impactFeedbackGenerator: UIImpactFeedbackGenerator?
     let viewPadding = CGFloat(3)
-    let buttonSpacing = CGFloat(0)
-    var buttonsView = UIStackView()
     let rowHeight = CGFloat(45)
+    var buttonsView = UIStackView()
 
     override func updateViewConstraints() {
         super.updateViewConstraints()
@@ -26,7 +25,11 @@ class KeyboardViewController: UIInputViewController {
         super.viewDidLoad()
         impactFeedbackGenerator = hasFullAccess ? UIImpactFeedbackGenerator(style: .light) : nil
         impactFeedbackGenerator?.prepare()
-        view.backgroundColor = customGray0
+        if traitCollection.userInterfaceStyle == .dark {
+            view.backgroundColor = customGray0
+        } else {
+            view.backgroundColor = customOffWhite
+        }
         mountButtons()
     }
     
@@ -66,13 +69,13 @@ class KeyboardViewController: UIInputViewController {
         buttonsView = UIStackView()
         buttonsView.axis = .vertical
         buttonsView.distribution = .fillEqually
-        buttonsView.spacing = buttonSpacing
+        buttonsView.spacing = 0
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
         
         for row in keyInputContext.getKeySet() {
             let rowStackView = UIStackView()
             rowStackView.axis = .horizontal
-            rowStackView.spacing = buttonSpacing
+            rowStackView.spacing = 0
             rowStackView.translatesAutoresizingMaskIntoConstraints = false
             
             for key in row {
@@ -90,20 +93,18 @@ class KeyboardViewController: UIInputViewController {
         
         view.addSubview(buttonsView)
         
-        let padding = buttonSpacing + viewPadding
-        
         NSLayoutConstraint.activate([
             buttonsView.leadingAnchor.constraint(
                 equalTo: view.leadingAnchor,
-                constant: padding
+                constant: viewPadding
             ),
             buttonsView.trailingAnchor.constraint(
                 equalTo: view.trailingAnchor,
-                constant: -padding
+                constant: -viewPadding
             ),
             buttonsView.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor,
-                constant: -padding
+                constant: -viewPadding
             )
         ])
     }
@@ -150,8 +151,7 @@ class KeyboardViewController: UIInputViewController {
                 let keyWidth = calculateKeyWidth(
                     span: key.span,
                     spanTotal: maxNumberOfSpans,
-                    containerSize: view.bounds.width - (2 * viewPadding),
-                    spacing: buttonSpacing
+                    containerSize: view.bounds.width - (2 * viewPadding)
                 )
                 let widthConstraint = button.widthAnchor.constraint(equalToConstant: keyWidth)
                 widthConstraint.priority = .defaultHigh
@@ -162,14 +162,13 @@ class KeyboardViewController: UIInputViewController {
     
     private func adjustViewHeight() {
         let rows = keyInputContext.getKeySet()
-        let viewHeight = CGFloat(rows.count) * (rowHeight + buttonSpacing) + buttonSpacing + (2 * viewPadding)
-        let heightConstraints = view.constraints.filter({ $0.firstAttribute == .height })
+        let viewHeight = CGFloat(rows.count) * rowHeight + (2 * viewPadding)
+        let heightConstraints = view.constraints.filter { $0.firstAttribute == .height }
         NSLayoutConstraint.deactivate(heightConstraints)
         let newHeightConstraint = view.heightAnchor.constraint(equalToConstant: viewHeight)
         newHeightConstraint.priority = .defaultHigh
         newHeightConstraint.isActive = true
     }
-    
     
     private func updateButtonImages() {
         for (_, rowView) in buttonsView.arrangedSubviews.enumerated() {
@@ -229,9 +228,11 @@ class KeyboardViewController: UIInputViewController {
             keyInputContext.isShifted = false
         }
         
-        if key.id == longSpace.id || key.id == longEnglishSpace.id || key.id == enter.id {
-            handleAutoCapitalization()
-        }
+        let spaceKeys = [longSpace, longEnglishSpace, shortEnglishSpace]
+        let isSpaceKey = spaceKeys.first { s in s.id == key.id } != nil
+        let isEnterKey = key.id == enter.id
+        
+        if isSpaceKey || isEnterKey { handleAutoCapitalization() }
         
         if key.remountOnTap {
             mountButtons()
@@ -262,7 +263,7 @@ class KeyboardViewController: UIInputViewController {
             panAmount = 0
         } else if gesture.state == .ended {
             if panAmount == 0 {
-                self.onTouchUpInside(sender: button)
+                onTouchUpInside(sender: button)
             }
         }
         
@@ -350,7 +351,7 @@ class KeyboardViewController: UIInputViewController {
         let isBeginningOfAll = isEmpty || last == nil
         let isBeginningOfSentence = lastTwo == ". " || lastTwo == "? " || lastTwo == "! "
         let isBeginningOfParagraph = last == "\n"
-        if  isBeginningOfAll || isBeginningOfSentence || isBeginningOfParagraph {
+        if isBeginningOfAll || isBeginningOfSentence || isBeginningOfParagraph {
             keyInputContext.isShifted = true
         }
     }

@@ -7,8 +7,6 @@
 
 import UIKit
 
-private var keyAssociationKey: UInt8 = 0
-
 class UIKeyButton: UIButton {
     var key: Key = blank
     var context = KeyInputContext()
@@ -25,7 +23,7 @@ class UIKeyButton: UIButton {
         self.key = key
         self.context = context
         self.impactFeedbackGenerator = impactFeedbackGenerator
-        self.addTarget(self, action: #selector(onTouchDown), for: .touchDown)
+        addTarget(self, action: #selector(onTouchDown), for: .touchDown)
         self.backgroundColor = .clear
     }
     
@@ -41,7 +39,6 @@ class UIKeyButton: UIButton {
         let backgroundColor = key.getBackgroundColor(context)
         visibleBox.backgroundColor = backgroundColor ?? customGray1
         
-        
         let title = key.getTitle(context)
         visibleBox.setTitle(title, for: .normal)
         visibleBox.setTitleColor(UIColor.white, for: .normal)
@@ -51,6 +48,11 @@ class UIKeyButton: UIButton {
         visibleBox.tintColor = .white
         
         visibleBox.isUserInteractionEnabled = false
+        
+        visibleBox.layer.shadowColor = UIColor.black.cgColor
+        visibleBox.layer.shadowOpacity = 0.5
+        visibleBox.layer.shadowOffset = CGSize(width: 0, height: 3)
+        visibleBox.layer.shadowRadius = 3
         
         addSubview(visibleBox)
         
@@ -124,9 +126,10 @@ class UIKeyButton: UIButton {
     private var tapHighlightTimer: Timer?
     
     @objc func onTouchDown(sender: UIKeyButton) {
-        if self.key.id == blank.id { return }
+        if key.id == blank.id { return }
         impactFeedbackGenerator?.impactOccurred()
-        self.visibleBox.backgroundColor = .systemIndigo
+        visibleBox.backgroundColor = .systemIndigo
+        visibleBox.layer.shadowOffset = CGSize(width: 0, height: 0)
         tapHighlightTimer?.invalidate()
         tapHighlightTimer = Timer.scheduledTimer(
             withTimeInterval: 0.15,
@@ -134,6 +137,7 @@ class UIKeyButton: UIButton {
         ) { _ in
             let backgroundColor = self.key.getBackgroundColor(self.context)
             self.visibleBox.backgroundColor = backgroundColor ?? customGray1
+            self.visibleBox.layer.shadowOffset = CGSize(width: 0, height: 3)
         }
     }
 }

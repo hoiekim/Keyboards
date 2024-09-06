@@ -11,20 +11,21 @@ private let KQ = EnglishKey(first: "K", second: "Q")
 private let BV = EnglishKey(first: "B", second: "V")
 private let ZX = EnglishKey(first: "Z", second: "X")
 private let D = EnglishKey(first: "D")
-private let TTH = EnglishKey(first: "T", second: "TH")
+private let T = EnglishKey(first: "T")
 private let G = EnglishKey(first: "G")
 private let J = EnglishKey(first: "J")
 private let H = EnglishKey(first: "H")
-private let SSH = EnglishKey(first: "S", second: "SH")
+private let S = EnglishKey(first: "S")
 private let R = EnglishKey(first: "R")
-private let CCH = EnglishKey(first: "C", second: "CH")
-private let PPH = EnglishKey(first: "P", second: "PH")
+private let C = EnglishKey(first: "C")
+private let P = EnglishKey(first: "P")
 private let F = EnglishKey(first: "F")
-private let NNG = EnglishKey(first: "N", second: "NG")
+private let N = EnglishKey(first: "N")
 private let M = EnglishKey(first: "M")
 private let L = EnglishKey(first: "L")
 private let X = EnglishKey(first: "X")
 private let W = EnglishKey(first: "W", backgroundColor: customGray3)
+private let WWH = EnglishKey(first: "W", second: "WH", backgroundColor: customGray3)
 private let O = EnglishKey(first: "O", backgroundColor: customGray3)
 private let A = EnglishKey(first: "A", backgroundColor: customGray3)
 private let Y = EnglishKey(first: "Y", backgroundColor: customGray3)
@@ -35,24 +36,19 @@ private let U = EnglishKey(first: "U", backgroundColor: customGray3)
 let longEnglishSpace = UtilKey(
     id: "englishSpace",
     span: 4,
-    imageOnShift: "arrow.forward.to.line",
     onTap: onTapEnglishSpace
 )
 
 let shortEnglishSpace = UtilKey(
     id: "englishSpace",
     span: 2,
-    imageOnShift: "arrow.forward.to.line",
     onTap: onTapEnglishSpace
 )
 
 let onTapEnglishSpace: OnTapUtilKey = { document, context in
-    if context.isShifted, !context.isCapsLocked {
-        document.insertText("\t")
-    } else if context.isDoubleTapped {
+    if context.isDoubleTapped {
         document.deleteBackward()
         document.insertText(". ")
-        context.isShifted = true
     } else {
         let beforeText = document.documentContextBeforeInput
         if let lastWord = beforeText?.split(separator: " ").last {
@@ -133,6 +129,8 @@ let onTapEnglishSpace: OnTapUtilKey = { document, context in
             case "thatd": "that'd"
             case "Theres": "There's"
             case "theres": "there's"
+            case "Heres": "Here's"
+            case "heres": "here's"
             case "Lets": "Let's"
             default: nil
             }
@@ -149,14 +147,14 @@ let onTapEnglishSpace: OnTapUtilKey = { document, context in
 }
 
 let shortEnglishKeySet: [[Key]] = [
-    [KQ, TTH, D, R, L, U, I, O],
-    [BV, PPH, F, G, H, J, A, E],
-    [shift, ZX, SSH, CCH, NNG, M, W, Y],
+    [KQ, D, T, R, L, U, I, O],
+    [F, P, H, S, G, J, A, E],
+    [shift, ZX, C, BV, N, M, WWH, Y],
     [changeToSymbols, changeToKorean, longEnglishSpace, enter, backSpace]
 ]
 
 let longEnglishKeySet: [[Key]] = [
-    [KQ, TTH, D, R, L, U, I, O, changeToSymbols, changeToKorean],
-    [BV, PPH, F, G, H, J, A, E, enter, backSpace],
-    [shift, ZX, SSH, CCH, NNG, M, W, Y, shortEnglishSpace]
+    [KQ, D, T, R, L, U, I, O, changeToSymbols, changeToKorean],
+    [F, P, H, S, G, J, A, E, enter, backSpace],
+    [shift, ZX, C, BV, N, M, WWH, Y, shortEnglishSpace]
 ]

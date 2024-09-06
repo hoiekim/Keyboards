@@ -36,8 +36,6 @@ let hangulBackSpace = UtilKey(
     onTap: { document, context in
         if let selectedText = document.selectedText, !selectedText.isEmpty {
             document.deleteBackward()
-        } else if context.isCapsLocked || context.isShifted {
-            deleteWord(document)
         } else {
             deleteHangulComponent(document)
         }

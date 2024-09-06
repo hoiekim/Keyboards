@@ -34,15 +34,7 @@ let backSpace = UtilKey(
     id: "backSpace",
     defaultImage: "delete.backward",
     onTap: { document, context in
-        if let selectedText = document.selectedText, !selectedText.isEmpty {
-            document.deleteBackward()
-        } else if context.isCapsLocked || context.isShifted {
-            deleteWord(document)
-        } else {
-            if let last = document.documentContextBeforeInput?.last {
-                document.deleteBackward()
-            }
-        }
+        document.deleteBackward()
     }
 )
 
@@ -71,21 +63,17 @@ let shift = UtilKey(
 let longSpace = UtilKey(
     id: "longSpace",
     span: 4,
-    imageOnShift: "arrow.forward.to.line",
     onTap: onTapSpace
 )
 
 let shortSpace = UtilKey(
     id: "shortSpace",
     span: 2,
-    imageOnShift: "arrow.forward.to.line",
     onTap: onTapSpace
 )
 
 let onTapSpace: OnTapUtilKey = { document, context in
-    if context.isShifted && !context.isCapsLocked {
-        document.insertText("\t")
-    } else if context.isDoubleTapped {
+    if context.isDoubleTapped {
         document.deleteBackward()
         document.insertText(". ")
     } else {

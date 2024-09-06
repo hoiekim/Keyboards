@@ -19,14 +19,10 @@ func minOfCoalesced(_ numbers: Int?...) -> Int? {
 func calculateKeyWidth(
     span: Int,
     spanTotal: Int,
-    containerSize: CGFloat,
-    spacing: CGFloat
+    containerSize: CGFloat
 ) -> CGFloat {
-    let numberOfSpaces = spanTotal + 1
-    let totalSpacing = CGFloat(numberOfSpaces) * spacing
-    let oneSpanSize = (containerSize - totalSpacing) / CGFloat(spanTotal)
-    let mergedSpacing = CGFloat(max(0, span - 1)) * spacing
-    return (oneSpanSize * CGFloat(span)) + mergedSpacing
+    let oneSpanSize = containerSize / CGFloat(spanTotal)
+    return oneSpanSize * CGFloat(span)
 }
 
 func isKeySetsEqual(_ keySet1: [[Key]], _ keySet2: [[Key]]) -> Bool {
@@ -54,6 +50,7 @@ let customGray0 = UIColor(white: 0.1, alpha: 1.0)
 let customGray1 = UIColor(white: 0.25, alpha: 1.0)
 let customGray2 = UIColor(white: 0.35, alpha: 1.0)
 let customGray3 = UIColor(white: 0.4, alpha: 1.0)
+let customOffWhite = UIColor(white: 0.85, alpha: 1.0)
 
 func isPortrait() -> Bool {
     return UIScreen.main.bounds.size.width < UIScreen.main.bounds.size.height
