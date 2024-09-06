@@ -1,6 +1,6 @@
 # Hoikey
 
-It's an iOS extension keyboards app for English and Korean. The design of the keyboards is inspired by Hangul writing system and it aims to be the most minimalistic and logical typing system and interface.
+It's an iOS extension keyboards app for English and Korean. The design of the keyboards is inspired by Hangul writing system and it aims to be the most minimalistic and logical typing system and interface. Download Hoikey on [Appstore](https://apps.apple.com/us/app/hoikey/id6642557993)!
 
 ## Support
 
