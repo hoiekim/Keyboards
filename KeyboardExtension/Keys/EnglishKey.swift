@@ -55,28 +55,22 @@ class EnglishKey: Key {
         let keyValue = getKeyValue(document: document, context: context)
         if context.isCapsLocked {
             document.insertText(keyValue.uppercased())
-        } else if context.isShifted {
+        } else if context.isShifted || context.isShiftedDoubleTapped() {
             document.insertText(keyValue.capitalized)
         } else {
             document.insertText(keyValue.lowercased())
         }
     }
-    
-    private var isSingleKeyRemoved = false
 
     private func getKeyValue(
         document: UITextDocumentProxy,
         context: KeyInputContext
     ) -> String {
         if second == nil { return first }
-        else if context.isDoubleTapped {
-            if !isSingleKeyRemoved {
-                document.deleteBackward()
-                isSingleKeyRemoved = true
-            }
+        else if context.isDoubleTapped() {
+            document.deleteBackward()
             return second!
         } else {
-            isSingleKeyRemoved = false
             return first
         }
     }

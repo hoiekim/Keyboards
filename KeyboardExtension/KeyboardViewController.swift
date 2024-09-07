@@ -26,9 +26,9 @@ class KeyboardViewController: UIInputViewController {
         impactFeedbackGenerator = hasFullAccess ? UIImpactFeedbackGenerator(style: .light) : nil
         impactFeedbackGenerator?.prepare()
         if traitCollection.userInterfaceStyle == .dark {
-            view.backgroundColor = customGray0
+            view.backgroundColor = darkBackground
         } else {
-            view.backgroundColor = customOffWhite
+            view.backgroundColor = lightBackground
         }
         mountButtons()
     }
@@ -180,46 +180,31 @@ class KeyboardViewController: UIInputViewController {
         }
     }
     
-    private var lastTappedKey: Key? = nil
-    private var isFirstTappedKeyShifted: Bool = false
-    private var doubleTapTimer: Timer?
-    
     @objc private func onTouchDown(sender: UIKeyButton) {
-        // handle double tap
-        let key = sender.key
-        if lastTappedKey?.id == key.id {
-            keyInputContext.isDoubleTapped = true
-            keyInputContext.isShifted = isFirstTappedKeyShifted
-        } else {
-            lastTappedKey = key
-            isFirstTappedKeyShifted = keyInputContext.isShifted
-            keyInputContext.isDoubleTapped = false
-        }
-        doubleTapTimer?.invalidate()
-        doubleTapTimer = Timer.scheduledTimer(
-            timeInterval: 0.35,
-            target: self,
-            selector: #selector(resetDoubleTap),
-            userInfo: nil,
-            repeats: false
+        let tapHistoryElement = TapHistoryElement(
+            timestamp: Date().timeIntervalSince1970,
+            key: sender.key,
+            context: keyInputContext.copy()
         )
-    }
-
-    @objc private func resetDoubleTap() {
-        lastTappedKey = nil
-        keyInputContext.isDoubleTapped = false
+        keyInputContext.tapHistory.enqueue(tapHistoryElement)
+        sender.context = keyInputContext.copy()
     }
     
     @objc private func onTouchUpInside(sender: UIKeyButton) {
-        if keyInputContext.isHeld {
-            keyInputContext.isHeld = false
-        } else {
-            sender.key.onTap(document: textDocumentProxy, context: keyInputContext)
-        }
-        afterTap(sender.key)
+        let context = sender.context
+        let key = sender.key
+        key.onTap(document: textDocumentProxy, context: context)
+        afterTap(sender)
     }
     
-    private func afterTap(_ key: Key) {
+    private func afterTap(_ button: UIKeyButton) {
+        let key = button.key
+        if key.id == shift.id {
+            keyInputContext.isShifted = button.context.isShifted
+            keyInputContext.isCapsLocked = button.context.isCapsLocked
+        }
+        keyInputContext.keySetName = button.context.keySetName
+        button.context = keyInputContext
         let isShiftKey = key.id == shift.id
         let isShifted = keyInputContext.isShifted
         let isCapsLocked = keyInputContext.isCapsLocked
@@ -312,6 +297,12 @@ class KeyboardViewController: UIInputViewController {
     
     @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard let button = gesture.view as? UIKeyButton else { return }
+        
+        if gesture.state == .ended {
+            holdTimer?.invalidate()
+            afterTap(button)
+        }
+        
         let key = button.key
         
         if key.id == shift.id { return }
@@ -321,25 +312,16 @@ class KeyboardViewController: UIInputViewController {
         if key.id == enter.id { return }
         
         if gesture.state == .began {
-            doubleTapTimer?.invalidate()
-            
             impactFeedbackGenerator?.impactOccurred()
-            key.onTap(document: textDocumentProxy, context: keyInputContext)
-            
-            keyInputContext.isHeld = true
+            key.onTap(document: textDocumentProxy, context: button.context)
             
             holdTimer = Timer.scheduledTimer(
                 withTimeInterval: 0.1,
                 repeats: true
             ) { _ in
                 self.impactFeedbackGenerator?.impactOccurred()
-                key.onTap(document: self.textDocumentProxy, context: self.keyInputContext)
+                key.onTap(document: self.textDocumentProxy, context: button.context)
             }
-        } else if gesture.state == .ended {
-            holdTimer?.invalidate()
-            afterTap(key)
-            resetDoubleTap()
-            keyInputContext.isHeld = false
         }
     }
     

@@ -45,7 +45,7 @@ let shift = UtilKey(
     imageOnShift: "shift.fill",
     imageOnCapsLock: "capslock.fill",
     onTap: { _, context in
-        if context.isDoubleTapped {
+        if context.isDoubleTapped() {
             context.isCapsLocked = true
         } else {
             if context.isCapsLocked {
@@ -73,7 +73,7 @@ let shortSpace = UtilKey(
 )
 
 let onTapSpace: OnTapUtilKey = { document, context in
-    if context.isDoubleTapped {
+    if context.isDoubleTapped() {
         document.deleteBackward()
         document.insertText(". ")
     } else {

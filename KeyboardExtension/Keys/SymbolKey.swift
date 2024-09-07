@@ -73,7 +73,7 @@ class SymbolKey: Key {
             return third!
         } else {
             if second == nil { return first }
-            else if context.isDoubleTapped {
+            else if context.isDoubleTapped() {
                 if !isSingleKeyRemoved {
                     document.deleteBackward()
                     isSingleKeyRemoved = true

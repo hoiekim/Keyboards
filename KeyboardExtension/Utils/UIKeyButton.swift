@@ -51,8 +51,8 @@ class UIKeyButton: UIButton {
         
         visibleBox.layer.shadowColor = UIColor.black.cgColor
         visibleBox.layer.shadowOpacity = 0.5
-        visibleBox.layer.shadowOffset = CGSize(width: 0, height: 3)
-        visibleBox.layer.shadowRadius = 3
+        visibleBox.layer.shadowOffset = CGSize(width: 0, height: 2)
+        visibleBox.layer.shadowRadius = 2
         
         addSubview(visibleBox)
         
@@ -98,7 +98,7 @@ class UIKeyButton: UIButton {
             
             let rightConstraint = cornerLabel.trailingAnchor.constraint(
                 equalTo: visibleBox.trailingAnchor,
-                constant: -3
+                constant: titleSuperscript.count == 1 ? -8 : -3
             )
             
             topConstraint.isActive = true

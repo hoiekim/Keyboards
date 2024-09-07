@@ -46,7 +46,7 @@ let shortEnglishSpace = UtilKey(
 )
 
 let onTapEnglishSpace: OnTapUtilKey = { document, context in
-    if context.isDoubleTapped {
+    if context.isDoubleTapped() {
         document.deleteBackward()
         document.insertText(". ")
     } else {

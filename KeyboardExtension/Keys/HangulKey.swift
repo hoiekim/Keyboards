@@ -160,7 +160,7 @@ class HangulKey: Key {
     }
 
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
-        let isSecond = (context.isShifted && !context.isDoubleTapped) || context.isCapsLocked
+        let isSecond = (context.isShifted && !context.isDoubleTapped()) || context.isCapsLocked
         let key = isSecond && second != nil ? second! : first
 
         let isConsonant = isConsonant(key)
@@ -181,11 +181,9 @@ class HangulKey: Key {
 
         let (initial, medial, final) = components
 
-        let isDoubleTappedVowel = second != nil && context.isDoubleTapped && isVowel
-        if context.isHeld {
-            if isDoubleTappedVowel { document.insertText(second!) }
-            else { document.insertText(key) }
-        } else if !isComposing {
+        let isDoubleTappedVowel = second != nil && context.isDoubleTapped() && isVowel
+        
+        if !isComposing {
             document.insertText(key)
         } else if isDoubleTappedVowel {
             switch (initial, medial, final) {

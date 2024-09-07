@@ -7,42 +7,31 @@
 
 import UIKit
 
+struct TapHistoryElement {
+    var timestamp: TimeInterval
+    var key: Key
+    var context: KeyInputContext
+}
+
 class KeyInputContext {
     var isShifted = false
     var isCapsLocked = false
-    var isDoubleTapped = false
-    var isHeld = false
     var keySetName = KeySetName.ENGLISH
     var isPortrait = UIScreen.main.bounds.size.width < UIScreen.main.bounds.size.height
-    
-    var undoStack: [String] = []
-    var redoStack: [String] = []
-    
-    convenience init(_ copyFrom: KeyInputContext) {
-        self.init()
-        self.isShifted = copyFrom.isShifted
-        self.isCapsLocked = copyFrom.isCapsLocked
-        self.isDoubleTapped = copyFrom.isDoubleTapped
-        self.isHeld = copyFrom.isHeld
-        self.keySetName = copyFrom.keySetName
-        self.undoStack = copyFrom.undoStack
-        self.redoStack = copyFrom.redoStack
-    }
-    
-    static func copyFrom(_ context: KeyInputContext) -> KeyInputContext {
+    var tapHistory = Queue<TapHistoryElement>(maxSize: 3)
+
+    func copy() -> KeyInputContext {
         let newContext = KeyInputContext()
-        newContext.isShifted = context.isShifted
-        newContext.isCapsLocked = context.isCapsLocked
-        newContext.isDoubleTapped = context.isDoubleTapped
-        newContext.isHeld = context.isHeld
-        newContext.keySetName = context.keySetName
-        newContext.undoStack = context.undoStack
-        newContext.redoStack = context.redoStack
+        newContext.isShifted = isShifted
+        newContext.isCapsLocked = isCapsLocked
+        newContext.keySetName = keySetName
+        newContext.isPortrait = isPortrait
+        newContext.tapHistory = tapHistory.copy()
         return newContext
     }
-    
+
     func getKeySet() -> [[Key]] {
-        switch(keySetName) {
+        switch keySetName {
         case KeySetName.ENGLISH:
             return isPortrait ? shortEnglishKeySet : longEnglishKeySet
         case KeySetName.KOREAN:
@@ -51,9 +40,24 @@ class KeyInputContext {
             return isPortrait ? shortSymbolsKeySet : longSymbolsKeySet
         }
     }
-    
+
     func setKeySet(_ name: KeySetName) {
-        self.keySetName = name
+        keySetName = name
+    }
+
+    func isDoubleTapped() -> Bool {
+        let count = tapHistory.count
+        if count < 2 { return false }
+        guard let first = tapHistory.peek(count - 2) else { return false }
+        guard let second = tapHistory.peek(count - 1) else { return false }
+        if first.key.id != second.key.id { return false }
+        return second.timestamp - first.timestamp < 0.5
+    }
+
+    func isShiftedDoubleTapped() -> Bool {
+        if !isDoubleTapped() { return false }
+        guard let first = tapHistory.peek(tapHistory.count - 2) else { return false }
+        return first.context.isShifted
     }
 }
 
@@ -74,13 +78,4 @@ protocol Key {
     func getTitleSuperscript(_ context: KeyInputContext) -> String?
     func getImage(_ context: KeyInputContext) -> UIImage?
     func getBackgroundColor(_ context: KeyInputContext) -> UIColor?
-}
-
-func updateUndoStack(_ document: UITextDocumentProxy, _ context: KeyInputContext) {
-    context.redoStack.removeAll()
-    let beforeText = document.documentContextBeforeInput ?? ""
-    let afterText = document.documentContextAfterInput ?? ""
-    context.undoStack.append(beforeText + afterText)
-    print(context.undoStack)
-    print(context.redoStack)
 }
