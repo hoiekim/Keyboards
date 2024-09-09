@@ -188,12 +188,16 @@ class HangulKey: Key {
         } else if isDoubleTappedVowel {
             switch (initial, medial, final) {
             case (.some, .some, nil):
-                document.deleteBackward()
                 let jungseong = letterToJungseong(second!)!
-                let syllable = compose(initial!, jungseong)!
-                document.insertText(syllable)
+                if jungseong != medial {
+                    document.deleteBackward()
+                    let syllable = compose(initial!, jungseong)!
+                    document.insertText(syllable)
+                } else {
+                    document.insertText(key)
+                }
             default:
-                document.deleteBackward()
+                if String(last) != second { document.deleteBackward() }
                 document.insertText(second!)
             }
         } else {

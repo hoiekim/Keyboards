@@ -62,8 +62,6 @@ class SymbolKey: Key {
         if isShifted || isCapsLocked { document.insertText(keyValue.uppercased()) }
         else { document.insertText(keyValue.lowercased()) }
     }
-    
-    private var isSingleKeyRemoved = false
 
     private func getKeyValue(
         document: UITextDocumentProxy,
@@ -74,13 +72,11 @@ class SymbolKey: Key {
         } else {
             if second == nil { return first }
             else if context.isDoubleTapped() {
-                if !isSingleKeyRemoved {
-                    document.deleteBackward()
-                    isSingleKeyRemoved = true
-                }
+                let last = document.documentContextBeforeInput?.last
+                if last != nil && String(last!) == first { document.deleteBackward() }
+                document.deleteBackward()
                 return second!
             } else {
-                isSingleKeyRemoved = false
                 return first
             }
         }
