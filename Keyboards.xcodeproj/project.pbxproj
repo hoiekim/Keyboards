@@ -457,7 +457,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.6;
+				MARKETING_VERSION = 1.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards;
 				PRODUCT_NAME = Hoikey;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -492,7 +492,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.6;
+				MARKETING_VERSION = 1.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards;
 				PRODUCT_NAME = Hoikey;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -520,7 +520,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.6;
+				MARKETING_VERSION = 1.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards.KeyboardExtension;
 				PRODUCT_NAME = KeyboardExtension;
 				SKIP_INSTALL = YES;
@@ -545,7 +545,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.6;
+				MARKETING_VERSION = 1.0.7;
 				PRODUCT_BUNDLE_IDENTIFIER = kim.hoie.Keyboards.KeyboardExtension;
 				PRODUCT_NAME = KeyboardExtension;
 				SKIP_INSTALL = YES;
