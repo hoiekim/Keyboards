@@ -69,7 +69,9 @@ class EnglishKey: Key {
         if second == nil { return first }
         else if context.isDoubleTapped() {
             let last = document.documentContextBeforeInput?.last
-            if last != nil && String(last!) == first { document.deleteBackward() }
+            if last != nil && String(last!).lowercased() == first.lowercased() {
+                document.deleteBackward()
+            }
             return second!
         } else {
             return first
