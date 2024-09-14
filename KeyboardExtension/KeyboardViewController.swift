@@ -18,7 +18,6 @@ class KeyboardViewController: UIInputViewController {
         super.updateViewConstraints()
         adjustButtonSizes()
         adjustViewHeight()
-        updateButtonImages()
     }
     
     override func viewDidLoad() {
@@ -49,7 +48,6 @@ class KeyboardViewController: UIInputViewController {
         adjustButtonSizes()
         adjustViewHeight()
         handleAutoCapitalization()
-        updateButtonImages()
     }
     
     override func viewWillLayoutSubviews() {
@@ -112,7 +110,7 @@ class KeyboardViewController: UIInputViewController {
     private func createButton(withKey key: Key) -> UIButton {
         let button = UIKeyButton(
             key: key,
-            context: keyInputContext,
+            globalContext: keyInputContext,
             impactFeedbackGenerator: impactFeedbackGenerator
         )
         
@@ -146,13 +144,11 @@ class KeyboardViewController: UIInputViewController {
             for (i, buttonView) in buttonViews.enumerated() {
                 guard let button = buttonView as? UIKeyButton else { continue }
                 button.removeConstraints(button.constraints)
+                button.mountImage()
                 if i == (buttonViews.count - 1) { continue }
                 let key = button.key
-                let keyWidth = calculateKeyWidth(
-                    span: key.span,
-                    spanTotal: maxNumberOfSpans,
-                    containerSize: view.bounds.width - (2 * viewPadding)
-                )
+                let oneSpanSize = (view.bounds.width - (2 * viewPadding)) / CGFloat(maxNumberOfSpans)
+                let keyWidth = oneSpanSize * CGFloat(key.span)
                 let widthConstraint = button.widthAnchor.constraint(equalToConstant: keyWidth)
                 widthConstraint.priority = .defaultHigh
                 widthConstraint.isActive = true
@@ -181,37 +177,32 @@ class KeyboardViewController: UIInputViewController {
     }
     
     @objc private func onTouchDown(sender: UIKeyButton) {
+        let contextSnapshot = keyInputContext.copy()
+        contextSnapshot.tapHistory.clear()
         let tapHistoryElement = TapHistoryElement(
             timestamp: Date().timeIntervalSince1970,
             key: sender.key,
-            context: keyInputContext.copy()
+            context: contextSnapshot
         )
         keyInputContext.tapHistory.enqueue(tapHistoryElement)
-        sender.context = keyInputContext.copy()
-    }
-    
-    @objc private func onTouchUpInside(sender: UIKeyButton) {
-        let context = sender.context
-        let key = sender.key
-        key.onTap(document: textDocumentProxy, context: context)
-        afterTap(sender)
-    }
-    
-    private func afterTap(_ button: UIKeyButton) {
-        let key = button.key
-        if key.id == shift.id {
-            keyInputContext.isShifted = button.context.isShifted
-            keyInputContext.isCapsLocked = button.context.isCapsLocked
-        }
-        keyInputContext.keySetName = button.context.keySetName
-        button.context = keyInputContext
-        let isShiftKey = key.id == shift.id
+        sender.setLocalContext(keyInputContext.copy())
+        
+        let isShiftKey = sender.key.id == shift.id
         let isShifted = keyInputContext.isShifted
         let isCapsLocked = keyInputContext.isCapsLocked
         
         if !isCapsLocked && !isShiftKey && isShifted {
             keyInputContext.isShifted = false
         }
+    }
+    
+    @objc private func onTouchUpInside(sender: UIKeyButton) {
+        sender.onTap(document: textDocumentProxy)
+        afterTap(sender)
+    }
+    
+    private func afterTap(_ button: UIKeyButton) {
+        let key = button.key
         
         let spaceKeys = [longSpace, longEnglishSpace, shortEnglishSpace]
         let isSpaceKey = spaceKeys.first { s in s.id == key.id } != nil
@@ -223,7 +214,7 @@ class KeyboardViewController: UIInputViewController {
             mountButtons()
             adjustButtonSizes()
             adjustViewHeight()
-        } else if isShifted != keyInputContext.isShifted || isShiftKey {
+        } else {
             updateButtonImages()
         }
     }
@@ -313,14 +304,14 @@ class KeyboardViewController: UIInputViewController {
         
         if gesture.state == .began {
             impactFeedbackGenerator?.impactOccurred()
-            key.onTap(document: textDocumentProxy, context: button.context)
+            button.onTap(document: textDocumentProxy)
             
             holdTimer = Timer.scheduledTimer(
                 withTimeInterval: 0.1,
                 repeats: true
             ) { _ in
                 self.impactFeedbackGenerator?.impactOccurred()
-                key.onTap(document: self.textDocumentProxy, context: button.context)
+                button.onTap(document: self.textDocumentProxy)
             }
         }
     }

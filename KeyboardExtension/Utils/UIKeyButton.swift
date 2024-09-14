@@ -9,25 +9,27 @@ import UIKit
 
 class UIKeyButton: UIButton {
     var key: Key = blank
-    var context = KeyInputContext()
-    var impactFeedbackGenerator: UIImpactFeedbackGenerator?
-    let visibleBox = UIButton()
-    let cornerLabel = UILabel()
+    private var globalContext = KeyInputContext()
+    private var localContext: KeyInputContext?
+    private var impactFeedbackGenerator: UIImpactFeedbackGenerator?
+    private let visibleBox = UIButton()
+    private let cornerLabel = UILabel()
     
     convenience init(
         key: Key,
-        context: KeyInputContext,
+        globalContext: KeyInputContext,
         impactFeedbackGenerator: UIImpactFeedbackGenerator?
     ) {
         self.init(type: .custom)
         self.key = key
-        self.context = context
+        self.globalContext = globalContext
         self.impactFeedbackGenerator = impactFeedbackGenerator
         addTarget(self, action: #selector(onTouchDown), for: .touchDown)
         self.backgroundColor = .clear
+        mountImage()
     }
     
-    func updateImage() {
+    func mountImage() {
         visibleBox.removeFromSuperview()
         
         let padding = CGFloat(3)
@@ -36,14 +38,14 @@ class UIKeyButton: UIButton {
         visibleBox.translatesAutoresizingMaskIntoConstraints = false
         visibleBox.layer.cornerRadius = cornerRadius
         
-        let backgroundColor = key.getBackgroundColor(context)
+        let backgroundColor = key.getBackgroundColor(globalContext)
         visibleBox.backgroundColor = backgroundColor ?? customGray1
         
-        let title = key.getTitle(context)
+        let title = key.getTitle(globalContext)
         visibleBox.setTitle(title, for: .normal)
         visibleBox.setTitleColor(UIColor.white, for: .normal)
         
-        let image = key.getImage(context)
+        let image = key.getImage(globalContext)
         visibleBox.setImage(image, for: .normal)
         visibleBox.tintColor = .white
         
@@ -82,27 +84,60 @@ class UIKeyButton: UIButton {
         rightConstraint.isActive = true
         
         cornerLabel.removeFromSuperview()
-        if let titleSuperscript = key.getTitleSuperscript(context) {
-            cornerLabel.text = titleSuperscript
-            cornerLabel.font = UIFont.systemFont(ofSize: 10)
-            cornerLabel.textColor = .white
-            cornerLabel.translatesAutoresizingMaskIntoConstraints = false
-            cornerLabel.isUserInteractionEnabled = false
-            
-            visibleBox.addSubview(cornerLabel)
-            
-            let topConstraint = cornerLabel.topAnchor.constraint(
-                equalTo: visibleBox.topAnchor,
-                constant: 1
-            )
-            
-            let rightConstraint = cornerLabel.trailingAnchor.constraint(
-                equalTo: visibleBox.trailingAnchor,
-                constant: titleSuperscript.count == 1 ? -8 : -3
-            )
-            
-            topConstraint.isActive = true
-            rightConstraint.isActive = true
+        if let titleSuperscript = key.getTitleSuperscript(globalContext) {
+            mountCornerLabel(titleSuperscript)
+        }
+        
+    }
+    
+    func mountCornerLabel(_ text: String) {
+        cornerLabel.text = text
+        cornerLabel.font = UIFont.systemFont(ofSize: 10)
+        cornerLabel.textColor = .white
+        cornerLabel.translatesAutoresizingMaskIntoConstraints = false
+        cornerLabel.isUserInteractionEnabled = false
+        
+        visibleBox.addSubview(cornerLabel)
+        
+        let topConstraint = cornerLabel.topAnchor.constraint(
+            equalTo: visibleBox.topAnchor,
+            constant: 1
+        )
+        
+        let rightConstraint = cornerLabel.trailingAnchor.constraint(
+            equalTo: visibleBox.trailingAnchor,
+            constant: text.count == 1 ? -8 : -3
+        )
+        
+        topConstraint.isActive = true
+        rightConstraint.isActive = true
+    }
+    
+    func updateImage() {
+        let backgroundColor = key.getBackgroundColor(globalContext)
+        visibleBox.backgroundColor = backgroundColor ?? customGray1
+        
+        let title = key.getTitle(globalContext)
+        visibleBox.setTitle(title, for: .normal)
+        visibleBox.setTitleColor(UIColor.white, for: .normal)
+        
+        let image = key.getImage(globalContext)
+        visibleBox.setImage(image, for: .normal)
+        visibleBox.tintColor = .white
+        
+        if visibleBox.subviews.isEmpty {
+            if let titleSuperscript = key.getTitleSuperscript(globalContext) {
+                mountCornerLabel(titleSuperscript)
+            } else {
+                cornerLabel.text = nil
+            }
+        } else {
+            if let titleSuperscript = key.getTitleSuperscript(globalContext) {
+                cornerLabel.text = titleSuperscript
+            } else {
+                cornerLabel.text = nil
+                cornerLabel.removeFromSuperview()
+            }
         }
     }
     
@@ -135,9 +170,22 @@ class UIKeyButton: UIButton {
             withTimeInterval: 0.15,
             repeats: false
         ) { _ in
-            let backgroundColor = self.key.getBackgroundColor(self.context)
+            let backgroundColor = self.key.getBackgroundColor(self.globalContext)
             self.visibleBox.backgroundColor = backgroundColor ?? customGray1
             self.visibleBox.layer.shadowOffset = CGSize(width: 0, height: 3)
         }
+    }
+    
+    func setLocalContext(_ c: KeyInputContext) {
+        self.localContext = c
+    }
+    
+    func onTap(document: UITextDocumentProxy) {
+        let context = localContext ?? globalContext
+        let contextSnapshot = context.copy()
+        self.key.onTap(document: document, context: context)
+        let diff = context.getDiff(from: contextSnapshot)
+        globalContext.override(from: diff)
+        self.localContext = nil
     }
 }

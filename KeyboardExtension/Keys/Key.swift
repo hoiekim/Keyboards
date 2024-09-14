@@ -7,16 +7,19 @@
 
 import UIKit
 
-struct TapHistoryElement {
-    var timestamp: TimeInterval
-    var key: Key
-    var context: KeyInputContext
+struct TapHistoryElement: Equatable {
+    static func == (lhs: TapHistoryElement, rhs: TapHistoryElement) -> Bool {
+        return lhs.timestamp == rhs.timestamp
+    }
+    
+    let timestamp: TimeInterval
+    let key: Key
+    let context: KeyInputContext
 }
 
 class KeyInputContext {
     var isShifted = false
     var isCapsLocked = false
-    var isHeld = false
     var keySetName = KeySetName.ENGLISH
     var isPortrait = UIScreen.main.bounds.size.width < UIScreen.main.bounds.size.height
     var tapHistory = Queue<TapHistoryElement>(maxSize: 3)
@@ -29,6 +32,24 @@ class KeyInputContext {
         newContext.isPortrait = isPortrait
         newContext.tapHistory = tapHistory.copy()
         return newContext
+    }
+    
+    func override(from: PartialKeyInputContext) {
+        if from.isShifted != nil { self.isShifted = from.isShifted! }
+        if from.isCapsLocked != nil { self.isCapsLocked = from.isCapsLocked! }
+        if from.keySetName != nil { self.keySetName = from.keySetName! }
+        if from.isPortrait != nil { self.isPortrait = from.isPortrait! }
+        if from.tapHistory != nil { self.tapHistory = from.tapHistory! }
+    }
+    
+    func getDiff(from: KeyInputContext) -> PartialKeyInputContext {
+        return PartialKeyInputContext(
+            isShifted: from.isShifted != self.isShifted ? self.isShifted : nil,
+            isCapsLocked: from.isCapsLocked != self.isCapsLocked ? self.isCapsLocked : nil,
+            keySetName: from.keySetName != self.keySetName ? self.keySetName : nil,
+            isPortrait: from.isPortrait != self.isPortrait ? self.isPortrait : nil,
+            tapHistory: from.tapHistory != self.tapHistory ? self.tapHistory : nil
+        )
     }
 
     func getKeySet() -> [[Key]] {
@@ -60,6 +81,14 @@ class KeyInputContext {
         guard let first = tapHistory.peek(tapHistory.count - 2) else { return false }
         return first.context.isShifted
     }
+}
+
+struct PartialKeyInputContext {
+    let isShifted: Bool?
+    let isCapsLocked: Bool?
+    let keySetName: KeySetName?
+    let isPortrait: Bool?
+    let tapHistory: Queue<TapHistoryElement>?
 }
 
 enum KeySetName {
