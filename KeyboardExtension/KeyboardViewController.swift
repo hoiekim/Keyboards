@@ -45,13 +45,9 @@ class KeyboardViewController: UIInputViewController {
             }
         }
         
+        handleAutoCapitalization()
         adjustButtonSizes()
         adjustViewHeight()
-        handleAutoCapitalization()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
     }
     
     override func viewDidLayoutSubviews() {
@@ -146,9 +142,8 @@ class KeyboardViewController: UIInputViewController {
                 button.removeConstraints(button.constraints)
                 button.mountImage()
                 if i == (buttonViews.count - 1) { continue }
-                let key = button.key
                 let oneSpanSize = (view.bounds.width - (2 * viewPadding)) / CGFloat(maxNumberOfSpans)
-                let keyWidth = oneSpanSize * CGFloat(key.span)
+                let keyWidth = oneSpanSize * CGFloat(button.key.span)
                 let widthConstraint = button.widthAnchor.constraint(equalToConstant: keyWidth)
                 widthConstraint.priority = .defaultHigh
                 widthConstraint.isActive = true

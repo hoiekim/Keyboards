@@ -26,7 +26,6 @@ class UIKeyButton: UIButton {
         self.impactFeedbackGenerator = impactFeedbackGenerator
         addTarget(self, action: #selector(onTouchDown), for: .touchDown)
         self.backgroundColor = .clear
-        mountImage()
     }
     
     func mountImage() {
