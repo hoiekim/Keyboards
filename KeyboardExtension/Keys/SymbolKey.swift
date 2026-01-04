@@ -57,17 +57,14 @@ class SymbolKey: Key {
 
     func onTap(document: UITextDocumentProxy, context: KeyInputContext) {
         let keyValue = getKeyValue(document: document, context: context)
-        let isShifted = context.isShifted
-        let isCapsLocked = context.isCapsLocked
-        if isShifted || isCapsLocked { document.insertText(keyValue.uppercased()) }
-        else { document.insertText(keyValue.lowercased()) }
+        document.insertText(keyValue)
     }
 
     private func getKeyValue(
         document: UITextDocumentProxy,
         context: KeyInputContext
     ) -> String {
-        if third != nil && (context.isShifted || context.isCapsLocked) {
+        if third != nil && (context.isShifted || context.isCapsLocked || context.isShiftedDoubleTapped()) {
             return third!
         } else {
             if second == nil { return first }

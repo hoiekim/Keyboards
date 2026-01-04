@@ -21,6 +21,7 @@ let lightBackground = UIColor(white: 0.8175, alpha: 0.01)
 let customGray1 = UIColor(white: 0.25, alpha: 1.0)
 let customGray2 = UIColor(white: 0.35, alpha: 1.0)
 let customGray3 = UIColor(white: 0.4, alpha: 1.0)
+let customGray4 = UIColor(white: 0.45, alpha: 1.0)
 
 func isPortrait() -> Bool {
     return UIScreen.main.bounds.size.width < UIScreen.main.bounds.size.height
@@ -60,7 +61,12 @@ class Queue<T: Equatable>: Equatable {
 
     func peek(_ index: Int) -> T? {
         if elements.count < index + 1 { return nil }
-        return elements[index]
+        
+        if index < 0 {
+            return elements[elements.count + index]
+        } else {
+            return elements[index]
+        }
     }
 
     var count: Int {

@@ -66,6 +66,12 @@ let longSpace = UtilKey(
     onTap: onTapSpace
 )
 
+let mediumSpace = UtilKey(
+    id: "longSpace",
+    span: 3,
+    onTap: onTapSpace
+)
+
 let shortSpace = UtilKey(
     id: "shortSpace",
     span: 2,
@@ -103,8 +109,7 @@ let changeToSymbols = UtilKey(
 let changeToEnglish = UtilKey(
     id: "changeToEnglish",
     remountOnTap: true,
-    defaultImage: "character",
-    locale: "en-US",
+    title: "A",
     onTap: { _, context in
         context.setKeySet(KeySetName.ENGLISH)
     }
@@ -113,8 +118,7 @@ let changeToEnglish = UtilKey(
 let changeToKorean = UtilKey(
     id: "changeToKorean",
     remountOnTap: true,
-    defaultImage: "character",
-    locale: "ko-KR",
+    title: "가",
     onTap: { _, context in
         context.setKeySet(KeySetName.KOREAN)
     }

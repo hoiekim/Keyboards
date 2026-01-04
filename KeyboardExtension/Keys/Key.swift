@@ -20,6 +20,7 @@ struct TapHistoryElement: Equatable {
 class KeyInputContext {
     var isShifted = false
     var isCapsLocked = false
+    var isLongHold = false
     var keySetName = KeySetName.ENGLISH
     var isPortrait = UIScreen.main.bounds.size.width < UIScreen.main.bounds.size.height
     var tapHistory = Queue<TapHistoryElement>(maxSize: 3)

@@ -193,7 +193,9 @@ class KeyboardViewController: UIInputViewController {
     
     @objc private func onTouchUpInside(sender: UIKeyButton) {
         sender.onTap(document: textDocumentProxy)
-        afterTap(sender)
+        if !keyInputContext.isLongHold {
+            afterTap(sender)
+        }
     }
     
     private func afterTap(_ button: UIKeyButton) {
@@ -284,12 +286,16 @@ class KeyboardViewController: UIInputViewController {
     @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard let button = gesture.view as? UIKeyButton else { return }
         
+        let key = button.key
+        
         if gesture.state == .ended {
             holdTimer?.invalidate()
+            if key.id != shift.id {
+                keyInputContext.isLongHold = false
+                keyInputContext.isShifted = false
+            }
             afterTap(button)
         }
-        
-        let key = button.key
         
         if key.id == shift.id { return }
         if key.id == changeToKorean.id { return }
@@ -298,6 +304,11 @@ class KeyboardViewController: UIInputViewController {
         if key.id == enter.id { return }
         
         if gesture.state == .began {
+            keyInputContext.isLongHold = true
+            if keyInputContext.tapHistory.peek(-1)?.context.isShifted == true {
+                keyInputContext.isShifted = true
+            }
+            
             impactFeedbackGenerator?.impactOccurred()
             button.onTap(document: textDocumentProxy)
             

@@ -21,7 +21,6 @@ class UtilKey: Key {
     var _imageOnShift: String?
     var _imageOnCapsLock: String?
     var _backgroundColor: UIColor?
-    var locale: String?
 
     init(
         id: String,
@@ -33,14 +32,12 @@ class UtilKey: Key {
         imageOnShift: String? = nil,
         imageOnCapsLock: String? = nil,
         backgroundColor: UIColor? = nil,
-        locale: String? = nil,
         onTap: @escaping OnTapUtilKey
     ) {
         self.id = "UtilKey_" + id
         self.span = span
         self.remountOnTap = remountOnTap
         self.updateButtonImagesOnTap = updateButtonImagesOnTap
-        self.locale = locale
         self.title = title
         self._defaultImage = defaultImage
         self._imageOnShift = imageOnShift
@@ -66,13 +63,7 @@ class UtilKey: Key {
         
         guard let imageName = imageName else { return nil }
         
-        let locale = Locale(identifier: locale ?? "en-US")
-        let imageConfig = UIImage.SymbolConfiguration(locale: locale)
-        
-        return UIImage(
-            systemName: imageName,
-            withConfiguration: imageConfig
-        )
+        return UIImage(systemName: imageName)
     }
 
     func getBackgroundColor(_ context: KeyInputContext) -> UIColor? {

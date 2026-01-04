@@ -24,14 +24,14 @@ private let N = EnglishKey(first: "N")
 private let M = EnglishKey(first: "M")
 private let L = EnglishKey(first: "L")
 private let X = EnglishKey(first: "X")
-private let W = EnglishKey(first: "W", backgroundColor: customGray3)
-private let WWH = EnglishKey(first: "W", second: "WH", backgroundColor: customGray3)
-private let O = EnglishKey(first: "O", backgroundColor: customGray3)
-private let A = EnglishKey(first: "A", backgroundColor: customGray3)
-private let Y = EnglishKey(first: "Y", backgroundColor: customGray3)
-private let I = EnglishKey(first: "I", backgroundColor: customGray3)
-private let E = EnglishKey(first: "E", backgroundColor: customGray3)
-private let U = EnglishKey(first: "U", backgroundColor: customGray3)
+private let W = EnglishKey(first: "W", backgroundColor: customGray4)
+private let WWH = EnglishKey(first: "W", second: "WH", backgroundColor: customGray4)
+private let O = EnglishKey(first: "O", backgroundColor: customGray4)
+private let A = EnglishKey(first: "A", backgroundColor: customGray4)
+private let Y = EnglishKey(first: "Y", backgroundColor: customGray4)
+private let I = EnglishKey(first: "I", backgroundColor: customGray4)
+private let E = EnglishKey(first: "E", backgroundColor: customGray4)
+private let U = EnglishKey(first: "U", backgroundColor: customGray4)
 
 let longEnglishSpace = UtilKey(
     id: "englishSpace",
@@ -55,6 +55,8 @@ let onTapEnglishSpace: OnTapUtilKey = { document, context in
             let replacement: String? = switch lastWord {
             case "Dont": "Don't"
             case "dont": "don't"
+            case "Doesnt": "Doesn't"
+            case "doesnt": "doesn't"
             case "Didnt": "Didn't"
             case "didnt": "didn't"
             case "Cant": "Can't"
@@ -132,6 +134,11 @@ let onTapEnglishSpace: OnTapUtilKey = { document, context in
             case "Heres": "Here's"
             case "heres": "here's"
             case "Lets": "Let's"
+            case "Whats": "What's"
+            case "Whos": "Who's"
+            case "Wheres": "Where's"
+            case "Whens": "When's"
+            case "Hows": "How's"
             default: nil
             }
             
