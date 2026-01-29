@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class KeyboardViewController: UIInputViewController {
     let keyInputContext = KeyInputContext()
@@ -30,6 +31,14 @@ class KeyboardViewController: UIInputViewController {
             view.backgroundColor = lightBackground
         }
         mountButtons()
+    }
+    
+    private func provideFeedback() {
+        if let generator = impactFeedbackGenerator {
+            generator.impactOccurred()
+        } else {
+            AudioServicesPlaySystemSound(1104) // Keyboard click sound
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -254,7 +263,7 @@ class KeyboardViewController: UIInputViewController {
 
         let offset = Int((distance / view.bounds.width) * offsetMultiplier)
         if offset > 0 || offset < 0 {
-            impactFeedbackGenerator?.impactOccurred()
+            provideFeedback()
             
             if isBackSpace {
                 if offset < 0 {
@@ -309,14 +318,14 @@ class KeyboardViewController: UIInputViewController {
                 keyInputContext.isShifted = true
             }
             
-            impactFeedbackGenerator?.impactOccurred()
+            provideFeedback()
             button.onTap(document: textDocumentProxy)
             
             holdTimer = Timer.scheduledTimer(
                 withTimeInterval: 0.1,
                 repeats: true
             ) { _ in
-                self.impactFeedbackGenerator?.impactOccurred()
+                self.provideFeedback()
                 button.onTap(document: self.textDocumentProxy)
             }
         }

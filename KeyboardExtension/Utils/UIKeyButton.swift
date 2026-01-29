@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class UIKeyButton: UIButton {
     var key: Key = blank
@@ -26,6 +27,14 @@ class UIKeyButton: UIButton {
         self.impactFeedbackGenerator = impactFeedbackGenerator
         addTarget(self, action: #selector(onTouchDown), for: .touchDown)
         self.backgroundColor = .clear
+    }
+    
+    private func provideFeedback() {
+        if let generator = impactFeedbackGenerator {
+            generator.impactOccurred()
+        } else {
+            AudioServicesPlaySystemSound(1104) // Keyboard click sound
+        }
     }
     
     func mountImage() {
@@ -161,7 +170,7 @@ class UIKeyButton: UIButton {
     
     @objc func onTouchDown(sender: UIKeyButton) {
         if key.id == blank.id { return }
-        impactFeedbackGenerator?.impactOccurred()
+        provideFeedback()
         visibleBox.backgroundColor = .systemIndigo
         visibleBox.layer.shadowOffset = CGSize(width: 0, height: 0)
         tapHighlightTimer?.invalidate()
