@@ -106,6 +106,39 @@ let changeToSymbols = UtilKey(
     }
 )
 
+/// Opens the number pad. In letter layouts it is reached by dragging right
+/// from the `changeToSymbols` key; in the symbols layout it is a regular key.
+let changeToNumbers = UtilKey(
+    id: "changeToNumbers",
+    remountOnTap: true,
+    title: "123",
+    onTap: { _, context in
+        context.setKeySet(KeySetName.NUMBERS)
+    }
+)
+
+/// Goes from the number pad back to the symbols layout.
+let changeToSymbolsFromNumbers = UtilKey(
+    id: "changeToSymbolsFromNumbers",
+    remountOnTap: true,
+    title: "#+",
+    onTap: { _, context in
+        context.setKeySet(KeySetName.SYMBOLS)
+    }
+)
+
+/// Returns to whichever letter layout (English or Korean) was used last.
+let changeToLastLetters = UtilKey(
+    id: "changeToLastLetters",
+    remountOnTap: true,
+    getTitle: { context in
+        context.lastLetterKeySetName == KeySetName.KOREAN ? "가" : "A"
+    },
+    onTap: { _, context in
+        context.setKeySet(context.lastLetterKeySetName)
+    }
+)
+
 let changeToEnglish = UtilKey(
     id: "changeToEnglish",
     remountOnTap: true,
