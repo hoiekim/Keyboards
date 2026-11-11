@@ -84,10 +84,16 @@ class KeyboardViewController: UIInputViewController {
             keyInputContext.isPortrait = portrait
             keyInputContext.isSplit = split
             remount()
-        } else if lastLayoutWidth != view.bounds.width {
+        } else if lastLayoutWidth != safeAreaWidth() {
+            // Also catches safe area inset changes, which often arrive after
+            // the first layout pass without the view width changing.
             adjustButtonSizes()
         }
-        lastLayoutWidth = view.bounds.width
+        lastLayoutWidth = safeAreaWidth()
+    }
+    
+    private func safeAreaWidth() -> CGFloat {
+        return view.bounds.width - view.safeAreaInsets.left - view.safeAreaInsets.right
     }
     
     private func remount() {
@@ -215,8 +221,9 @@ class KeyboardViewController: UIInputViewController {
         let keySet = keyInputContext.getKeySet()
         let maxNumberOfSpans = keySet.map { $0.reduce(0) { $0 + $1.span } }.max()!
         let isSplit = keyInputContext.isSplit
-        let safeAreaWidth = view.bounds.width - view.safeAreaInsets.left - view.safeAreaInsets.right
-        let availableWidth = safeAreaWidth - (2 * viewPadding)
+        // Clamped so an early call before the view has a width doesn't
+        // produce negative width constraints.
+        let availableWidth = max(0, safeAreaWidth() - (2 * viewPadding))
         var oneSpanSize = availableWidth / CGFloat(maxNumberOfSpans)
         if isSplit { oneSpanSize = min(oneSpanSize, maxSplitKeyWidth) }
         for (_, rowView) in buttonsView.arrangedSubviews.enumerated() {
