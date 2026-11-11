@@ -359,7 +359,9 @@ class KeyboardViewController: UIInputViewController {
         if isUtilKey && !isBackSpace {
             // A slightly moved tap on a utility key still counts as a tap
             let isInside = button.bounds.contains(gesture.location(in: button))
-            if gesture.state == .ended && isInside {
+            let moved = gesture.translation(in: view)
+            let isSmallMove = hypot(moved.x, moved.y) < 20
+            if gesture.state == .ended && isInside && isSmallMove {
                 onTouchUpInside(sender: button)
             }
             return
