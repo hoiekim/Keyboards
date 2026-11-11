@@ -16,6 +16,7 @@ class UtilKey: Key {
     let remountOnTap: Bool
     let updateButtonImagesOnTap: Bool
     private let _onTap: OnTapUtilKey
+    private let _getTitle: ((KeyInputContext) -> String?)?
     var title: String?
     var _defaultImage: String?
     var _imageOnShift: String?
@@ -32,9 +33,10 @@ class UtilKey: Key {
         imageOnShift: String? = nil,
         imageOnCapsLock: String? = nil,
         backgroundColor: UIColor? = nil,
+        getTitle: ((KeyInputContext) -> String?)? = nil,
         onTap: @escaping OnTapUtilKey
     ) {
-        self.id = "UtilKey_" + id
+        self.id = id.hasPrefix("UtilKey_") ? id : "UtilKey_" + id
         self.span = span
         self.remountOnTap = remountOnTap
         self.updateButtonImagesOnTap = updateButtonImagesOnTap
@@ -43,10 +45,31 @@ class UtilKey: Key {
         self._imageOnShift = imageOnShift
         self._imageOnCapsLock = imageOnCapsLock
         self._backgroundColor = backgroundColor
+        self._getTitle = getTitle
         self._onTap = onTap
     }
 
+    /// Returns a copy of this key with a different span. The copy keeps the
+    /// same id so that it behaves exactly like the original key (e.g. space
+    /// keys split into two halves in the split layout).
+    func withSpan(_ span: Int) -> UtilKey {
+        return UtilKey(
+            id: id,
+            span: span,
+            remountOnTap: remountOnTap,
+            updateButtonImagesOnTap: updateButtonImagesOnTap,
+            title: title,
+            defaultImage: _defaultImage,
+            imageOnShift: _imageOnShift,
+            imageOnCapsLock: _imageOnCapsLock,
+            backgroundColor: _backgroundColor,
+            getTitle: _getTitle,
+            onTap: _onTap
+        )
+    }
+
     func getTitle(_ context: KeyInputContext) -> String? {
+        if let getTitle = _getTitle { return getTitle(context) }
         return title
     }
     

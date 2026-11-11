@@ -13,7 +13,17 @@ class KeyboardViewController: UIInputViewController {
     var impactFeedbackGenerator: UIImpactFeedbackGenerator?
     let viewPadding = CGFloat(3)
     let rowHeight = CGFloat(45)
+    /// Keyboards at least this wide are split in half and pushed to the
+    /// sides, leaving the hard-to-reach center empty (iPad, landscape iPhone).
+    let splitWidthThreshold = CGFloat(600)
+    /// Maximum width of a one-span key in the split layout.
+    let maxSplitKeyWidth = CGFloat(50)
+    /// Minimum downward travel to hide the keyboard with a swipe.
+    let dismissSwipeDistance = CGFloat(40)
+    /// Minimum rightward travel on the symbols key to open the number pad.
+    let numbersDragDistance = CGFloat(20)
     var buttonsView = UIStackView()
+    private var lastLayoutWidth = CGFloat(0)
 
     override func updateViewConstraints() {
         super.updateViewConstraints()
@@ -30,7 +40,14 @@ class KeyboardViewController: UIInputViewController {
         } else {
             view.backgroundColor = lightBackground
         }
+        keyInputContext.isSplit = shouldSplit()
         mountButtons()
+        mountDismissGesture()
+    }
+    
+    private func shouldSplit() -> Bool {
+        let width = view.bounds.width > 0 ? view.bounds.width : UIScreen.main.bounds.width
+        return width >= splitWidthThreshold
     }
     
     private func provideFeedback() {
@@ -60,11 +77,47 @@ class KeyboardViewController: UIInputViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        if keyInputContext.isPortrait != isPortrait() {
-            keyInputContext.isPortrait = isPortrait()
-            mountButtons()
+        super.viewDidLayoutSubviews()
+        let portrait = isPortrait()
+        let split = shouldSplit()
+        if keyInputContext.isPortrait != portrait || keyInputContext.isSplit != split {
+            keyInputContext.isPortrait = portrait
+            keyInputContext.isSplit = split
+            remount()
+        } else if lastLayoutWidth != view.bounds.width {
+            adjustButtonSizes()
         }
+        lastLayoutWidth = view.bounds.width
+    }
+    
+    private func remount() {
+        mountButtons()
+        adjustButtonSizes()
+        adjustViewHeight()
+    }
+    
+    /// Splits a row into left and right halves at the given span. A utility
+    /// key that straddles the middle (e.g. space) is divided into two keys,
+    /// one for each half.
+    private func splitRow(_ row: [Key], at half: Int) -> (left: [Key], right: [Key]) {
+        var left: [Key] = []
+        var right: [Key] = []
+        var spans = 0
+        for key in row {
+            if spans >= half {
+                right.append(key)
+            } else if spans + key.span <= half {
+                left.append(key)
+            } else if let utilKey = key as? UtilKey {
+                let leftSpan = half - spans
+                left.append(utilKey.withSpan(leftSpan))
+                right.append(utilKey.withSpan(key.span - leftSpan))
+            } else {
+                left.append(key)
+            }
+            spans += key.span
+        }
+        return (left, right)
     }
     
     private func mountButtons() {
@@ -75,15 +128,33 @@ class KeyboardViewController: UIInputViewController {
         buttonsView.spacing = 0
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
         
-        for row in keyInputContext.getKeySet() {
+        let keySet = keyInputContext.getKeySet()
+        let maxNumberOfSpans = keySet.map { $0.reduce(0) { $0 + $1.span } }.max() ?? 0
+        
+        for row in keySet {
             let rowStackView = UIStackView()
             rowStackView.axis = .horizontal
             rowStackView.spacing = 0
             rowStackView.translatesAutoresizingMaskIntoConstraints = false
             
-            for key in row {
-                let button = createButton(withKey: key)
-                rowStackView.addArrangedSubview(button)
+            if keyInputContext.isSplit {
+                let (left, right) = splitRow(row, at: maxNumberOfSpans / 2)
+                for key in left {
+                    rowStackView.addArrangedSubview(createButton(withKey: key))
+                }
+                // Empty view that takes up all the remaining space in the center
+                let spacer = UIView()
+                spacer.translatesAutoresizingMaskIntoConstraints = false
+                spacer.setContentHuggingPriority(UILayoutPriority(1), for: .horizontal)
+                spacer.setContentCompressionResistancePriority(UILayoutPriority(1), for: .horizontal)
+                rowStackView.addArrangedSubview(spacer)
+                for key in right {
+                    rowStackView.addArrangedSubview(createButton(withKey: key))
+                }
+            } else {
+                for key in row {
+                    rowStackView.addArrangedSubview(createButton(withKey: key))
+                }
             }
             
             let constraint = rowStackView
@@ -98,11 +169,11 @@ class KeyboardViewController: UIInputViewController {
         
         NSLayoutConstraint.activate([
             buttonsView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
                 constant: viewPadding
             ),
             buttonsView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor,
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
                 constant: -viewPadding
             ),
             buttonsView.bottomAnchor.constraint(
@@ -143,6 +214,11 @@ class KeyboardViewController: UIInputViewController {
     private func adjustButtonSizes() {
         let keySet = keyInputContext.getKeySet()
         let maxNumberOfSpans = keySet.map { $0.reduce(0) { $0 + $1.span } }.max()!
+        let isSplit = keyInputContext.isSplit
+        let safeAreaWidth = view.bounds.width - view.safeAreaInsets.left - view.safeAreaInsets.right
+        let availableWidth = safeAreaWidth - (2 * viewPadding)
+        var oneSpanSize = availableWidth / CGFloat(maxNumberOfSpans)
+        if isSplit { oneSpanSize = min(oneSpanSize, maxSplitKeyWidth) }
         for (_, rowView) in buttonsView.arrangedSubviews.enumerated() {
             guard let rowStackView = rowView as? UIStackView else { continue }
             let buttonViews = rowStackView.arrangedSubviews
@@ -150,8 +226,9 @@ class KeyboardViewController: UIInputViewController {
                 guard let button = buttonView as? UIKeyButton else { continue }
                 button.removeConstraints(button.constraints)
                 button.mountImage()
-                if i == (buttonViews.count - 1) { continue }
-                let oneSpanSize = (view.bounds.width - (2 * viewPadding)) / CGFloat(maxNumberOfSpans)
+                // In the split layout the spacer fills the remaining width, so
+                // every key gets a fixed width. Otherwise the last key fills it.
+                if !isSplit && i == (buttonViews.count - 1) { continue }
                 let keyWidth = oneSpanSize * CGFloat(button.key.span)
                 let widthConstraint = button.widthAnchor.constraint(equalToConstant: keyWidth)
                 widthConstraint.priority = .defaultHigh
@@ -217,9 +294,7 @@ class KeyboardViewController: UIInputViewController {
         if isSpaceKey || isEnterKey { handleAutoCapitalization() }
         
         if key.remountOnTap {
-            mountButtons()
-            adjustButtonSizes()
-            adjustViewHeight()
+            remount()
         } else {
             updateButtonImages()
         }
@@ -233,10 +308,55 @@ class KeyboardViewController: UIInputViewController {
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         guard let button = gesture.view as? UIKeyButton else { return }
         let key = button.key
+        let translation = gesture.translation(in: view)
+        
+        // Swiping down from the center top edge hides the keyboard
+        if gesture.state == .began {
+            let location = gesture.location(in: view)
+            let startLocation = CGPoint(
+                x: location.x - translation.x,
+                y: location.y - translation.y
+            )
+            isDismissCandidate = isInDismissZone(startLocation)
+            didDismiss = false
+        }
+        if isDismissCandidate {
+            if didDismiss { return }
+            if isDismissSwipe(translation) {
+                didDismiss = true
+                provideFeedback()
+                dismissKeyboard()
+                return
+            }
+        }
+        
+        // Tapping the symbols key opens the symbols layout. Dragging right
+        // from it opens the number pad instead.
+        if key.id == changeToSymbols.id {
+            if gesture.state == .ended {
+                let isDragRight = translation.x > numbersDragDistance
+                    && abs(translation.x) > abs(translation.y)
+                if isDragRight {
+                    provideFeedback()
+                    keyInputContext.setKeySet(KeySetName.NUMBERS)
+                    remount()
+                } else if button.bounds.contains(gesture.location(in: button)) {
+                    onTouchUpInside(sender: button)
+                }
+            }
+            return
+        }
         
         let isUtilKey = key.className == UtilKey.className
         let isBackSpace = key.id == backSpace.id || key.id == hangulBackSpace.id
-        if isUtilKey && !isBackSpace { return }
+        if isUtilKey && !isBackSpace {
+            // A slightly moved tap on a utility key still counts as a tap
+            let isInside = button.bounds.contains(gesture.location(in: button))
+            if gesture.state == .ended && isInside {
+                onTouchUpInside(sender: button)
+            }
+            return
+        }
         
         if gesture.state == .began {
             lastPanTimestamp = nil
@@ -290,6 +410,47 @@ class KeyboardViewController: UIInputViewController {
         }
     }
     
+    private var isDismissCandidate = false
+    private var didDismiss = false
+    
+    /// The area where a swipe down to hide the keyboard may start:
+    /// the upper half of the top row, around the horizontal center.
+    private func isInDismissZone(_ point: CGPoint) -> Bool {
+        let isNearTop = point.y <= buttonsView.frame.minY + rowHeight * 0.5
+        let isCentered = abs(point.x - view.bounds.midX) <= view.bounds.width * 0.2
+        return isNearTop && isCentered
+    }
+    
+    private func isDismissSwipe(_ translation: CGPoint) -> Bool {
+        return translation.y > dismissSwipeDistance
+            && translation.y > abs(translation.x) * 2
+    }
+    
+    private var dismissPanGesture: UIPanGestureRecognizer?
+    
+    /// Catches swipes that don't start on a key, e.g. the top padding or the
+    /// empty center of the split layout. Swipes starting on keys are handled
+    /// in `handlePanGesture`.
+    private func mountDismissGesture() {
+        let gesture = UIPanGestureRecognizer(
+            target: self,
+            action: #selector(handleDismissPan(_:))
+        )
+        gesture.delegate = self
+        view.addGestureRecognizer(gesture)
+        dismissPanGesture = gesture
+    }
+    
+    @objc private func handleDismissPan(_ gesture: UIPanGestureRecognizer) {
+        if gesture.state == .began { didDismiss = false }
+        if didDismiss { return }
+        if isDismissSwipe(gesture.translation(in: view)) {
+            didDismiss = true
+            provideFeedback()
+            dismissKeyboard()
+        }
+    }
+    
     private var holdTimer: Timer?
     
     @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
@@ -310,6 +471,9 @@ class KeyboardViewController: UIInputViewController {
         if key.id == changeToKorean.id { return }
         if key.id == changeToEnglish.id { return }
         if key.id == changeToSymbols.id { return }
+        if key.id == changeToNumbers.id { return }
+        if key.id == changeToSymbolsFromNumbers.id { return }
+        if key.id == changeToLastLetters.id { return }
         if key.id == enter.id { return }
         
         if gesture.state == .began {
@@ -342,5 +506,24 @@ class KeyboardViewController: UIInputViewController {
         if isBeginningOfAll || isBeginningOfSentence || isBeginningOfParagraph {
             keyInputContext.isShifted = true
         }
+    }
+}
+
+extension KeyboardViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldReceive touch: UITouch
+    ) -> Bool {
+        guard gestureRecognizer === dismissPanGesture else { return true }
+        if touch.view is UIKeyButton { return false }
+        return isInDismissZone(touch.location(in: view))
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard gestureRecognizer === dismissPanGesture,
+              let pan = gestureRecognizer as? UIPanGestureRecognizer
+        else { return true }
+        let velocity = pan.velocity(in: view)
+        return velocity.y > 0 && abs(velocity.y) > abs(velocity.x)
     }
 }

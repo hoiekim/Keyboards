@@ -22,6 +22,8 @@ class KeyInputContext {
     var isCapsLocked = false
     var isLongHold = false
     var keySetName = KeySetName.ENGLISH
+    var lastLetterKeySetName = KeySetName.ENGLISH
+    var isSplit = false
     var isPortrait = UIScreen.main.bounds.size.width < UIScreen.main.bounds.size.height
     var tapHistory = Queue<TapHistoryElement>(maxSize: 3)
 
@@ -30,6 +32,8 @@ class KeyInputContext {
         newContext.isShifted = isShifted
         newContext.isCapsLocked = isCapsLocked
         newContext.keySetName = keySetName
+        newContext.lastLetterKeySetName = lastLetterKeySetName
+        newContext.isSplit = isSplit
         newContext.isPortrait = isPortrait
         newContext.tapHistory = tapHistory.copy()
         return newContext
@@ -39,6 +43,7 @@ class KeyInputContext {
         if from.isShifted != nil { self.isShifted = from.isShifted! }
         if from.isCapsLocked != nil { self.isCapsLocked = from.isCapsLocked! }
         if from.keySetName != nil { self.keySetName = from.keySetName! }
+        if from.lastLetterKeySetName != nil { self.lastLetterKeySetName = from.lastLetterKeySetName! }
         if from.isPortrait != nil { self.isPortrait = from.isPortrait! }
         if from.tapHistory != nil { self.tapHistory = from.tapHistory! }
     }
@@ -48,24 +53,35 @@ class KeyInputContext {
             isShifted: from.isShifted != self.isShifted ? self.isShifted : nil,
             isCapsLocked: from.isCapsLocked != self.isCapsLocked ? self.isCapsLocked : nil,
             keySetName: from.keySetName != self.keySetName ? self.keySetName : nil,
+            lastLetterKeySetName: from.lastLetterKeySetName != self.lastLetterKeySetName
+                ? self.lastLetterKeySetName
+                : nil,
             isPortrait: from.isPortrait != self.isPortrait ? self.isPortrait : nil,
             tapHistory: from.tapHistory != self.tapHistory ? self.tapHistory : nil
         )
     }
 
     func getKeySet() -> [[Key]] {
+        // Split layout reuses the short (portrait) key sets so that muscle
+        // memory is shared between portrait and wide screens.
+        let useShort = isPortrait || isSplit
         switch keySetName {
         case KeySetName.ENGLISH:
-            return isPortrait ? shortEnglishKeySet : longEnglishKeySet
+            return useShort ? shortEnglishKeySet : longEnglishKeySet
         case KeySetName.KOREAN:
-            return isPortrait ? shortKoreanKeySet : longKoreanKeySet
+            return useShort ? shortKoreanKeySet : longKoreanKeySet
         case KeySetName.SYMBOLS:
-            return isPortrait ? shortSymbolsKeySet : longSymbolsKeySet
+            return useShort ? shortSymbolsKeySet : longSymbolsKeySet
+        case KeySetName.NUMBERS:
+            return useShort ? shortNumbersKeySet : longNumbersKeySet
         }
     }
 
     func setKeySet(_ name: KeySetName) {
         keySetName = name
+        if name == KeySetName.ENGLISH || name == KeySetName.KOREAN {
+            lastLetterKeySetName = name
+        }
     }
 
     func isDoubleTapped() -> Bool {
@@ -88,6 +104,7 @@ struct PartialKeyInputContext {
     let isShifted: Bool?
     let isCapsLocked: Bool?
     let keySetName: KeySetName?
+    let lastLetterKeySetName: KeySetName?
     let isPortrait: Bool?
     let tapHistory: Queue<TapHistoryElement>?
 }
@@ -96,6 +113,7 @@ enum KeySetName {
     case ENGLISH
     case KOREAN
     case SYMBOLS
+    case NUMBERS
 }
 
 protocol Key {
