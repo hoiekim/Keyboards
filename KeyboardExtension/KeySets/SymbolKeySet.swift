@@ -9,88 +9,74 @@ import UIKit
 
 // MARK: - Symbols layout
 //
-// Opened by tapping the symbols key. Every commonly used symbol is available
-// without shift. Rarely used symbols live on the shifted layer (third).
+// Opened by tapping the symbols key. Every symbol is available without
+// shift; the layout has no shift key.
 
-private let hash = SymbolKey(first: "#", third: "~")
-private let underDash = SymbolKey(first: "_", third: "∙")
-private let minus = SymbolKey(first: "-", third: "º")
-private let plus = SymbolKey(first: "+", third: "€")
-private let leftParen = SymbolKey(first: "(", third: "[")
-private let rightParen = SymbolKey(first: ")", third: "]")
-private let apostrophe = SymbolKey(first: "'", third: "`")
+private let hash = SymbolKey(first: "#")
+private let ampersand = SymbolKey(first: "&")
+private let plus = SymbolKey(first: "+")
+private let minus = SymbolKey(first: "-")
+private let slash = SymbolKey(first: "/")
+private let asterisk = SymbolKey(first: "*")
+private let dollar = SymbolKey(first: "$")
 private let question = SymbolKey(first: "?")
 
-private let colon = SymbolKey(first: ":")
-private let dollar = SymbolKey(first: "$", third: "₩")
-private let asterisk = SymbolKey(first: "*", third: "^")
-private let slash = SymbolKey(first: "/", third: "\\")
-private let lessThan = SymbolKey(first: "<", third: "{")
-private let greaterThan = SymbolKey(first: ">", third: "}")
-private let percent = SymbolKey(first: "%")
+private let leftParen = SymbolKey(first: "(")
+private let rightParen = SymbolKey(first: ")")
+private let lessThan = SymbolKey(first: "<")
+private let greaterThan = SymbolKey(first: ">")
+private let backtick = SymbolKey(first: "`")
+private let apostrophe = SymbolKey(first: "'")
+private let quote = SymbolKey(first: "\"")
 private let exclamation = SymbolKey(first: "!")
 
-private let quote = SymbolKey(first: "\"")
-private let comma = SymbolKey(first: ",")
-private let equal = SymbolKey(first: "=")
-private let ampersand = SymbolKey(first: "&", third: "|")
+private let colon = SymbolKey(first: ":")
 private let semicolon = SymbolKey(first: ";")
-private let period = SymbolKey(first: ".", third: "…")
+private let percent = SymbolKey(first: "%")
+private let equal = SymbolKey(first: "=")
+private let underDash = SymbolKey(first: "_")
+private let comma = SymbolKey(first: ",")
+private let period = SymbolKey(first: ".")
 private let at = SymbolKey(first: "@")
 
 let shortSymbolsKeySet: [[Key]] = [
-    [hash, underDash, minus, plus, leftParen, rightParen, apostrophe, question],
-    [colon, dollar, asterisk, slash, lessThan, greaterThan, percent, exclamation],
-    [shift, quote, comma, equal, ampersand, semicolon, period, at],
-    [changeToEnglish, changeToKorean, mediumSpace, changeToNumbers, enter, backSpace]
+    [hash, ampersand, plus, minus, slash, asterisk, dollar, question],
+    [leftParen, rightParen, lessThan, greaterThan, backtick, apostrophe, quote, exclamation],
+    [colon, semicolon, percent, equal, underDash, comma, period, at],
+    [changeToNumbers, changeToLastLetters, longSpace, enter, backSpace]
 ]
 
 let longSymbolsKeySet: [[Key]] = [
-    [hash, underDash, minus, plus, leftParen, rightParen, apostrophe, question, changeToEnglish, changeToKorean],
-    [colon, dollar, asterisk, slash, lessThan, greaterThan, percent, exclamation, changeToNumbers, backSpace],
-    [shift, quote, comma, equal, ampersand, semicolon, period, at, shortSpace]
+    [hash, ampersand, plus, minus, slash, asterisk, dollar, question, changeToNumbers, changeToLastLetters],
+    [leftParen, rightParen, lessThan, greaterThan, backtick, apostrophe, quote, exclamation, enter, backSpace],
+    [colon, semicolon, percent, equal, underDash, comma, period, at, shortSpace]
 ]
 
 // MARK: - Numbers layout
 //
-// Opened by dragging right from the symbols key (or tapping "123" in the
-// symbols layout). Numbers sit on the left side in phone keypad order and
-// the symbols most often typed together with numbers sit on the right.
+// Opened by swiping up from the symbols key (or tapping "123" in the
+// symbols layout). Number keys are double width, in phone keypad order.
 
-private let _0 = SymbolKey(first: "0", backgroundColor: customGray4)
-private let _1 = SymbolKey(first: "1", backgroundColor: customGray4)
-private let _2 = SymbolKey(first: "2", backgroundColor: customGray4)
-private let _3 = SymbolKey(first: "3", backgroundColor: customGray4)
-private let _4 = SymbolKey(first: "4", backgroundColor: customGray4)
-private let _5 = SymbolKey(first: "5", backgroundColor: customGray4)
-private let _6 = SymbolKey(first: "6", backgroundColor: customGray4)
-private let _7 = SymbolKey(first: "7", backgroundColor: customGray4)
-private let _8 = SymbolKey(first: "8", backgroundColor: customGray4)
-private let _9 = SymbolKey(first: "9", backgroundColor: customGray4)
+private let _0 = SymbolKey(first: "0", span: 2, backgroundColor: customGray4)
+private let _1 = SymbolKey(first: "1", span: 2, backgroundColor: customGray4)
+private let _2 = SymbolKey(first: "2", span: 2, backgroundColor: customGray4)
+private let _3 = SymbolKey(first: "3", span: 2, backgroundColor: customGray4)
+private let _4 = SymbolKey(first: "4", span: 2, backgroundColor: customGray4)
+private let _5 = SymbolKey(first: "5", span: 2, backgroundColor: customGray4)
+private let _6 = SymbolKey(first: "6", span: 2, backgroundColor: customGray4)
+private let _7 = SymbolKey(first: "7", span: 2, backgroundColor: customGray4)
+private let _8 = SymbolKey(first: "8", span: 2, backgroundColor: customGray4)
+private let _9 = SymbolKey(first: "9", span: 2, backgroundColor: customGray4)
 
-private let numPlus = SymbolKey(first: "+")
-private let numMinus = SymbolKey(first: "-")
-private let numLeftParen = SymbolKey(first: "(")
-private let numRightParen = SymbolKey(first: ")")
-private let numAsterisk = SymbolKey(first: "*")
-private let numSlash = SymbolKey(first: "/")
-private let numEqual = SymbolKey(first: "=")
-private let numPercent = SymbolKey(first: "%")
-private let numColon = SymbolKey(first: ":")
-private let numDollar = SymbolKey(first: "$")
-private let numHash = SymbolKey(first: "#")
-private let numComma = SymbolKey(first: ",")
-private let numPeriod = SymbolKey(first: ".")
+private let pipe = SymbolKey(first: "|")
+private let tilde = SymbolKey(first: "~")
 
 let shortNumbersKeySet: [[Key]] = [
-    [_1, _2, _3, numPlus, numMinus, numLeftParen, numRightParen, question],
-    [_4, _5, _6, numAsterisk, numSlash, numEqual, numPercent, exclamation],
-    [_7, _8, _9, numColon, numDollar, numHash, numComma, at],
-    [changeToLastLetters, _0, numPeriod, mediumSpace, changeToSymbolsFromNumbers, backSpace]
+    [dollar, _1, _2, _3, question],
+    [pipe, _4, _5, _6, exclamation],
+    [tilde, _7, _8, _9, at],
+    [changeToSymbolsFromNumbers, changeToLastLetters, tinySpace, _0, period, enter, backSpace]
 ]
 
-let longNumbersKeySet: [[Key]] = [
-    [_1, _2, _3, numPlus, numMinus, numLeftParen, numRightParen, question, changeToEnglish, changeToKorean],
-    [_4, _5, _6, numAsterisk, numSlash, numEqual, numPercent, exclamation, changeToSymbolsFromNumbers, backSpace],
-    [_7, _8, _9, _0, numPeriod, numComma, numColon, numDollar, shortSpace]
-]
+// The number pad needs four rows, so landscape uses the same layout.
+let longNumbersKeySet: [[Key]] = shortNumbersKeySet

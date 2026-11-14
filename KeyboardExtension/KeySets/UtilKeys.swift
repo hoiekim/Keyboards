@@ -66,9 +66,9 @@ let longSpace = UtilKey(
     onTap: onTapSpace
 )
 
-let mediumSpace = UtilKey(
-    id: "longSpace",
-    span: 3,
+let tinySpace = UtilKey(
+    id: "tinySpace",
+    span: 1,
     onTap: onTapSpace
 )
 
@@ -106,7 +106,7 @@ let changeToSymbols = UtilKey(
     }
 )
 
-/// Opens the number pad. In letter layouts it is reached by dragging right
+/// Opens the number pad. In letter layouts it is reached by swiping up
 /// from the `changeToSymbols` key; in the symbols layout it is a regular key.
 let changeToNumbers = UtilKey(
     id: "changeToNumbers",
