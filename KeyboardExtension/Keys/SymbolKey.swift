@@ -12,7 +12,7 @@ class SymbolKey: Key {
     let className = "SymbolKey"
     
     let id: String
-    let span: Int = 1
+    let span: Int
     let remountOnTap = false
     let updateButtonImagesOnTap = false
     let first: String
@@ -24,10 +24,12 @@ class SymbolKey: Key {
         first: String,
         second: String? = nil,
         third: String? = nil,
+        span: Int = 1,
         backgroundColor: UIColor? = nil
     ) {
         let values: [String] = [first, second, third].compactMap { $0 }
         self.id = "SymbolKey_" + values.joined(separator: "_")
+        self.span = span
         self.first = first
         self.second = second
         self.third = third

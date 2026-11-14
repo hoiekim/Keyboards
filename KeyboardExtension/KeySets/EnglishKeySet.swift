@@ -117,8 +117,6 @@ let onTapEnglishSpace: OnTapUtilKey = { document, context in
             case "shes": "she's"
             case "Hes": "He's"
             case "hes": "he's"
-            case "Its": "It's"
-            case "its": "it's"
             case "Itll": "It'll"
             case "itll": "it'll"
             case "Itd": "It'd"
